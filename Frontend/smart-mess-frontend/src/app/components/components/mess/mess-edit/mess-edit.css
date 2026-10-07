@@ -1,79 +1,92 @@
-.mess-edit-container {
-  min-height: calc(100vh - 120px);
-  padding: 35px;
-  background: #f4f7fb;
+:host {
+  display: block;
+  padding: 10px 0;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-.mess-edit-card {
-  max-width: 900px;
-  margin: auto;
-  background: white;
+/* Form Container Card */
+.container {
+  max-width: 650px;
+  background: #ffffff;
   padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,.08);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
 }
 
-.mess-edit-card h1 {
-  color: #062b63;
-  border-left: 5px solid #0d6efd;
-  padding-left: 15px;
-  margin-bottom: 25px;
-}
-
-.mess-edit-form {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.mess-edit-form .form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.mess-edit-form label {
-  margin-bottom: 7px;
-  color: #26364a;
-  font-size: 14px;
+/* Headings */
+h2 {
+  font-size: 22px;
   font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
 }
 
-.mess-edit-form input,
-.mess-edit-form select,
-.mess-edit-form textarea {
-  padding: 12px 14px;
-  border: 1px solid #cfd7e3;
-  border-radius: 7px;
-  outline: none;
+/* Labels */
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #475569;
+  margin-bottom: 6px;
+}
+
+/* Form Inputs & Selects */
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 9px 12px;
   font-size: 14px;
+  color: #1e293b;
+  background-color: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
 }
 
-.mess-edit-form input:focus,
-.mess-edit-form select:focus,
-.mess-edit-form textarea:focus {
-  border-color: #0d6efd;
+.form-control:focus {
+  background-color: #ffffff;
+  border-color: #1e73be;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(30, 115, 190, 0.15);
 }
 
-.mess-edit-actions {
-  grid-column: 1 / -1;
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  padding-top: 20px;
-  border-top: 1px solid #edf1f5;
+.mb-3 {
+  margin-bottom: 18px;
 }
 
-@media (max-width: 700px) {
-  .mess-edit-container {
-    padding: 15px;
-  }
+/* Submit and Cancel Buttons */
+.btn {
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
 
-  .mess-edit-form {
-    grid-template-columns: 1fr;
-  }
+.btn-primary {
+  background-color: #1e73be;
+  border-color: #1e73be;
+  color: #ffffff;
+}
 
-  .mess-edit-actions {
-    grid-column: auto;
-    flex-direction: column;
-  }
+.btn-primary:hover {
+  background-color: #155a96;
+  border-color: #155a96;
+}
+
+.btn-secondary {
+  background-color: #64748b;
+  border-color: #64748b;
+  color: #ffffff;
+}
+
+.btn-secondary:hover {
+  background-color: #475569;
+  border-color: #475569;
 }

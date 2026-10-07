@@ -1,59 +1,254 @@
-<div class="container">
+<div class="edit-page">
 
-  <h2>Edit Student</h2>
+  <!-- HEADER -->
 
-  <form [formGroup]="studentForm" (ngSubmit)="updateStudent()">
-
-    <div>
-      <label>Name</label>
-      <input type="text" formControlName="name">
-    </div>
+  <div class="page-header">
 
     <div>
-      <label>Email</label>
-      <input type="email" formControlName="email">
+
+      <h1>Edit Student</h1>
+
+      <p>
+        Update student information
+      </p>
+
     </div>
 
-    <div>
-      <label>Password</label>
-      <input type="password" formControlName="password">
-    </div>
+    <button
+      type="button"
+      class="back-btn"
+      (click)="cancel()">
 
-    <div>
-      <label>Phone</label>
-      <input type="text" formControlName="phone">
-    </div>
+      ← Back to Students
 
-    <div>
-      <label>Roll Number</label>
-      <input type="text" formControlName="rollNumber">
-    </div>
-
-    <div>
-      <label>Department</label>
-      <input type="text" formControlName="department">
-    </div>
-
-    <div>
-      <label>Hostel Name</label>
-      <input type="text" formControlName="hostelName">
-    </div>
-
-    <div>
-      <label>Room Number</label>
-      <input type="text" formControlName="roomNumber">
-    </div>
-
-    <br>
-
-    <button type="submit">
-      Update Student
     </button>
 
-    <button type="button" (click)="cancel()">
-      Cancel
-    </button>
+  </div>
 
-  </form>
+
+  <!-- LOADING -->
+
+  <div
+    class="loading-card"
+    *ngIf="loading">
+
+    <div class="spinner"></div>
+
+    <p>Loading student...</p>
+
+  </div>
+
+
+  <!-- FORM -->
+
+  <div
+    class="form-card"
+    *ngIf="!loading">
+
+    <div class="form-title">
+
+      <h2>Student Information</h2>
+
+      <span>
+        Student ID: {{ studentId }}
+      </span>
+
+    </div>
+
+
+    <form
+      [formGroup]="studentForm"
+      (ngSubmit)="updateStudent()">
+
+
+      <div class="form-grid">
+
+
+        <!-- NAME -->
+
+        <div class="form-group">
+
+          <label>
+            Name <span>*</span>
+          </label>
+
+          <input
+            type="text"
+            formControlName="name"
+            placeholder="Enter student name">
+
+          <small
+            class="error"
+            *ngIf="
+              studentForm.get('name')?.touched &&
+              studentForm.get('name')?.invalid
+            ">
+
+            Name is required.
+
+          </small>
+
+        </div>
+
+
+        <!-- EMAIL -->
+
+        <div class="form-group">
+
+          <label>
+            Email <span>*</span>
+          </label>
+
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="Enter email">
+
+          <small
+            class="error"
+            *ngIf="
+              studentForm.get('email')?.touched &&
+              studentForm.get('email')?.invalid
+            ">
+
+            Enter a valid email.
+
+          </small>
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="form-group">
+
+          <label>
+            Password
+          </label>
+
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Enter new password">
+
+          <small class="hint">
+            Leave blank to keep existing password.
+          </small>
+
+        </div>
+
+
+        <!-- PHONE -->
+
+        <div class="form-group">
+
+          <label>
+            Phone
+          </label>
+
+          <input
+            type="text"
+            formControlName="phone"
+            placeholder="Enter phone number">
+
+        </div>
+
+
+        <!-- ROLL NUMBER -->
+
+        <div class="form-group">
+
+          <label>
+            Roll Number
+          </label>
+
+          <input
+            type="text"
+            formControlName="rollNumber"
+            placeholder="Enter roll number">
+
+        </div>
+
+
+        <!-- DEPARTMENT -->
+
+        <div class="form-group">
+
+          <label>
+            Department
+          </label>
+
+          <input
+            type="text"
+            formControlName="department"
+            placeholder="Enter department">
+
+        </div>
+
+
+        <!-- HOSTEL -->
+
+        <div class="form-group">
+
+          <label>
+            Hostel Name
+          </label>
+
+          <input
+            type="text"
+            formControlName="hostelName"
+            placeholder="Enter hostel name">
+
+        </div>
+
+
+        <!-- ROOM -->
+
+        <div class="form-group">
+
+          <label>
+            Room Number
+          </label>
+
+          <input
+            type="text"
+            formControlName="roomNumber"
+            placeholder="Enter room number">
+
+        </div>
+
+
+      </div>
+
+
+      <!-- BUTTONS -->
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="cancel-btn"
+          (click)="cancel()">
+
+          Cancel
+
+        </button>
+
+
+        <button
+          type="submit"
+          class="update-btn"
+          [disabled]="studentForm.invalid">
+
+          Update Student
+
+        </button>
+
+      </div>
+
+
+    </form>
+
+  </div>
 
 </div>

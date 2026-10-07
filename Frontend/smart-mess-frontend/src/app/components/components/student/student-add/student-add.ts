@@ -61,11 +61,15 @@ export class StudentAdd {
 
   }
 
+
   submitForm(): void {
 
     if (this.studentForm.invalid) {
+
       this.studentForm.markAllAsTouched();
+
       return;
+
     }
 
     const studentData = {
@@ -81,51 +85,55 @@ export class StudentAdd {
       studentData
     );
 
-    this.studentService.create(studentData).subscribe({
 
-      next: (response) => {
+    this.studentService
+      .create(studentData)
+      .subscribe({
 
-        console.log(
-          'STUDENT ADDED:',
-          response
-        );
+        next: (response) => {
 
-        alert(
-          'Student added successfully!'
-        );
+          console.log(
+            'STUDENT ADDED:',
+            response
+          );
 
-        this.router.navigate([
-          '/students'
-        ]);
+          alert(
+            'Student added successfully!'
+          );
 
-      },
+          this.router.navigate([
+            '/students'
+          ]);
 
-      error: (error: any) => {
+        },
 
-        console.error(
-          'ADD STUDENT ERROR:',
-          error
-        );
+        error: (error: any) => {
 
-        console.error(
-          'STATUS:',
-          error.status
-        );
+          console.error(
+            'ADD STUDENT ERROR:',
+            error
+          );
 
-        console.error(
-          'ERROR BODY:',
-          error.error
-        );
+          console.error(
+            'STATUS:',
+            error.status
+          );
 
-        alert(
-          'Student could not be added.'
-        );
+          console.error(
+            'ERROR BODY:',
+            error.error
+          );
 
-      }
+          alert(
+            'Student could not be added.'
+          );
 
-    });
+        }
+
+      });
 
   }
+
 
   cancel(): void {
 

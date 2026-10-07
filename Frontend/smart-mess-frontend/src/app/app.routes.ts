@@ -1,58 +1,74 @@
 import { Routes } from '@angular/router';
+
+// Home & Dashboard
 import { Home } from './components/components/home/home';
 import { Dashboard } from './components/components/dashboard/dashboard';
 
+// Student
 import { StudentList } from './components/components/student/student-list/student-list';
 import { StudentAdd } from './components/components/student/student-add/student-add';
 import { StudentEdit } from './components/components/student/student-edit/student-edit';
 
+// Mess
 import { MessList } from './components/components/mess/mess-list/mess-list';
 import { MessAdd } from './components/components/mess/mess-add/mess-add';
 import { MessEdit } from './components/components/mess/mess-edit/mess-edit';
 
+// Canteen
 import { CanteenList } from './components/components/canteen/canteen-list/canteen-list';
 import { CanteenAdd } from './components/components/canteen/canteen-add/canteen-add';
 import { CanteenEdit } from './components/components/canteen/canteen-edit/canteen-edit';
 
+// Menu
 import { MenuList } from './components/components/menu/menu-list/menu-list';
 import { MenuAdd } from './components/components/menu/menu-add/menu-add';
 import { MenuEdit } from './components/components/menu/menu-edit/menu-edit';
 
+// Food Item
 import { FoodItemList } from './components/components/food-item/food-item-list/food-item-list';
 import { FoodItemAdd } from './components/components/food-item/food-item-add/food-item-add';
 import { FoodItemEdit } from './components/components/food-item/food-item-edit/food-item-edit';
 
+// Food Order
 import { FoodOrderList } from './components/components/food-order/food-order-list/food-order-list';
 import { FoodOrderAdd } from './components/components/food-order/food-order-add/food-order-add';
 
+// Payment
 import { PaymentList } from './components/components/payment/payment-list/payment-list';
 
+// Subscription
 import { SubscriptionList } from './components/components/subscription/subscription-list/subscription-list';
 import { SubscriptionAdd } from './components/components/subscription/subscription-add/subscription-add';
 
+// Attendance
 import { AttendanceList } from './components/components/attendance/attendance-list/attendance-list';
 import { AttendanceAdd } from './components/components/attendance/attendance-add/attendance-add';
 
+// Feedback
 import { FeedbackList } from './components/components/feedback/feedback-list/feedback-list';
 import { FeedbackAdd } from './components/components/feedback/feedback-add/feedback-add';
 
+// Complaint
 import { ComplaintList } from './components/components/complaint/complaint-list/complaint-list';
 import { ComplaintAdd } from './components/components/complaint/complaint-add/complaint-add';
 
+// Notice
 import { NoticeList } from './components/components/notice/notice-list/notice-list';
 import { NoticeAdd } from './components/components/notice/notice-add/notice-add';
 
-import { authGuard } from './guards/guards/auth-guard';
-
+// Login & Register
 import { Login } from './components/components/login/login';
 import { Register } from './components/components/register/register';
+
+// Auth Guard
+import { authGuard } from './guards/guards/auth-guard';
 
 
 export const routes: Routes = [
 
-  // =====================================
-  // LOGIN
-  // =====================================
+  // =====================================================
+  // DEFAULT
+  // =====================================================
 
   {
     path: '',
@@ -60,35 +76,40 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
 
+
+  // =====================================================
+  // HOME
+  // =====================================================
+
   {
     path: 'home',
     component: Home
   },
+
+
+  // =====================================================
+  // LOGIN
+  // =====================================================
 
   {
     path: 'login',
     component: Login
   },
 
+
+  // =====================================================
+  // REGISTER
+  // =====================================================
+
   {
     path: 'register',
     component: Register
   },
 
-  // =====================================
-  // DEFAULT
-  // =====================================
 
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
-
-
-  // =====================================
+  // =====================================================
   // DASHBOARD
-  // =====================================
+  // =====================================================
 
   {
     path: 'dashboard',
@@ -97,9 +118,9 @@ export const routes: Routes = [
   },
 
 
-  // =====================================
+  // =====================================================
   // STUDENTS
-  // =====================================
+  // =====================================================
 
   {
     path: 'students',
@@ -120,9 +141,9 @@ export const routes: Routes = [
   },
 
 
-  // =====================================
+  // =====================================================
   // MESSES
-  // =====================================
+  // =====================================================
 
   {
     path: 'messes',
@@ -143,9 +164,9 @@ export const routes: Routes = [
   },
 
 
-  // =====================================
+  // =====================================================
   // CANTEENS
-  // =====================================
+  // =====================================================
 
   {
     path: 'canteens',
@@ -166,9 +187,9 @@ export const routes: Routes = [
   },
 
 
-  // =====================================
+  // =====================================================
   // MENUS
-  // =====================================
+  // =====================================================
 
   {
     path: 'menus',
@@ -189,9 +210,9 @@ export const routes: Routes = [
   },
 
 
-  // =====================================
+  // =====================================================
   // FOOD ITEMS
-  // =====================================
+  // =====================================================
 
   {
     path: 'food-items',
@@ -212,9 +233,9 @@ export const routes: Routes = [
   },
 
 
-  // =====================================
-  // ORDERS
-  // =====================================
+  // =====================================================
+  // FOOD ORDERS
+  // =====================================================
 
   {
     path: 'orders',
@@ -229,9 +250,9 @@ export const routes: Routes = [
   },
 
 
-  // =====================================
+  // =====================================================
   // PAYMENTS
-  // =====================================
+  // =====================================================
 
   {
     path: 'payments',
@@ -240,15 +261,16 @@ export const routes: Routes = [
   },
 
 
-  // =====================================
+  // =====================================================
   // SUBSCRIPTIONS
-  // =====================================
+  // =====================================================
 
   {
     path: 'subscriptions',
     component: SubscriptionList,
     canActivate: [authGuard]
   },
+
   {
     path: 'subscriptions/add',
     component: SubscriptionAdd,
@@ -256,9 +278,9 @@ export const routes: Routes = [
   },
 
 
-  // =====================================
+  // =====================================================
   // ATTENDANCE
-  // =====================================
+  // =====================================================
 
   {
     path: 'attendance',
@@ -273,9 +295,9 @@ export const routes: Routes = [
   },
 
 
-  // =====================================
+  // =====================================================
   // FEEDBACK
-  // =====================================
+  // =====================================================
 
   {
     path: 'feedbacks',
@@ -290,9 +312,9 @@ export const routes: Routes = [
   },
 
 
-  // =====================================
+  // =====================================================
   // COMPLAINTS
-  // =====================================
+  // =====================================================
 
   {
     path: 'complaints',
@@ -307,9 +329,9 @@ export const routes: Routes = [
   },
 
 
-  // =====================================
+  // =====================================================
   // NOTICES
-  // =====================================
+  // =====================================================
 
   {
     path: 'notices',
@@ -322,5 +344,15 @@ export const routes: Routes = [
     component: NoticeAdd,
     canActivate: [authGuard]
   },
- 
+
+
+  // =====================================================
+  // INVALID URL
+  // =====================================================
+
+  {
+    path: '**',
+    redirectTo: 'home'
+  }
+
 ];

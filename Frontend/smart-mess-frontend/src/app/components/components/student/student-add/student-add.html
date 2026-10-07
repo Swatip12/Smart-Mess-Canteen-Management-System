@@ -1,8 +1,14 @@
 <div class="student-add-container">
 
   <div class="page-header">
-    <h1>Add Student</h1>
-    <p>Register a new student in Smart Mess Management System</p>
+
+    <div>
+      <h1>Add Student</h1>
+      <p>
+        Register a new student in Smart Mess Management System
+      </p>
+    </div>
+
   </div>
 
 
@@ -19,11 +25,10 @@
       <div class="form-grid">
 
 
-        <!-- Name -->
         <div class="form-group">
 
           <label>
-            Name <span class="required">*</span>
+            Name <span>*</span>
           </label>
 
           <input
@@ -32,8 +37,7 @@
             placeholder="Enter student name"
           />
 
-          <div
-            class="error-message"
+          <small
             *ngIf="
               studentForm.get('name')?.touched &&
               studentForm.get('name')?.invalid
@@ -41,16 +45,15 @@
 
             Name is required.
 
-          </div>
+          </small>
 
         </div>
 
 
-        <!-- Email -->
         <div class="form-group">
 
           <label>
-            Email <span class="required">*</span>
+            Email <span>*</span>
           </label>
 
           <input
@@ -59,8 +62,7 @@
             placeholder="Enter email address"
           />
 
-          <div
-            class="error-message"
+          <small
             *ngIf="
               studentForm.get('email')?.touched &&
               studentForm.get('email')?.invalid
@@ -68,16 +70,15 @@
 
             Enter a valid email.
 
-          </div>
+          </small>
 
         </div>
 
 
-        <!-- Password -->
         <div class="form-group">
 
           <label>
-            Password <span class="required">*</span>
+            Password <span>*</span>
           </label>
 
           <input
@@ -89,12 +90,9 @@
         </div>
 
 
-        <!-- Phone -->
         <div class="form-group">
 
-          <label>
-            Phone
-          </label>
+          <label>Phone</label>
 
           <input
             type="text"
@@ -105,12 +103,9 @@
         </div>
 
 
-        <!-- Roll Number -->
         <div class="form-group">
 
-          <label>
-            Roll Number
-          </label>
+          <label>Roll Number</label>
 
           <input
             type="text"
@@ -121,12 +116,9 @@
         </div>
 
 
-        <!-- Department -->
         <div class="form-group">
 
-          <label>
-            Department
-          </label>
+          <label>Department</label>
 
           <input
             type="text"
@@ -137,12 +129,9 @@
         </div>
 
 
-        <!-- Hostel Name -->
         <div class="form-group">
 
-          <label>
-            Hostel Name
-          </label>
+          <label>Hostel Name</label>
 
           <input
             type="text"
@@ -153,12 +142,9 @@
         </div>
 
 
-        <!-- Room Number -->
         <div class="form-group">
 
-          <label>
-            Room Number
-          </label>
+          <label>Room Number</label>
 
           <input
             type="text"
@@ -172,12 +158,11 @@
       </div>
 
 
-      <!-- Buttons -->
       <div class="form-actions">
 
         <button
           type="button"
-          class="btn btn-cancel"
+          class="btn-cancel"
           (click)="cancel()">
 
           Cancel
@@ -187,7 +172,7 @@
 
         <button
           type="submit"
-          class="btn btn-submit"
+          class="btn-submit"
           [disabled]="studentForm.invalid">
 
           Add Student

@@ -1,130 +1,423 @@
+/* MAIN PAGE */
+
 .student-page {
-  min-height: 100vh;
   padding: 30px;
+  min-height: 100vh;
   background: #f4f7fb;
 }
 
-.student-header {
+
+/* HEADER */
+
+.page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
-  padding: 22px 25px;
   margin-bottom: 25px;
-  border-radius: 10px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
 }
 
-.student-header h1 {
+.page-header h1 {
   margin: 0;
-  color: #062b63;
-  font-size: 28px;
+  color: #123b70;
+  font-size: 32px;
+  font-weight: 700;
 }
 
-.student-header p {
+.page-header p {
   margin: 6px 0 0;
-  color: #777;
+  color: #718096;
+  font-size: 15px;
 }
 
-.add-btn {
-  border: none;
-  background: #0d6efd;
+
+/* ADD STUDENT BUTTON */
+
+.add-student-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 12px 20px;
+
+  background: #1769e0;
   color: white;
-  padding: 11px 18px;
-  border-radius: 6px;
-  cursor: pointer;
+
+  border-radius: 8px;
+
+  text-decoration: none;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  box-shadow: 0 4px 12px rgba(23, 105, 224, 0.25);
+
+  transition: 0.2s ease;
+}
+
+.add-student-btn:hover {
+  background: #0f56c5;
+  transform: translateY(-1px);
+}
+
+.add-student-btn span {
+  font-size: 20px;
+}
+
+
+/* TABLE CARD */
+
+.table-card {
+  background: white;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 4px 20px rgba(15, 42, 70, 0.08);
+
+  overflow: hidden;
+}
+
+
+/* TABLE HEADER */
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 20px 24px;
+
+  border-bottom: 1px solid #e8edf3;
+}
+
+.table-header h2 {
+  margin: 0;
+
+  color: #1d3557;
+
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.student-count {
+  background: #eaf2ff;
+
+  color: #1769e0;
+
+  padding: 6px 12px;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+
   font-weight: 600;
 }
 
-.add-btn:hover {
-  background: #0b5ed7;
-}
 
-.loading {
-  background: white;
-  padding: 40px;
-  text-align: center;
-  border-radius: 10px;
-  color: #555;
-  font-size: 16px;
-}
+/* TABLE WRAPPER */
 
-.table-container {
-  background: white;
-  border-radius: 10px;
+.table-wrapper {
+  width: 100%;
   overflow-x: auto;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
 }
+
+
+/* TABLE */
 
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 1100px;
+
+  min-width: 1050px;
 }
+
+
+/* TABLE HEAD */
 
 thead {
-  background: #062b63;
+  background: #f7f9fc;
 }
 
-th {
-  color: white;
-  padding: 14px 12px;
+thead th {
+  padding: 15px 16px;
+
   text-align: left;
-  font-size: 14px;
-}
 
-td {
-  padding: 13px 12px;
-  border-bottom: 1px solid #e5e7eb;
-  font-size: 14px;
-}
+  color: #526174;
 
-tbody tr:hover {
-  background: #f8fafc;
-}
+  font-size: 13px;
 
-.status {
-  background: #d1e7dd;
-  color: #146c43;
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-size: 12px;
-  font-weight: 600;
-}
+  font-weight: 700;
 
-.actions {
+  border-bottom: 1px solid #e3e8ef;
+
   white-space: nowrap;
 }
 
-.edit-btn {
-  border: none;
-  background: #ffc107;
-  color: #212529;
-  padding: 7px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right: 6px;
+
+/* TABLE BODY */
+
+tbody td {
+  padding: 16px;
+
+  color: #39475a;
+
+  font-size: 14px;
+
+  border-bottom: 1px solid #edf1f5;
+
+  vertical-align: middle;
 }
 
-.delete-btn {
+
+/* ROW HOVER */
+
+tbody tr:hover {
+  background: #f8fbff;
+}
+
+
+/* STUDENT NAME */
+
+.student-name {
+  color: #123b70;
+
+  font-weight: 600;
+}
+
+
+/* STATUS */
+
+.status-badge {
+  display: inline-block;
+
+  padding: 5px 11px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.status-badge.active {
+  background: #e8f7ee;
+  color: #168348;
+}
+
+.status-badge.inactive {
+  background: #f1f3f5;
+  color: #6b7280;
+}
+
+
+/* ACTION BUTTONS */
+
+.action-buttons {
+  white-space: nowrap;
+}
+
+
+/* EDIT */
+
+.edit-btn {
   border: none;
-  background: #dc3545;
-  color: white;
-  padding: 7px 12px;
-  border-radius: 5px;
+
+  background: #fff3cd;
+
+  color: #946200;
+
+  padding: 7px 13px;
+
+  border-radius: 6px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
   cursor: pointer;
+
+  margin-right: 7px;
+
+  transition: 0.2s ease;
 }
 
 .edit-btn:hover {
-  background: #ffca2c;
+  background: #ffdf78;
+}
+
+
+/* DELETE */
+
+.delete-btn {
+  border: none;
+
+  background: #ffe8e8;
+
+  color: #dc3545;
+
+  padding: 7px 13px;
+
+  border-radius: 6px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
 }
 
 .delete-btn:hover {
-  background: #bb2d3b;
+  background: #dc3545;
+  color: white;
 }
+
+
+/* NO DATA */
 
 .no-data {
   text-align: center;
-  padding: 35px;
-  color: #777;
+
+  padding: 50px !important;
+
+  color: #7b8794;
+
+  font-size: 15px;
+}
+
+.no-data a {
+  display: inline-block;
+
+  margin-top: 10px;
+
+  color: #1769e0;
+
+  text-decoration: none;
+
+  font-weight: 600;
+}
+
+
+/* LOADING */
+
+.loading-box {
+  background: white;
+
+  min-height: 300px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 4px 20px rgba(15, 42, 70, 0.08);
+}
+
+.loading-box p {
+  margin-top: 15px;
+
+  color: #667085;
+
+  font-size: 15px;
+}
+
+
+/* SPINNER */
+
+.spinner {
+  width: 42px;
+  height: 42px;
+
+  border: 4px solid #e5e7eb;
+
+  border-top: 4px solid #1769e0;
+
+  border-radius: 50%;
+
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+/* ERROR */
+
+.error-box {
+  background: white;
+
+  padding: 30px;
+
+  border-radius: 12px;
+
+  text-align: center;
+
+  color: #dc3545;
+
+  box-shadow:
+    0 4px 20px rgba(15, 42, 70, 0.08);
+}
+
+.error-box button {
+  display: block;
+
+  margin: 15px auto 0;
+
+  padding: 8px 16px;
+
+  border: none;
+
+  border-radius: 6px;
+
+  background: #1769e0;
+
+  color: white;
+
+  cursor: pointer;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+  .student-page {
+    padding: 15px;
+  }
+
+  .page-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+  .page-header h1 {
+    font-size: 26px;
+  }
+
+  .add-student-btn {
+    width: 100%;
+
+    justify-content: center;
+  }
+
 }

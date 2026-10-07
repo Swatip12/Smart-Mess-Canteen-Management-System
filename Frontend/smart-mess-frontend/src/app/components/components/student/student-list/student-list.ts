@@ -1,19 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { StudentService } from '../../../../services/services/student';
+import { Student } from '../../../../models/models/student.model';
 
 @Component({
   selector: 'app-student-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './student-list.html',
   styleUrl: './student-list.css'
 })
 export class StudentList implements OnInit {
 
-  students: any[] = [];
+  students: Student[] = [];
+  loading = false;
+  errorMessage = '';
 
   constructor(
     private studentService: StudentService,
@@ -21,27 +24,38 @@ export class StudentList implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadStudents();
+  }
 
-    console.log('STUDENT LIST COMPONENT LOADED');
+  loadStudents(): void {
+
+    this.loading = true;
+    this.errorMessage = '';
 
     this.studentService.getAll().subscribe({
 
-      next: (data: any[]) => {
+      next: (data: Student[]) => {
 
         console.log('STUDENTS FROM API:', data);
 
-        this.students = data;
+        this.students = data ?? [];
+
+        this.loading = false;
 
       },
 
-      error: (error) => {
+      error: (error: any) => {
 
-        console.error('STUDENT API ERROR:', error);
+        console.error('STUDENT LIST ERROR:', error);
 
+        this.students = [];
+        this.loading = false;
+
+        this.errorMessage =
+          'Unable to load students. Please try again.';
       }
 
     });
-
   }
 
   addStudent(): void {
@@ -62,32 +76,18 @@ export class StudentList implements OnInit {
 
       next: () => {
 
-        alert('Student deleted successfully');
+        alert('Student deleted successfully.');
 
-        this.studentService.getAll().subscribe({
-
-          next: (data: any[]) => {
-            this.students = data;
-          },
-
-          error: (error) => {
-            console.error(error);
-          }
-
-        });
-
+        this.loadStudents();
       },
 
-      error: (error) => {
+      error: (error: any) => {
 
-        console.error('DELETE ERROR:', error);
+        console.error('DELETE STUDENT ERROR:', error);
 
-        alert('Failed to delete student');
-
+        alert('Failed to delete student.');
       }
 
     });
-
   }
-
 }

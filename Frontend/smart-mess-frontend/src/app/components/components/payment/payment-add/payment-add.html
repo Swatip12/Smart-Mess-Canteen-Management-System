@@ -1,1 +1,88 @@
-<p>payment-add works!</p>
+<div class="page-container">
+  <div class="card">
+    <div class="card-header">
+      <h2>Record New Payment</h2>
+      <p class="subtitle">Enter payment transaction details</p>
+    </div>
+
+    <form [formGroup]="paymentForm" (ngSubmit)="addPayment()">
+
+      <div class="form-grid">
+        <!-- Student ID -->
+        <div class="form-group">
+          <label>Student ID <span class="required">*</span></label>
+          <input
+            type="number"
+            class="form-control"
+            formControlName="studentId"
+            placeholder="e.g. 101">
+        </div>
+
+        <!-- Amount -->
+        <div class="form-group">
+          <label>Amount (₹) <span class="required">*</span></label>
+          <input
+            type="number"
+            class="form-control"
+            formControlName="amount"
+            placeholder="e.g. 1200"
+            min="1">
+        </div>
+
+        <!-- Payment Type -->
+        <div class="form-group">
+          <label>Payment Type <span class="required">*</span></label>
+          <select class="form-control" formControlName="type">
+            <option *ngFor="let t of paymentTypes" [value]="t">{{ t }}</option>
+          </select>
+        </div>
+
+        <!-- Payment Status -->
+        <div class="form-group">
+          <label>Status <span class="required">*</span></label>
+          <select class="form-control" formControlName="status">
+            <option *ngFor="let s of paymentStatuses" [value]="s">{{ s }}</option>
+          </select>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="form-group">
+          <label>Payment Method <span class="required">*</span></label>
+          <select class="form-control" formControlName="paymentMethod">
+            <option *ngFor="let m of paymentMethods" [value]="m">{{ m }}</option>
+          </select>
+        </div>
+
+        <!-- Paid At Date -->
+        <div class="form-group">
+          <label>Paid At Date <span class="required">*</span></label>
+          <input
+            type="date"
+            class="form-control"
+            formControlName="paidAt">
+        </div>
+      </div>
+
+      <!-- Transaction ID -->
+      <div class="form-group mt-3">
+        <label>Transaction ID / Reference Number</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="transactionId"
+          placeholder="e.g. TXN-89457201">
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          Save Payment
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="cancel()">
+          Cancel
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

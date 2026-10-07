@@ -1,44 +1,45 @@
-/* ================================
-   ADD STUDENT
-   ================================ */
-
 .student-add-container {
-  min-height: calc(100vh - 120px);
   padding: 30px;
-  background: #f4f7fb;
+  background: #f5f7fb;
+  min-height: calc(100vh - 70px);
 }
 
-/* Card */
-.student-form-card {
-  max-width: 900px;
-  margin: 0 auto;
+.page-header {
+  margin-bottom: 25px;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 30px;
+}
+
+.page-header p {
+  margin-top: 7px;
+  color: #6b7280;
+}
+
+.form-card {
+  max-width: 950px;
+  margin: auto;
   background: white;
   padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
 }
 
-/* Title */
-.student-form-card h2 {
-  margin: 0 0 8px;
-  color: #062b63;
-  font-size: 28px;
-}
-
-.form-subtitle {
-  color: #6b7280;
+.form-card h2 {
+  margin-top: 0;
   margin-bottom: 25px;
-  font-size: 14px;
+  color: #374151;
 }
 
-/* Form Grid */
-.student-form {
+.form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
-/* Form Group */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -46,111 +47,81 @@
 
 .form-group label {
   margin-bottom: 7px;
-  color: #374151;
-  font-size: 14px;
   font-weight: 600;
+  color: #374151;
 }
 
-.form-group input,
-.form-group select {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 11px 13px;
+.form-group label span {
+  color: #ef4444;
+}
+
+.form-group input {
+  padding: 12px 14px;
   border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 14px;
   outline: none;
-  transition: 0.2s;
 }
 
-.form-group input:focus,
-.form-group select:focus {
-  border-color: #0d6efd;
-  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12);
+.form-group input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-/* Error */
-.error {
-  color: #dc3545;
-  font-size: 12px;
+.form-group small {
   margin-top: 5px;
+  color: #dc2626;
 }
 
-/* Full Width */
-.full-width {
-  grid-column: 1 / -1;
-}
-
-/* Buttons */
-.form-buttons {
-  grid-column: 1 / -1;
+.form-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 12px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
 }
 
-.save-btn {
-  background: #198754;
-  color: white;
+.btn-cancel,
+.btn-submit {
+  padding: 11px 20px;
   border: none;
-  padding: 11px 25px;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 14px;
   font-weight: 600;
 }
 
-.save-btn:hover {
-  background: #157347;
-}
-
-.cancel-btn {
-  background: #6c757d;
+.btn-cancel {
+  background: #6b7280;
   color: white;
-  border: none;
-  padding: 11px 25px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
 }
 
-.cancel-btn:hover {
-  background: #5c636a;
+.btn-submit {
+  background: #2563eb;
+  color: white;
 }
 
-/* Disabled */
-.save-btn:disabled {
+.btn-submit:hover {
+  background: #1d4ed8;
+}
+
+.btn-submit:disabled {
   background: #9ca3af;
   cursor: not-allowed;
 }
 
-/* Responsive */
 @media (max-width: 700px) {
+
   .student-add-container {
     padding: 15px;
   }
 
-  .student-form-card {
+  .form-card {
     padding: 20px;
   }
 
-  .student-form {
+  .form-grid {
     grid-template-columns: 1fr;
   }
 
-  .full-width {
-    grid-column: auto;
-  }
-
-  .form-buttons {
-    grid-column: auto;
-    flex-direction: column;
-  }
-
-  .save-btn,
-  .cancel-btn {
-    width: 100%;
-  }
 }

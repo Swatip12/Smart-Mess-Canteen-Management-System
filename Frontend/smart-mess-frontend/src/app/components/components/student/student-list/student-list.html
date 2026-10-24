@@ -1,192 +1,93 @@
 <div class="student-page">
 
-  <!-- HEADER -->
   <div class="page-header">
-
     <div>
       <h1>Students</h1>
       <p>Manage registered students</p>
     </div>
 
-    <a
-      routerLink="/students/add"
-      class="add-student-btn">
-
-      <span>+</span>
-      Add Student
-
+    <a routerLink="/students/add" class="add-student-btn">
+      <span>+</span> Add Student
     </a>
-
   </div>
 
-
-  <!-- LOADING -->
-  <div
-    class="loading-box"
-    *ngIf="loading">
-
+  <div class="loading-box" *ngIf="loading">
     <div class="spinner"></div>
-
     <p>Loading students...</p>
-
   </div>
 
-
-  <!-- ERROR -->
-  <div
-    class="error-box"
-    *ngIf="!loading && errorMessage">
-
+  <div class="error-box" *ngIf="!loading && errorMessage">
     {{ errorMessage }}
-
-    <button
-      type="button"
-      (click)="loadStudents()">
-
-      Try Again
-
-    </button>
-
+    <button type="button" (click)="loadStudents()">Try Again</button>
   </div>
 
-
-  <!-- STUDENT TABLE -->
-  <div
-    class="table-card"
-    *ngIf="!loading && !errorMessage">
+  <div class="table-card" *ngIf="!loading && !errorMessage">
 
     <div class="table-header">
-
       <h2>Student List</h2>
-
-      <span class="student-count">
-        {{ students.length }} Students
-      </span>
-
+      <span class="student-count">{{ students.length }} Students</span>
     </div>
 
-
     <div class="table-wrapper">
-
       <table>
-
         <thead>
-
           <tr>
-
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Phone</th>
             <th>Roll Number</th>
             <th>Department</th>
             <th>Hostel</th>
             <th>Room</th>
             <th>Status</th>
             <th>Actions</th>
-
           </tr>
-
         </thead>
 
-
         <tbody>
-
-          <!-- STUDENTS -->
-          <tr
-            *ngFor="let student of students">
-
+          <tr *ngFor="let student of students">
+            <td>{{ student.id }}</td>
+            <td class="student-name">{{ student.name }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.phone || 'N/A' }}</td>
+            <td>{{ student.rollNumber || 'N/A' }}</td>
+            <td>{{ student.department || 'N/A' }}</td>
+            <td>{{ student.hostelName || 'N/A' }}</td>
+            <td>{{ student.roomNumber || 'N/A' }}</td>
             <td>
-              {{ student.id }}
-            </td>
-
-            <td class="student-name">
-              {{ student.name || 'N/A' }}
-            </td>
-
-            <td>
-              {{ student.email || 'N/A' }}
-            </td>
-
-            <td>
-              {{ student.rollNumber || 'N/A' }}
-            </td>
-
-            <td>
-              {{ student.department || 'N/A' }}
-            </td>
-
-            <td>
-              {{ student.hostelName || 'N/A' }}
-            </td>
-
-            <td>
-              {{ student.roomNumber || 'N/A' }}
-            </td>
-
-            <td>
-
               <span
                 class="status-badge"
                 [class.active]="student.status === 'ACTIVE'"
                 [class.inactive]="student.status !== 'ACTIVE'">
-
                 {{ student.status || 'ACTIVE' }}
-
               </span>
-
             </td>
 
             <td class="action-buttons">
-
               <button
                 type="button"
                 class="edit-btn"
                 (click)="editStudent(student.id!)">
-
                 Edit
-
               </button>
 
               <button
                 type="button"
                 class="delete-btn"
                 (click)="deleteStudent(student.id!)">
-
                 Delete
-
               </button>
-
             </td>
-
           </tr>
 
-
-          <!-- NO DATA -->
-          <tr
-            *ngIf="students.length === 0">
-
-            <td
-              colspan="9"
-              class="no-data">
-
+          <tr *ngIf="students.length === 0">
+            <td colspan="10" class="no-data">
               No students found.
-
-              <br>
-
-              <a routerLink="/students/add">
-                Add Student
-              </a>
-
             </td>
-
           </tr>
-
         </tbody>
-
       </table>
-
     </div>
-
   </div>
-
 </div>

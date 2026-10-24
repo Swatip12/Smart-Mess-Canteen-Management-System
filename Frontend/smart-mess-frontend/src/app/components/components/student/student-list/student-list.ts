@@ -26,38 +26,34 @@ export class StudentList implements OnInit {
   ngOnInit(): void {
     this.loadStudents();
   }
+loadStudents(): void {
+  this.loading = true;
+  this.errorMessage = '';
 
-  loadStudents(): void {
+  this.studentService.getAll().subscribe({
+    next: (data: Student[]) => {
+      console.log('STUDENTS FROM API:', data);
 
-    this.loading = true;
-    this.errorMessage = '';
+      this.students = Array.isArray(data) ? data : [];
+      this.loading = false;
 
-    this.studentService.getAll().subscribe({
+      console.log('TOTAL STUDENTS:', this.students.length);
+      console.log('LOADING:', this.loading);
+    },
 
-      next: (data: Student[]) => {
+    error: (error: any) => {
+      console.error('STUDENT API ERROR:', error);
 
-        console.log('STUDENTS FROM API:', data);
+      this.students = [];
+      this.loading = false;
+      this.errorMessage = 'Unable to load students. Please try again.';
+    },
 
-        this.students = data ?? [];
-
-        this.loading = false;
-
-      },
-
-      error: (error: any) => {
-
-        console.error('STUDENT LIST ERROR:', error);
-
-        this.students = [];
-        this.loading = false;
-
-        this.errorMessage =
-          'Unable to load students. Please try again.';
-      }
-
-    });
-  }
-
+    complete: () => {
+      console.log('Student API request completed.');
+    }
+  });
+}
   addStudent(): void {
     this.router.navigate(['/students/add']);
   }

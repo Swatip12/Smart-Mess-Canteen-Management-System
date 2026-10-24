@@ -1,4 +1,32 @@
-/* MAIN PAGE */
+
+.student-page {
+  display: block !important;
+  width: 100%;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.page-header,
+.table-card {
+  display: flex;
+  visibility: visible;
+  opacity: 1;
+}
+
+.table-card {
+  display: block;
+}
+
+.table-wrapper {
+  display: block;
+  overflow-x: auto;
+}
+
+table {
+  display: table;
+  width: 100%;
+  visibility: visible;
+}/* MAIN PAGE */
 
 .student-page {
   padding: 30px;

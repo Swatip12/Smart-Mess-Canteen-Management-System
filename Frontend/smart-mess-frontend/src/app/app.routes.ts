@@ -4,6 +4,9 @@ import { Routes } from '@angular/router';
 import { Home } from './components/components/home/home';
 import { Dashboard } from './components/components/dashboard/dashboard';
 
+import { About } from './components/components/about/about';
+import { Contact } from './components/components/contact/contact';
+
 // Student
 import { StudentList } from './components/components/student/student-list/student-list';
 import { StudentAdd } from './components/components/student/student-add/student-add';
@@ -84,6 +87,15 @@ export const routes: Routes = [
   {
     path: 'home',
     component: Home
+  },
+
+  {
+    path: 'about',
+    component: About
+  },
+  {
+    path: 'contact',
+    component: Contact
   },
 
 
@@ -191,11 +203,12 @@ export const routes: Routes = [
   // MENUS
   // =====================================================
 
-  {
-    path: 'menus',
-    component: MenuList,
-    canActivate: [authGuard]
-  },
+ 
+ {
+  path: 'menus',
+  component: MenuList,
+  canActivate: [authGuard]
+},
 
   {
     path: 'menus/add',

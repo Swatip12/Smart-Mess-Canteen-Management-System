@@ -1,0 +1,88 @@
+<div class="contact-container">
+
+  <div class="contact-header">
+    <h1>Contact Us</h1>
+
+    <p>
+      Have any questions or suggestions?
+      Contact us using the information below.
+    </p>
+  </div>
+
+  <div class="contact-content">
+
+    <div class="contact-info">
+
+      <h2>Get In Touch</h2>
+
+      <div class="info-box">
+        <h3>📍 Address</h3>
+        <p>Smart Mess & Canteen Management System</p>
+      </div>
+
+      <div class="info-box">
+        <h3>📧 Email</h3>
+        <p>smartmess@gmail.com</p>
+      </div>
+
+      <div class="info-box">
+        <h3>📞 Phone</h3>
+        <p>+91 9876543210</p>
+      </div>
+
+      <div class="info-box">
+        <h3>🕐 Working Hours</h3>
+        <p>Monday - Saturday: 9:00 AM - 6:00 PM</p>
+      </div>
+
+    </div>
+
+    <div class="contact-form">
+
+      <h2>Send Us a Message</h2>
+
+      <form (ngSubmit)="submitForm()">
+
+        <label>Name</label>
+        <input
+          type="text"
+          name="name"
+          [(ngModel)]="name"
+          placeholder="Enter your name"
+          required>
+
+        <label>Email</label>
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter your email"
+          required>
+
+        <label>Subject</label>
+        <input
+          type="text"
+          name="subject"
+          [(ngModel)]="subject"
+          placeholder="Enter subject"
+          required>
+
+        <label>Message</label>
+        <textarea
+          name="message"
+          [(ngModel)]="message"
+          placeholder="Enter your message"
+          rows="5"
+          required></textarea>
+
+        <button type="submit">
+          Send Message
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

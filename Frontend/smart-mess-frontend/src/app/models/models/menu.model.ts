@@ -3,7 +3,9 @@ export interface Menu {
   menuDate: string;
   dayOfWeek?: string;
   mess?: any;
+  messId?: number;
   meal?: any;
+  mealId?: number;
   items?: string;
   createdAt?: string;
 }

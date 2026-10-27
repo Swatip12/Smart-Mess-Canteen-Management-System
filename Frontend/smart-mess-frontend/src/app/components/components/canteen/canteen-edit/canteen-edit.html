@@ -1,71 +1,94 @@
-<div class="container mt-4">
-
-  <h2>Edit Canteen</h2>
-
-  <form [formGroup]="canteenForm" (ngSubmit)="updateCanteen()">
-
-    <div class="mb-3">
-      <label>Name</label>
-      <input
-        type="text"
-        class="form-control"
-        formControlName="name">
+<div class="page-container">
+  <div class="page-header mb-4">
+    <div class="d-flex align-items-center gap-2 mb-1">
+      <a routerLink="/canteens" class="btn btn-sm btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i>
+      </a>
+      <h2 class="mb-0">Edit Canteen</h2>
     </div>
+    <p class="text-muted ms-4 ps-2 mb-0">Update information and operating hours for this canteen</p>
+  </div>
 
-    <div class="mb-3">
-      <label>Location</label>
-      <input
-        type="text"
-        class="form-control"
-        formControlName="location">
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <form [formGroup]="canteenForm" (ngSubmit)="updateCanteen()">
+            <div class="row g-3">
+              <div class="col-md-12">
+                <label class="form-label fw-semibold">Canteen Name <span class="text-danger">*</span></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Location <span class="text-danger">*</span></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="location">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Contact Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="contactNumber">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Opening Time</label>
+                <input
+                  type="time"
+                  class="form-control"
+                  formControlName="openingTime">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Closing Time</label>
+                <input
+                  type="time"
+                  class="form-control"
+                  formControlName="closingTime">
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-check form-switch mt-2">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="isActive"
+                    formControlName="isActive">
+                  <label class="form-check-label fw-semibold" for="isActive">
+                    Canteen is currently Active and Accepting Orders
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-4 text-muted">
+
+            <div class="d-flex justify-content-end gap-2">
+              <button
+                type="button"
+                class="btn btn-light border px-4"
+                (click)="cancel()">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary px-4 d-flex align-items-center gap-2"
+                [disabled]="canteenForm.invalid">
+                <i class="bi bi-save"></i>
+                Update Canteen
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-
-    <div class="mb-3">
-      <label>Opening Time</label>
-      <input
-        type="time"
-        class="form-control"
-        formControlName="openingTime">
-    </div>
-
-    <div class="mb-3">
-      <label>Closing Time</label>
-      <input
-        type="time"
-        class="form-control"
-        formControlName="closingTime">
-    </div>
-
-    <div class="mb-3">
-      <label>Contact Number</label>
-      <input
-        type="text"
-        class="form-control"
-        formControlName="contactNumber">
-    </div>
-
-    <div class="mb-3">
-      <label>
-        <input
-          type="checkbox"
-          formControlName="isActive">
-        Active
-      </label>
-    </div>
-
-    <button
-      type="submit"
-      class="btn btn-primary me-2">
-      Update Canteen
-    </button>
-
-    <button
-      type="button"
-      class="btn btn-secondary"
-      (click)="cancel()">
-      Cancel
-    </button>
-
-  </form>
-
+  </div>
 </div>

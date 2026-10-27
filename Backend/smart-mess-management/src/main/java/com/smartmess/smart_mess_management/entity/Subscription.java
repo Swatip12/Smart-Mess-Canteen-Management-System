@@ -1,5 +1,6 @@
 package com.smartmess.smart_mess_management.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,9 +26,17 @@ public class Subscription {
     @JoinColumn(name = "student_id")
     private Student student;
 
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long studentId;
+
     @ManyToOne
     @JoinColumn(name = "mess_id")
     private Mess mess;
+
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long messId;
 
     private LocalDate startDate;
     private LocalDate endDate;
@@ -42,7 +51,6 @@ public class Subscription {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
-
 
     // Getters and Setters
 
@@ -62,12 +70,28 @@ public class Subscription {
         this.student = student;
     }
 
+    public Long getStudentId() {
+        return student != null ? student.getId() : studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
+    }
+
     public Mess getMess() {
         return mess;
     }
 
     public void setMess(Mess mess) {
         this.mess = mess;
+    }
+
+    public Long getMessId() {
+        return mess != null ? mess.getId() : messId;
+    }
+
+    public void setMessId(Long messId) {
+        this.messId = messId;
     }
 
     public LocalDate getStartDate() {

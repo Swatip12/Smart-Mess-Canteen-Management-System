@@ -6,19 +6,30 @@ import org.springframework.stereotype.Service;
 
 import com.smartmess.smart_mess_management.Services.NoticeService;
 import com.smartmess.smart_mess_management.entity.Notice;
+import com.smartmess.smart_mess_management.repository.AdminRepository;
 import com.smartmess.smart_mess_management.repository.NoticeRepository;
 
 import enums.NoticeType;
-import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService {
 
     private final NoticeRepository noticeRepository;
+    private final AdminRepository adminRepository;
+
+    public NoticeServiceImpl(NoticeRepository noticeRepository, AdminRepository adminRepository) {
+        this.noticeRepository = noticeRepository;
+        this.adminRepository = adminRepository;
+    }
 
     @Override
     public Notice createNotice(Notice notice) {
+        if (notice.getAdmin() == null && notice.getAdminId() != null) {
+            adminRepository.findById(notice.getAdminId()).ifPresent(notice::setAdmin);
+        }
+        if (notice.getIsActive() == null) {
+            notice.setIsActive(true);
+        }
         return noticeRepository.save(notice);
     }
 
@@ -42,9 +53,15 @@ public class NoticeServiceImpl implements NoticeService {
         existing.setTitle(notice.getTitle());
         existing.setContent(notice.getContent());
         existing.setType(notice.getType());
-        existing.setAdmin(notice.getAdmin());
+        if (notice.getAdmin() != null) {
+            existing.setAdmin(notice.getAdmin());
+        } else if (notice.getAdminId() != null) {
+            adminRepository.findById(notice.getAdminId()).ifPresent(existing::setAdmin);
+        }
         existing.setValidUntil(notice.getValidUntil());
-        existing.setIsActive(notice.getIsActive());
+        if (notice.getIsActive() != null) {
+            existing.setIsActive(notice.getIsActive());
+        }
 
         return noticeRepository.save(existing);
     }

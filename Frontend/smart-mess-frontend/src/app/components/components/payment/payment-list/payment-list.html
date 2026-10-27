@@ -1,143 +1,98 @@
-<div class="container mt-4">
-
-  <div class="d-flex justify-content-between mb-3">
-
-    <h2>Payments</h2>
-
-  </div>
-
-  <!-- Filters -->
-
-  <div class="row mb-3">
-
-    <!-- Student Filter -->
-
-    <div class="col-md-4">
-
-      <label class="form-label">
-        Filter by Student
-      </label>
-
+<div class="page-container">
+  <div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="mb-1"><i class="bi bi-credit-card text-primary me-2"></i>Payments & Transactions</h2>
+      <p class="text-muted mb-0">Audit mess fee collections, subscription dues, and canteen receipts</p>
+    </div>
+    <div class="d-flex align-items-center gap-2">
       <select
-        class="form-select"
+        class="form-select form-select-sm"
+        style="width: 170px;"
         [(ngModel)]="selectedStudent"
         (change)="filterPayments()">
-
-        <option value="ALL">
-          All Students
-        </option>
-
-        <option
-          *ngFor="let student of students"
-          [value]="student.id">
-
-          {{ student.name }}
-
-        </option>
-
+        <option value="ALL">All Students</option>
+        <option *ngFor="let s of students" [value]="s.id">{{ s.name }}</option>
       </select>
-
-    </div>
-
-
-    <!-- Status Filter -->
-
-    <div class="col-md-4">
-
-      <label class="form-label">
-        Filter by Status
-      </label>
 
       <select
-        class="form-select"
+        class="form-select form-select-sm"
+        style="width: 160px;"
         [(ngModel)]="selectedStatus"
         (change)="filterPayments()">
-
-        <option value="ALL">
-          All Status
-        </option>
-
-        <option
-          *ngFor="let status of statuses"
-          [value]="status">
-
-          {{ status }}
-
-        </option>
-
+        <option value="ALL">All Statuses</option>
+        <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
       </select>
 
+      <button class="btn btn-sm btn-outline-success d-flex align-items-center gap-1" (click)="exportCsv()">
+        <i class="bi bi-file-earmark-spreadsheet"></i>
+        <span>Export CSV</span>
+      </button>
     </div>
-
   </div>
 
+  <div class="card card-table shadow-sm border-0">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th class="ps-4">Transaction ID</th>
+              <th>Student</th>
+              <th>Payment Type</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Method</th>
+              <th class="text-end pe-4">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of filteredPayments">
+              <td class="ps-4">
+                <code class="text-primary bg-light px-2 py-1 rounded small">
+                  {{ p.transactionId || ('TXN-' + p.id) }}
+                </code>
+              </td>
+              <td>
+                <div class="fw-semibold text-dark">
+                  {{ p.student?.name || ('Student #' + (p.studentId || 'N/A')) }}
+                </div>
+                <small class="text-muted" *ngIf="p.student?.rollNumber">{{ p.student.rollNumber }}</small>
+              </td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'badge-info': p.type === 'SUBSCRIPTION',
+                  'badge-warning': p.type === 'MESS_FEE',
+                  'badge-primary': p.type === 'CANTEEN_ORDER'
+                }">{{ p.type }}</span>
+              </td>
+              <td class="fw-bold text-dark">₹{{ p.amount || 0 }}</td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'badge-success': p.status === 'COMPLETED',
+                  'badge-warning': p.status === 'PENDING',
+                  'badge-danger': p.status === 'FAILED',
+                  'badge-secondary': p.status === 'REFUNDED'
+                }">{{ p.status }}</span>
+              </td>
+              <td>
+                <span class="text-muted small">
+                  <i class="bi bi-wallet2 me-1"></i>{{ p.paymentMethod || 'ONLINE' }}
+                </span>
+              </td>
+              <td class="text-end pe-4 text-muted small">
+                {{ p.paidAt ? (p.paidAt | date:'medium') : 'N/A' }}
+              </td>
+            </tr>
 
-  <!-- Payment Table -->
-
-  <table class="table table-striped">
-
-    <thead>
-
-      <tr>
-
-        <th>Student</th>
-        <th>Amount</th>
-        <th>Type</th>
-        <th>Status</th>
-        <th>Transaction ID</th>
-        <th>Date</th>
-
-      </tr>
-
-    </thead>
-
-    <tbody>
-
-      <tr
-        *ngFor="let payment of filteredPayments">
-
-        <td>
-          {{ payment.student?.name || 'N/A' }}
-        </td>
-
-        <td>
-          ₹{{ payment.amount }}
-        </td>
-
-        <td>
-          {{ payment.type }}
-        </td>
-
-        <td>
-          {{ payment.status }}
-        </td>
-
-        <td>
-          {{ payment.transactionId || 'N/A' }}
-        </td>
-
-        <td>
-          {{ payment.paidAt || 'N/A' }}
-        </td>
-
-      </tr>
-
-
-      <tr
-        *ngIf="filteredPayments.length === 0">
-
-        <td
-          colspan="6"
-          class="text-center">
-
-          No payments found.
-
-        </td>
-
-      </tr>
-
-    </tbody>
-
-  </table>
-
+            <tr *ngIf="filteredPayments.length === 0">
+              <td colspan="7" class="text-center py-5 text-muted">
+                <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
+                No payments match the current filter selection.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

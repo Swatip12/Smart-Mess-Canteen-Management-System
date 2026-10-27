@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -15,9 +15,11 @@ import { FeedbackService } from '../../../../services/services/feedback';
 export class FeedbackList implements OnInit {
 
   feedbacks: Feedback[] = [];
+  loading: boolean = false;
 
   constructor(
-    private feedbackService: FeedbackService
+    private feedbackService: FeedbackService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -25,38 +27,24 @@ export class FeedbackList implements OnInit {
   }
 
   loadFeedbacks(): void {
+    this.loading = true;
+    this.cdr.markForCheck();
 
     this.feedbackService.getAll().subscribe({
-
       next: (data: Feedback[]) => {
-
-        this.feedbacks = data;
-
-        console.log(
-          'Feedbacks loaded:',
-          data
-        );
-
+        this.feedbacks = data || [];
+        this.loading = false;
+        this.cdr.markForCheck();
       },
-
       error: (error: any) => {
-
-        console.error(
-          'Error loading feedbacks:',
-          error
-        );
-
+        console.error('Error loading feedbacks:', error);
+        this.loading = false;
+        this.cdr.markForCheck();
       }
-
     });
-
   }
 
   getStars(rating: number = 0): string {
-
-    return '★'.repeat(rating) +
-           '☆'.repeat(5 - rating);
-
+    return '★'.repeat(rating) + '☆'.repeat(5 - rating);
   }
-
 }

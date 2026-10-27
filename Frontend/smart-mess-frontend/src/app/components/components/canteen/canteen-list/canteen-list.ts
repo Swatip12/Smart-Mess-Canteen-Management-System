@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -18,40 +18,30 @@ export class CanteenList implements OnInit {
 
   constructor(
     private canteenService: CanteenService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    console.log('CANTEEN LIST LOADED');
     this.loadCanteens();
   }
 
   loadCanteens(): void {
-
     this.loading = true;
+    this.cdr.markForCheck();
 
     this.canteenService.getAll().subscribe({
-
       next: (data: any[]) => {
-
-        console.log('CANTEEN API DATA:', data);
-
         this.canteens = data || [];
-
         this.loading = false;
-
+        this.cdr.markForCheck();
       },
-
       error: (error: any) => {
-
         console.error('CANTEEN API ERROR:', error);
-
         this.canteens = [];
-
         this.loading = false;
-
+        this.cdr.markForCheck();
       }
-
     });
   }
 
@@ -64,23 +54,19 @@ export class CanteenList implements OnInit {
   }
 
   deleteCanteen(id: number): void {
-
     if (!confirm('Are you sure you want to delete this canteen?')) {
       return;
     }
 
     this.canteenService.delete(id).subscribe({
-
       next: () => {
         alert('Canteen deleted successfully!');
         this.loadCanteens();
       },
-
       error: (error: any) => {
         console.error('DELETE ERROR:', error);
         alert('Failed to delete canteen.');
       }
-
     });
   }
 }

@@ -1,0 +1,70 @@
+<div class="student-complaint-container">
+
+  <div class="student-complaint-header">
+    <button class="back-button" (click)="goBack()">← Back to Dashboard</button>
+    <h1>File a Complaint</h1>
+  </div>
+
+  <div class="complaint-form-card">
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+
+    <form (ngSubmit)="submitComplaint()">
+
+      <div class="form-group">
+        <label for="title">Complaint Title:</label>
+        <input
+          id="title"
+          type="text"
+          [(ngModel)]="title"
+          name="title"
+          placeholder="Brief title of your complaint"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="category-select">Complaint Category:</label>
+        <select
+          id="category-select"
+          [(ngModel)]="category"
+          name="category"
+          required
+        >
+          <option *ngFor="let cat of categories" [value]="cat">
+            {{ cat }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Detailed Description:</label>
+        <textarea
+          id="description"
+          [(ngModel)]="description"
+          name="description"
+          placeholder="Please provide detailed information about your complaint..."
+          rows="6"
+          required
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        class="submit-button"
+        [disabled]="loading"
+      >
+        {{ loading ? 'Submitting...' : 'Submit Complaint' }}
+      </button>
+
+    </form>
+
+  </div>
+
+</div>

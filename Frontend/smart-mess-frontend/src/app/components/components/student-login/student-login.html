@@ -1,0 +1,136 @@
+<div class="student-login-wrapper">
+
+  <!-- Ambient background glow elements -->
+  <div class="glow-orb glow-orb-student-1"></div>
+  <div class="glow-orb glow-orb-student-2"></div>
+
+  <div class="student-login-card">
+
+    <!-- Card Brand Header -->
+    <div class="student-login-header">
+      <div class="brand-badge-student">
+        <i class="bi bi-mortarboard-fill"></i>
+        <span>STUDENT & DINER PORTAL</span>
+      </div>
+      <h1 class="portal-title">Welcome Back</h1>
+      <p class="portal-subtitle">Access your meal plans, canteen menu orders, and daily attendance</p>
+    </div>
+
+    <!-- Demo Credential Quick-Fill Pill -->
+    <div class="demo-banner">
+      <div class="demo-info">
+        <i class="bi bi-info-circle-fill text-success"></i>
+        <span><strong>Student Account:</strong> paliwalswati603&#64;gmail.com / 123456</span>
+      </div>
+      <button type="button" class="btn-demo-fill-student" (click)="fillDemoCredentials()" title="Fill student credentials">
+        Auto Fill
+      </button>
+    </div>
+
+    <!-- Login Form -->
+    <form (ngSubmit)="login()" class="login-form">
+
+      <!-- Email Field -->
+      <div class="form-field-group">
+        <label for="studentEmail" class="field-label">Student Email Address</label>
+        <div class="input-container">
+          <i class="bi bi-envelope-at field-icon"></i>
+          <input
+            id="studentEmail"
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="student@example.com"
+            class="form-control-custom"
+            autocomplete="email"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-field-group">
+        <div class="password-label-row">
+          <label for="studentPassword" class="field-label">Password</label>
+          <a routerLink="/home" class="help-link">Need Help?</a>
+        </div>
+        <div class="input-container">
+          <i class="bi bi-key-fill field-icon"></i>
+          <input
+            id="studentPassword"
+            [type]="showPassword ? 'text' : 'password'"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="Enter your student password"
+            class="form-control-custom"
+            autocomplete="current-password"
+            required
+          />
+          <button
+            type="button"
+            class="toggle-password-btn"
+            (click)="togglePasswordVisibility()"
+            [title]="showPassword ? 'Hide password' : 'Show password'"
+          >
+            <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Error Feedback Alert -->
+      <div *ngIf="errorMessage" class="error-banner">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn-student-submit"
+        [disabled]="loading"
+      >
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        <span>{{ loading ? 'Signing In...' : 'Sign In as Student' }}</span>
+        <i *ngIf="!loading" class="bi bi-arrow-right ms-2"></i>
+      </button>
+
+    </form>
+
+    <!-- Card Footer & Cross-Portal Routing -->
+    <div class="student-login-footer">
+      <div class="register-prompt">
+        <span>New student?</span>
+        <button
+          type="button"
+          (click)="goToRegister()"
+          class="register-btn-link"
+        >
+          Create Student Account
+        </button>
+      </div>
+
+      <div class="divider">
+        <span>ADMINISTRATIVE ACCESS</span>
+      </div>
+
+      <div class="footer-actions">
+        <a routerLink="/login" class="portal-switch-card">
+          <div class="switch-icon"><i class="bi bi-shield-lock-fill"></i></div>
+          <div class="switch-text">
+            <strong>Administrator Console</strong>
+            <small>Manage mess facilities, food items & reports</small>
+          </div>
+          <i class="bi bi-chevron-right arrow-icon"></i>
+        </a>
+      </div>
+
+      <div class="home-link-wrap">
+        <a routerLink="/home" class="back-home-link">
+          <i class="bi bi-arrow-left me-1"></i> Back to Homepage
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</div>

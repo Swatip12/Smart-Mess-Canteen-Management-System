@@ -1,17 +1,9 @@
 package com.smartmess.smart_mess_management.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,6 +31,7 @@ public class FoodItem {
     @Enumerated(EnumType.STRING)
     private FoodCategory category; // VEG, NON_VEG, BEVERAGE, SNACK
 
+    @Builder.Default
     private Boolean isAvailable = true;
     private String imageUrl;
 
@@ -46,6 +39,9 @@ public class FoodItem {
     @JoinColumn(name = "canteen_id")
     private Canteen canteen;
 
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long canteenId;
 
     // Getters and Setters
 
@@ -111,5 +107,13 @@ public class FoodItem {
 
     public void setCanteen(Canteen canteen) {
         this.canteen = canteen;
+    }
+
+    public Long getCanteenId() {
+        return canteen != null ? canteen.getId() : canteenId;
+    }
+
+    public void setCanteenId(Long canteenId) {
+        this.canteenId = canteenId;
     }
 }

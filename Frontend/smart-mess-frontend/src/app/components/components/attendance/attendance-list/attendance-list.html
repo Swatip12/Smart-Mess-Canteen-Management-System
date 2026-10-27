@@ -1,233 +1,84 @@
-<div class="attendance-page">
-
-  <!-- Header -->
-  <div class="attendance-header">
-
+<div class="page-container">
+  <div class="page-header d-flex justify-content-between align-items-center mb-4">
     <div>
-      <h2>Attendance</h2>
-      <p>View and manage student attendance records</p>
+      <h2 class="mb-1"><i class="bi bi-calendar-check text-primary me-2"></i>Mess Attendance</h2>
+      <p class="text-muted mb-0">Record and monitor student daily mess check-ins</p>
     </div>
-
-    <a
-      routerLink="/attendance/add"
-      class="add-attendance-btn">
-      + Mark Attendance
-    </a>
-
-  </div>
-
-
-  <!-- Filter Card -->
-  <div class="filter-card">
-
-    <div class="filter-item">
-
-      <label>From Date</label>
-
+    <div class="d-flex align-items-center gap-2">
       <input
         type="date"
-        [(ngModel)]="fromDate">
-
-    </div>
-
-
-    <div class="filter-item">
-
-      <label>To Date</label>
-
+        class="form-control form-control-sm"
+        style="width: 140px;"
+        [(ngModel)]="fromDate"
+        placeholder="From Date">
+      <span class="text-muted small">to</span>
       <input
         type="date"
-        [(ngModel)]="toDate">
+        class="form-control form-control-sm"
+        style="width: 140px;"
+        [(ngModel)]="toDate"
+        placeholder="To Date">
+      <button class="btn btn-sm btn-outline-primary" (click)="filterByDateRange()">Filter</button>
+      <button class="btn btn-sm btn-light border" (click)="clearFilter()">Clear</button>
 
-    </div>
-
-
-    <div class="filter-buttons">
-
-      <button
-        type="button"
-        class="filter-btn"
-        (click)="filterByDateRange()">
-
-        Filter
-
-      </button>
-
-
-      <button
-        type="button"
-        class="clear-btn"
-        (click)="clearFilter()">
-
-        Clear
-
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- Attendance Table -->
-  <div class="table-card">
-
-    <div class="table-header">
-
-      <h3>Attendance Records</h3>
-
-      <span class="record-count">
-        {{ filteredRecords.length }} Records
-      </span>
-
-    </div>
-
-
-    <!-- Loading -->
-    <div
-      class="empty-message"
-      *ngIf="attendanceRecords.length === 0">
-
-      <div class="empty-icon">📋</div>
-
-      <h3>No Attendance Records</h3>
-
-      <p>
-        No attendance has been marked yet.
-      </p>
-
-      <a
-        routerLink="/attendance/add"
-        class="add-small-btn">
-
-        + Mark Attendance
-
+      <a routerLink="/attendance/add" class="btn btn-primary btn-sm d-flex align-items-center gap-1 ms-2">
+        <i class="bi bi-plus-lg"></i>
+        <span>Mark Entry</span>
       </a>
-
     </div>
-
-
-    <!-- Table -->
-    <div
-      class="table-wrapper"
-      *ngIf="attendanceRecords.length > 0">
-
-      <table>
-
-        <thead>
-
-          <tr>
-
-            <th>#</th>
-
-            <th>Student</th>
-
-            <th>Meal</th>
-
-            <th>Date</th>
-
-            <th>Status</th>
-
-          </tr>
-
-        </thead>
-
-
-        <tbody>
-
-          <tr
-            *ngFor="
-              let record of filteredRecords;
-              let i = index
-            ">
-
-            <td class="number">
-              {{ i + 1 }}
-            </td>
-
-
-            <td class="student-name">
-
-              {{ record.student?.name || 'N/A' }}
-
-            </td>
-
-
-            <td>
-
-              {{ record.meal?.name || 'N/A' }}
-
-            </td>
-
-
-            <td>
-
-              {{ record.attendanceDate || 'N/A' }}
-
-            </td>
-
-
-            <td>
-
-              <!-- PRESENT -->
-              <span
-                *ngIf="record.isPresent === true"
-                class="status present">
-
-                ● PRESENT
-
-              </span>
-
-
-              <!-- ABSENT -->
-              <span
-                *ngIf="record.isPresent === false"
-                class="status absent">
-
-                ● ABSENT
-
-              </span>
-
-
-              <!-- UNKNOWN -->
-              <span
-                *ngIf="
-                  record.isPresent !== true &&
-                  record.isPresent !== false
-                "
-                class="status unknown">
-
-                N/A
-
-              </span>
-
-            </td>
-
-          </tr>
-
-
-          <!-- Filter returned no records -->
-          <tr
-            *ngIf="
-              attendanceRecords.length > 0 &&
-              filteredRecords.length === 0
-            ">
-
-            <td
-              colspan="5"
-              class="no-filter-result">
-
-              No attendance records found for the selected dates.
-
-            </td>
-
-          </tr>
-
-        </tbody>
-
-      </table>
-
-    </div>
-
   </div>
 
+  <div class="card card-table shadow-sm border-0">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th class="ps-4">#</th>
+              <th>Student</th>
+              <th>Meal Session</th>
+              <th>Date</th>
+              <th>Attendance Status</th>
+              <th class="text-end pe-4">Timestamp</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of filteredRecords; let i = index">
+              <td class="ps-4 fw-semibold text-secondary">{{ i + 1 }}</td>
+              <td>
+                <div class="fw-semibold text-dark">
+                  {{ record.student?.name || ('Student #' + (record.studentId || 'N/A')) }}
+                </div>
+                <small class="text-muted" *ngIf="record.student?.rollNumber">{{ record.student.rollNumber }}</small>
+              </td>
+              <td>
+                <span class="badge badge-info">
+                  <i class="bi bi-clock me-1"></i>{{ record.meal?.name || 'Meal' }}
+                </span>
+              </td>
+              <td>
+                <span class="fw-semibold text-dark">{{ record.attendanceDate | date:'mediumDate' }}</span>
+              </td>
+              <td>
+                <span class="badge" [ngClass]="record.isPresent ? 'badge-success' : 'badge-danger'">
+                  <i class="bi" [ngClass]="record.isPresent ? 'bi-check-circle' : 'bi-x-circle'"></i>
+                  {{ record.isPresent ? 'PRESENT' : 'ABSENT' }}
+                </span>
+              </td>
+              <td class="text-end pe-4 text-muted small">
+                {{ record.markedAt ? (record.markedAt | date:'medium') : 'Today' }}
+              </td>
+            </tr>
+
+            <tr *ngIf="filteredRecords.length === 0">
+              <td colspan="6" class="text-center py-5 text-muted">
+                <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
+                No attendance records found for the selected period.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

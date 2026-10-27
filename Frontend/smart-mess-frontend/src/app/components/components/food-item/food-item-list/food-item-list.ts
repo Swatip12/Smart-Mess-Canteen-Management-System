@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 
@@ -15,10 +15,12 @@ import { FoodItemService } from '../../../../services/services/food-item';
 export class FoodItemList implements OnInit {
 
   foodItems: FoodItem[] = [];
+  isLoading = false;
 
   constructor(
     private foodItemService: FoodItemService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -26,20 +28,26 @@ export class FoodItemList implements OnInit {
   }
 
   loadFoodItems(): void {
+    this.isLoading = true;
+    this.cdr.markForCheck();
+
     this.foodItemService.getAll().subscribe({
       next: (data: FoodItem[]) => {
-        this.foodItems = data;
+        this.foodItems = data || [];
+        this.isLoading = false;
+        this.cdr.markForCheck();
       },
       error: (error: any) => {
         console.error('Error loading food items:', error);
+        this.foodItems = [];
+        this.isLoading = false;
+        this.cdr.markForCheck();
       }
     });
   }
 
   deleteFoodItem(id: number): void {
-
     if (confirm('Are you sure you want to delete this food item?')) {
-
       this.foodItemService.delete(id).subscribe({
         next: () => {
           this.loadFoodItems();
@@ -48,7 +56,6 @@ export class FoodItemList implements OnInit {
           console.error('Error deleting food item:', error);
         }
       });
-
     }
   }
 

@@ -3,8 +3,6 @@ package com.smartmess.smart_mess_management.Controllers;
 import com.smartmess.smart_mess_management.Services.AttendanceService;
 import com.smartmess.smart_mess_management.entity.Attendance;
 
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +11,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/attendance")
-@RequiredArgsConstructor
 public class AttendanceController {
 
     private final AttendanceService attendanceService;
+
+    public AttendanceController(AttendanceService attendanceService) {
+        this.attendanceService = attendanceService;
+    }
 
     @PostMapping
     public ResponseEntity<Attendance> create(

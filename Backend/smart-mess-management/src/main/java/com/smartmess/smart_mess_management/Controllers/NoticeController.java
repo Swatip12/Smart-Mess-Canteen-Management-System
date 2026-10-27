@@ -5,8 +5,6 @@ import com.smartmess.smart_mess_management.entity.Notice;
 
 import enums.NoticeType;
 
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +12,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/notices")
-@RequiredArgsConstructor
 public class NoticeController {
 
     private final NoticeService noticeService;
+
+    public NoticeController(NoticeService noticeService) {
+        this.noticeService = noticeService;
+    }
 
     @PostMapping
     public ResponseEntity<Notice> create(

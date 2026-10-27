@@ -17,14 +17,16 @@ import com.smartmess.smart_mess_management.Services.MessService;
 import com.smartmess.smart_mess_management.entity.Mess;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/messes")
-@RequiredArgsConstructor
 public class MessController {
 
     private final MessService messService;
+
+    public MessController(MessService messService) {
+        this.messService = messService;
+    }
 
     @PostMapping
     public ResponseEntity<Mess> create(

@@ -1,308 +1,94 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
-import { StudentService } from '../../../services/services/student';
-import { SubscriptionService } from '../../../services/services/subscription';
-import { FoodOrderService } from '../../../services/services/food-order';
-import { ComplaintService } from '../../../services/services/complaint';
+import { ReportService } from '../../../services/services/report';
 import { NoticeService } from '../../../services/services/notice';
-
-import { Student } from '../../../models/models/student.model';
-import { Subscription } from '../../../models/models/subscription.model';
-import { FoodOrder } from '../../../models/models/food-order.model';
-import { Complaint } from '../../../models/models/complaint.model';
 import { Notice } from '../../../models/models/notice.model';
-import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
-export class Dashboard implements OnInit {
-
-  // ============================
-  // DASHBOARD COUNTS
-  // ============================
+export class Dashboard implements OnInit, OnDestroy {
 
   totalStudents: number = 0;
-
   activeSubscriptions: number = 0;
-
   pendingOrders: number = 0;
-
   openComplaints: number = 0;
-
-
-  // ============================
-  // RECENT NOTICES
-  // ============================
+  lowStockCount: number = 0;
+  totalRevenue: number = 0;
+  todayRevenue: number = 0;
 
   recentNotices: Notice[] = [];
-
-
-  // ============================
-  // CONSTRUCTOR
-  // ============================
+  lastRefreshedAt: string = '';
+  isRefreshing: boolean = false;
+  private refreshTimer: any = null;
 
   constructor(
-    private studentService: StudentService,
-    private subscriptionService: SubscriptionService,
-    private foodOrderService: FoodOrderService,
-    private complaintService: ComplaintService,
-    private noticeService: NoticeService
+    private reportService: ReportService,
+    private noticeService: NoticeService,
+    private cdr: ChangeDetectorRef
   ) {}
 
-
-  // ============================
-  // ON INIT
-  // ============================
-
   ngOnInit(): void {
+    this.refreshAll();
+    // Auto-refresh real-time counts every 15 seconds
+    this.refreshTimer = setInterval(() => {
+      this.refreshAll(false);
+    }, 15000);
+  }
 
-    this.loadStudents();
+  ngOnDestroy(): void {
+    if (this.refreshTimer) {
+      clearInterval(this.refreshTimer);
+    }
+  }
 
-    this.loadSubscriptions();
-
-    this.loadOrders();
-
-    this.loadComplaints();
-
+  refreshAll(showIndicator: boolean = true): void {
+    if (showIndicator) {
+      this.isRefreshing = true;
+      this.cdr.markForCheck();
+    }
+    this.loadSummary();
     this.loadRecentNotices();
-
   }
 
-
-  // ============================
-  // LOAD STUDENTS
-  // ============================
-
-  loadStudents(): void {
-
-    this.studentService.getAll().subscribe({
-
-      next: (data: Student[]) => {
-
-        console.log(
-          'DASHBOARD STUDENTS:',
-          data
-        );
-
-        this.totalStudents = data.length;
-
-        console.log(
-          'TOTAL STUDENTS COUNT:',
-          this.totalStudents
-        );
-
+  loadSummary(): void {
+    this.reportService.getDashboardSummary().subscribe({
+      next: (data) => {
+        this.totalStudents = data.totalStudents || 0;
+        this.activeSubscriptions = data.activeSubscriptions || 0;
+        this.pendingOrders = data.pendingOrders || 0;
+        this.openComplaints = data.openComplaints || 0;
+        this.lowStockCount = data.lowStockCount || 0;
+        this.totalRevenue = data.totalRevenue || 0;
+        this.todayRevenue = data.todayRevenue || 0;
+        this.isRefreshing = false;
+        this.lastRefreshedAt = new Date().toLocaleTimeString();
+        this.cdr.markForCheck();
       },
-
-      error: (error: any) => {
-
-        console.error(
-          'DASHBOARD STUDENT ERROR:',
-          error
-        );
-
-        this.totalStudents = 0;
-
+      error: (err) => {
+        console.error('Failed to load dashboard summary', err);
+        this.isRefreshing = false;
+        this.cdr.markForCheck();
       }
-
     });
-
   }
-
-
-  // ============================
-  // LOAD SUBSCRIPTIONS
-  // ============================
-
-  loadSubscriptions(): void {
-
-    this.subscriptionService.getAll().subscribe({
-
-      next: (data: Subscription[]) => {
-
-        console.log(
-          'DASHBOARD SUBSCRIPTIONS:',
-          data
-        );
-
-        this.activeSubscriptions =
-          data.filter(
-            subscription =>
-              subscription.status === 'ACTIVE'
-          ).length;
-
-        console.log(
-          'ACTIVE SUBSCRIPTIONS COUNT:',
-          this.activeSubscriptions
-        );
-
-      },
-
-      error: (error: any) => {
-
-        console.error(
-          'DASHBOARD SUBSCRIPTION ERROR:',
-          error
-        );
-
-        this.activeSubscriptions = 0;
-
-      }
-
-    });
-
-  }
-
-
-  // ============================
-  // LOAD FOOD ORDERS
-  // ============================
-
-  loadOrders(): void {
-
-    this.foodOrderService.getAll().subscribe({
-
-      next: (data: FoodOrder[]) => {
-
-        console.log(
-          'DASHBOARD ORDERS:',
-          data
-        );
-
-        this.pendingOrders =
-          data.filter(
-            order =>
-              order.status === 'PENDING'
-          ).length;
-
-        console.log(
-          'PENDING ORDERS COUNT:',
-          this.pendingOrders
-        );
-
-      },
-
-      error: (error: any) => {
-
-        console.error(
-          'DASHBOARD ORDER ERROR:',
-          error
-        );
-
-        this.pendingOrders = 0;
-
-      }
-
-    });
-
-  }
-
-
-  // ============================
-  // LOAD COMPLAINTS
-  // ============================
-
-  loadComplaints(): void {
-
-    this.complaintService.getAll().subscribe({
-
-      next: (data: Complaint[]) => {
-
-        console.log(
-          'DASHBOARD COMPLAINTS:',
-          data
-        );
-
-        this.openComplaints =
-          data.filter(
-            complaint =>
-              complaint.status === 'OPEN'
-          ).length;
-
-        console.log(
-          'OPEN COMPLAINTS COUNT:',
-          this.openComplaints
-        );
-
-      },
-
-      error: (error: any) => {
-
-        console.error(
-          'DASHBOARD COMPLAINT ERROR:',
-          error
-        );
-
-        this.openComplaints = 0;
-
-      }
-
-    });
-
-  }
-
-
-  // ============================
-  // LOAD RECENT NOTICES
-  // ============================
 
   loadRecentNotices(): void {
-
-  this.noticeService.getAll().subscribe({
-
-    next: (data: Notice[]) => {
-
-      console.log(
-        'DASHBOARD NOTICES:',
-        data
-      );
-
-      // Sort latest notices first
-      const sortedNotices = [...data].sort(
-        (a, b) => {
-
-          const dateA = a.createdAt
-            ? new Date(a.createdAt).getTime()
-            : 0;
-
-          const dateB = b.createdAt
-            ? new Date(b.createdAt).getTime()
-            : 0;
-
-          return dateB - dateA;
-
-        }
-      );
-
-      // Show latest 3 notices
-      this.recentNotices =
-        sortedNotices.slice(0, 3);
-
-      console.log(
-        'RECENT NOTICES:',
-        this.recentNotices
-      );
-
-    },
-
-    error: (error: any) => {
-
-      console.error(
-        'DASHBOARD NOTICE ERROR:',
-        error
-      );
-
-      this.recentNotices = [];
-
-    }
-
-  });
-
+    this.noticeService.getAll().subscribe({
+      next: (data: Notice[]) => {
+        this.recentNotices = (data || []).slice(0, 5);
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        console.error('Error loading notices', err);
+        this.cdr.markForCheck();
+      }
+    });
   }
-  }
-
+}

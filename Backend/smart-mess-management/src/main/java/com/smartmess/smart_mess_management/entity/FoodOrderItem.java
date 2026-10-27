@@ -1,6 +1,7 @@
 package com.smartmess.smart_mess_management.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,16 +19,20 @@ public class FoodOrderItem {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonBackReference
     private FoodOrder foodOrder;
 
     @ManyToOne
     @JoinColumn(name = "food_item_id")
     private FoodItem foodItem;
 
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long foodItemId;
+
     private Integer quantity;
     private BigDecimal unitPrice;
     private BigDecimal subTotal;
-
 
     // Getters and Setters
 
@@ -53,6 +58,14 @@ public class FoodOrderItem {
 
     public void setFoodItem(FoodItem foodItem) {
         this.foodItem = foodItem;
+    }
+
+    public Long getFoodItemId() {
+        return foodItem != null ? foodItem.getId() : foodItemId;
+    }
+
+    public void setFoodItemId(Long foodItemId) {
+        this.foodItemId = foodItemId;
     }
 
     public Integer getQuantity() {

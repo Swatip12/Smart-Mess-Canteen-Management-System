@@ -1,0 +1,87 @@
+<div class="student-feedback-container">
+
+  <div class="student-feedback-header">
+    <button class="back-button" (click)="goBack()">← Back to Dashboard</button>
+    <h1>Submit Feedback</h1>
+  </div>
+
+  <div class="feedback-form-card">
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+
+    <form (ngSubmit)="submitFeedback()">
+
+      <div class="form-group">
+        <label for="mess-select">Select Mess:</label>
+        <select
+          id="mess-select"
+          [(ngModel)]="selectedMess"
+          name="mess"
+          required
+        >
+          <option *ngFor="let mess of messes" [value]="mess.id">
+            {{ mess.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Rating:</label>
+        <div class="rating-stars">
+          <span
+            *ngFor="let star of [1, 2, 3, 4, 5]"
+            class="star"
+            [class.active]="star <= rating"
+            (click)="setRating(star)"
+          >
+            ★
+          </span>
+        </div>
+        <p class="rating-text">{{ rating }}/5</p>
+      </div>
+
+      <div class="form-group">
+        <label for="category-select">Feedback Category:</label>
+        <select
+          id="category-select"
+          [(ngModel)]="category"
+          name="category"
+          required
+        >
+          <option *ngFor="let cat of categories" [value]="cat">
+            {{ cat.replace('_', ' ') }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="comment">Your Feedback:</label>
+        <textarea
+          id="comment"
+          [(ngModel)]="comment"
+          name="comment"
+          placeholder="Please share your experience..."
+          rows="5"
+          required
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        class="submit-button"
+        [disabled]="loading"
+      >
+        {{ loading ? 'Submitting...' : 'Submit Feedback' }}
+      </button>
+
+    </form>
+
+  </div>
+
+</div>

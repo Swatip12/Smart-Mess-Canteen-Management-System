@@ -1,1 +1,103 @@
-<router-outlet></router-outlet>
+<!-- Admin Layout when on Admin Routes -->
+<div class="admin-layout-root" *ngIf="isAdminRoute(); else publicLayout">
+
+  <!-- Header -->
+  <header class="admin-header-bar">
+    <div class="admin-brand">
+      <span>🍴</span> Smart Mess & Canteen
+    </div>
+
+    <div class="admin-header-actions">
+      <div class="admin-user-pill">
+        <i class="bi bi-person-circle"></i>
+        <span>{{ getAdminName() }} (Admin)</span>
+      </div>
+      <button class="admin-logout-btn" (click)="logoutAdmin()" title="Logout Admin">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="admin-main-container">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-section-title">Main</div>
+      <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="admin-nav-item">
+        <i class="bi bi-speedometer2"></i> Dashboard
+      </a>
+
+      <div class="admin-sidebar-section-title">Management</div>
+      <a routerLink="/students" routerLinkActive="active" class="admin-nav-item">
+        <i class="bi bi-people"></i> Students
+      </a>
+      <a routerLink="/messes" routerLinkActive="active" class="admin-nav-item">
+        <i class="bi bi-building"></i> Messes
+      </a>
+      <a routerLink="/canteens" routerLinkActive="active" class="admin-nav-item">
+        <i class="bi bi-shop"></i> Canteens
+      </a>
+      <a routerLink="/meals" routerLinkActive="active" class="admin-nav-item">
+        <i class="bi bi-clock-history"></i> Meal Timings
+      </a>
+      <a routerLink="/menus" routerLinkActive="active" class="admin-nav-item">
+        <i class="bi bi-calendar4-week"></i> Daily Menus
+      </a>
+      <a routerLink="/food-items" routerLinkActive="active" class="admin-nav-item">
+        <i class="bi bi-egg-fried"></i> Food Items
+      </a>
+
+      <div class="admin-sidebar-section-title">Operations</div>
+      <a routerLink="/orders" routerLinkActive="active" class="admin-nav-item">
+        <i class="bi bi-cart3"></i> Orders
+      </a>
+      <a routerLink="/payments" routerLinkActive="active" class="admin-nav-item">
+        <i class="bi bi-credit-card"></i> Payments
+      </a>
+      <a routerLink="/subscriptions" routerLinkActive="active" class="admin-nav-item">
+        <i class="bi bi-card-checklist"></i> Subscriptions
+      </a>
+      <a routerLink="/attendance" routerLinkActive="active" class="admin-nav-item">
+        <i class="bi bi-calendar-check"></i> Attendance
+      </a>
+
+      <div class="admin-sidebar-section-title">Inventory & Supply</div>
+      <a routerLink="/inventory" routerLinkActive="active" class="admin-nav-item">
+        <i class="bi bi-box-seam"></i> Kitchen Stock
+      </a>
+      <a routerLink="/suppliers" routerLinkActive="active" class="admin-nav-item">
+        <i class="bi bi-truck"></i> Suppliers
+      </a>
+
+      <div class="admin-sidebar-section-title">Communication</div>
+      <a routerLink="/feedbacks" routerLinkActive="active" class="admin-nav-item">
+        <i class="bi bi-star"></i> Feedback
+      </a>
+      <a routerLink="/complaints" routerLinkActive="active" class="admin-nav-item">
+        <i class="bi bi-exclamation-triangle"></i> Complaints
+      </a>
+      <a routerLink="/notices" routerLinkActive="active" class="admin-nav-item">
+        <i class="bi bi-megaphone"></i> Notices
+      </a>
+
+      <div class="admin-sidebar-section-title">System & Security</div>
+      <a routerLink="/audit-logs" routerLinkActive="active" class="admin-nav-item">
+        <i class="bi bi-shield-check"></i> Audit Trail
+      </a>
+      <a routerLink="/settings" routerLinkActive="active" class="admin-nav-item">
+        <i class="bi bi-gear"></i> System Settings
+      </a>
+    </aside>
+
+    <!-- Content Area -->
+    <main class="admin-content-area">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+</div>
+
+<!-- Public & Student Portal Layout -->
+<ng-template #publicLayout>
+  <router-outlet></router-outlet>
+</ng-template>

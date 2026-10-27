@@ -5,16 +5,18 @@ import com.smartmess.smart_mess_management.Services.FoodOrderItemService;
 import com.smartmess.smart_mess_management.entity.FoodOrderItem;
 import com.smartmess.smart_mess_management.repository.FoodOrderItemRepository;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class FoodOrderItemServiceImpl implements FoodOrderItemService {
 
     private final FoodOrderItemRepository foodOrderItemRepository;
+
+    public FoodOrderItemServiceImpl(FoodOrderItemRepository foodOrderItemRepository) {
+        this.foodOrderItemRepository = foodOrderItemRepository;
+    }
 
     @Override
     public FoodOrderItem createOrderItem(FoodOrderItem orderItem) {

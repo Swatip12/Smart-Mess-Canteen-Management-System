@@ -58,10 +58,13 @@
 
   display: flex;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .login-btn,
-.register-btn {
+.register-btn,
+.student-login-btn,
+.student-register-btn {
   text-decoration: none;
 
   padding: 11px 25px;
@@ -77,13 +80,31 @@
   color: #082b63;
 }
 
+.student-login-btn {
+  background: #1fa463;
+  color: white;
+}
+
 .register-btn {
   background: #1677ff;
   color: white;
 }
 
+.student-register-btn {
+  background: #ff9800;
+  color: white;
+}
+
 .register-btn:hover {
   background: #075dcc;
+}
+
+.student-login-btn:hover {
+  background: #158c4f;
+}
+
+.student-register-btn:hover {
+  background: #e68900;
 }
 
 

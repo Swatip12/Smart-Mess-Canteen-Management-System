@@ -1,72 +1,85 @@
-<div class="container mt-4">
-
-  <div class="d-flex justify-content-between mb-3">
-
-    <h2>Food Item List</h2>
-
-    <a
-      routerLink="/food-items/add"
-      class="btn btn-primary">
-      + Add Food Item
+<div class="page-container">
+  <div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="mb-1"><i class="bi bi-egg-fried text-primary me-2"></i>Food Items & Canteen Dishes</h2>
+      <p class="text-muted mb-0">Manage dishes, prices, categories, and inventory availability</p>
+    </div>
+    <a routerLink="/food-items/add" class="btn btn-primary d-flex align-items-center gap-2">
+      <i class="bi bi-plus-lg"></i>
+      <span>Add New Item</span>
     </a>
-
   </div>
 
-  <table class="table table-striped">
+  <div class="card card-table shadow-sm border-0">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th class="ps-4">ID</th>
+              <th>Item Name</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Availability</th>
+              <th>Canteen</th>
+              <th>Description</th>
+              <th class="text-end pe-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of foodItems">
+              <td class="ps-4 fw-semibold text-secondary">#{{ item.id }}</td>
+              <td>
+                <div class="fw-semibold text-dark">{{ item.name }}</div>
+              </td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'badge-success': item.category === 'VEG',
+                  'badge-danger': item.category === 'NON_VEG',
+                  'badge-info': item.category === 'BEVERAGE',
+                  'badge-warning': item.category === 'SNACK'
+                }">{{ item.category }}</span>
+              </td>
+              <td class="fw-bold text-dark">₹{{ item.price | number:'1.2-2' }}</td>
+              <td>
+                <span class="badge" [ngClass]="item.isAvailable ? 'badge-success' : 'badge-danger'">
+                  <i class="bi" [ngClass]="item.isAvailable ? 'bi-check-circle' : 'bi-x-circle'"></i>
+                  {{ item.isAvailable ? 'In Stock' : 'Sold Out' }}
+                </span>
+              </td>
+              <td>
+                <span class="text-muted"><i class="bi bi-shop me-1 text-secondary"></i>{{ item.canteen?.name || item.canteen || 'General' }}</span>
+              </td>
+              <td>
+                <span class="text-muted small text-truncate d-inline-block" style="max-width: 200px;">
+                  {{ item.description || '—' }}
+                </span>
+              </td>
+              <td class="text-end pe-4">
+                <button
+                  class="btn btn-sm btn-outline-primary me-2"
+                  (click)="editFoodItem(item.id!)"
+                  title="Edit Food Item">
+                  <i class="bi bi-pencil me-1"></i>Edit
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="deleteFoodItem(item.id!)"
+                  title="Delete Food Item">
+                  <i class="bi bi-trash me-1"></i>Delete
+                </button>
+              </td>
+            </tr>
 
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Category</th>
-        <th>Available</th>
-        <th>Canteen</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-
-    <tbody>
-
-      <tr *ngFor="let item of foodItems">
-
-        <td>{{ item.id }}</td>
-        <td>{{ item.name }}</td>
-        <td>{{ item.description }}</td>
-        <td>{{ item.price }}</td>
-        <td>{{ item.category }}</td>
-        <td>{{ item.isAvailable }}</td>
-        <td>{{ item.canteen }}</td>
-
-        <td>
-
-          <button
-            class="btn btn-sm btn-warning me-1"
-            (click)="editFoodItem(item.id!)">
-            Edit
-          </button>
-
-          <button
-            class="btn btn-sm btn-danger"
-            (click)="deleteFoodItem(item.id!)">
-            Delete
-          </button>
-
-        </td>
-
-      </tr>
-
-      <tr *ngIf="foodItems.length === 0">
-
-        <td colspan="8" class="text-center">
-          No food items found.
-        </td>
-
-      </tr>
-
-    </tbody>
-
-  </table>
-
+            <tr *ngIf="foodItems.length === 0">
+              <td colspan="8" class="text-center py-5 text-muted">
+                <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
+                No food items found. Click "Add New Item" to create canteen items.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,205 @@
+<div class="student-login-wrapper">
+
+  <!-- Ambient background glow elements -->
+  <div class="glow-orb-student-1"></div>
+  <div class="glow-orb-student-2"></div>
+
+  <div class="student-login-card student-register-card">
+
+    <!-- Card Brand Header -->
+    <div class="student-login-header">
+      <div class="brand-badge-student">
+        <i class="bi bi-person-plus-fill"></i>
+        <span>NEW STUDENT SIGNUP</span>
+      </div>
+      <h1 class="portal-title">Create Student Profile</h1>
+      <p class="portal-subtitle">Register for mess dining, canteen ordering, and attendance tracking</p>
+    </div>
+
+    <!-- Registration Form -->
+    <form (ngSubmit)="register()" class="login-form">
+
+      <!-- Row 1: Full Name & Email -->
+      <div class="form-row-2">
+        <div class="form-field-group">
+          <label class="field-label">Full Name *</label>
+          <div class="input-container">
+            <i class="bi bi-person-fill field-icon"></i>
+            <input
+              type="text"
+              name="name"
+              [(ngModel)]="name"
+              placeholder="e.g. Swati Paliwal"
+              class="form-control-custom"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-field-group">
+          <label class="field-label">Email Address *</label>
+          <div class="input-container">
+            <i class="bi bi-envelope-at field-icon"></i>
+            <input
+              type="email"
+              name="email"
+              [(ngModel)]="email"
+              placeholder="swati@example.com"
+              class="form-control-custom"
+              required
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Password & Phone -->
+      <div class="form-row-2">
+        <div class="form-field-group">
+          <label class="field-label">Password *</label>
+          <div class="input-container">
+            <i class="bi bi-key-fill field-icon"></i>
+            <input
+              type="password"
+              name="password"
+              [(ngModel)]="password"
+              placeholder="Create strong password"
+              class="form-control-custom"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-field-group">
+          <label class="field-label">Phone Number</label>
+          <div class="input-container">
+            <i class="bi bi-telephone-fill field-icon"></i>
+            <input
+              type="tel"
+              name="phone"
+              [(ngModel)]="phone"
+              placeholder="9876543210"
+              class="form-control-custom"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Roll Number & Department -->
+      <div class="form-row-2">
+        <div class="form-field-group">
+          <label class="field-label">Roll / Student ID</label>
+          <div class="input-container">
+            <i class="bi bi-card-text field-icon"></i>
+            <input
+              type="text"
+              name="rollNumber"
+              [(ngModel)]="rollNumber"
+              placeholder="e.g. CS2026-042"
+              class="form-control-custom"
+            />
+          </div>
+        </div>
+
+        <div class="form-field-group">
+          <label class="field-label">Department / Branch</label>
+          <div class="input-container">
+            <i class="bi bi-building field-icon"></i>
+            <input
+              type="text"
+              name="department"
+              [(ngModel)]="department"
+              placeholder="Computer Science"
+              class="form-control-custom"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 4: Hostel & Room -->
+      <div class="form-row-2">
+        <div class="form-field-group">
+          <label class="field-label">Hostel Name</label>
+          <div class="input-container">
+            <i class="bi bi-house-door-fill field-icon"></i>
+            <input
+              type="text"
+              name="hostelName"
+              [(ngModel)]="hostelName"
+              placeholder="Hostel Block B"
+              class="form-control-custom"
+            />
+          </div>
+        </div>
+
+        <div class="form-field-group">
+          <label class="field-label">Room Number</label>
+          <div class="input-container">
+            <i class="bi bi-door-closed-fill field-icon"></i>
+            <input
+              type="text"
+              name="roomNumber"
+              [(ngModel)]="roomNumber"
+              placeholder="e.g. 204"
+              class="form-control-custom"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Error Feedback -->
+      <div *ngIf="errorMessage" class="error-banner">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn-student-submit"
+        [disabled]="loading"
+      >
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        <span>{{ loading ? 'Registering Account...' : 'Create Student Account' }}</span>
+        <i *ngIf="!loading" class="bi bi-check-lg ms-2"></i>
+      </button>
+
+    </form>
+
+    <!-- Footer Links -->
+    <div class="student-login-footer">
+      <div class="register-prompt">
+        <span>Already have an account?</span>
+        <button
+          type="button"
+          (click)="goToLogin()"
+          class="register-btn-link"
+        >
+          Sign In Here
+        </button>
+      </div>
+
+      <div class="divider">
+        <span>ALTERNATIVE ACCESS</span>
+      </div>
+
+      <div class="footer-actions">
+        <a routerLink="/register" class="portal-switch-card">
+          <div class="switch-icon"><i class="bi bi-shield-lock-fill"></i></div>
+          <div class="switch-text">
+            <strong>Administrator Registration</strong>
+            <small>Create administrative management account</small>
+          </div>
+          <i class="bi bi-chevron-right arrow-icon"></i>
+        </a>
+      </div>
+
+      <div class="home-link-wrap">
+        <a routerLink="/home" class="back-home-link">
+          <i class="bi bi-arrow-left me-1"></i> Back to Homepage
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</div>

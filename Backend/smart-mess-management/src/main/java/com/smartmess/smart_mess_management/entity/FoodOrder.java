@@ -1,6 +1,7 @@
 package com.smartmess.smart_mess_management.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,9 +26,17 @@ public class FoodOrder {
     @JoinColumn(name = "student_id")
     private Student student;
 
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long studentId;
+
     @ManyToOne
     @JoinColumn(name = "canteen_id")
     private Canteen canteen;
+
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long canteenId;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status; // PENDING, CONFIRMED, READY, DELIVERED, CANCELLED
@@ -38,8 +47,8 @@ public class FoodOrder {
     private LocalDateTime orderedAt;
 
     @OneToMany(mappedBy = "foodOrder", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<FoodOrderItem> orderItems;
-
 
     // Getters and Setters
 
@@ -59,12 +68,28 @@ public class FoodOrder {
         this.student = student;
     }
 
+    public Long getStudentId() {
+        return student != null ? student.getId() : studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
+    }
+
     public Canteen getCanteen() {
         return canteen;
     }
 
     public void setCanteen(Canteen canteen) {
         this.canteen = canteen;
+    }
+
+    public Long getCanteenId() {
+        return canteen != null ? canteen.getId() : canteenId;
+    }
+
+    public void setCanteenId(Long canteenId) {
+        this.canteenId = canteenId;
     }
 
     public OrderStatus getStatus() {

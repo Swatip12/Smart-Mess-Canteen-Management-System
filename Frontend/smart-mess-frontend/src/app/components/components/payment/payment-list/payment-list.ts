@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { Payment } from '../../../../models/models/payment.model';
 import { PaymentService } from '../../../../services/services/payment';
+import { ReportService } from '../../../../services/services/report';
 
 @Component({
   selector: 'app-payment-list',
@@ -30,7 +31,9 @@ export class PaymentList implements OnInit {
   ];
 
   constructor(
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private reportService: ReportService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -38,71 +41,57 @@ export class PaymentList implements OnInit {
   }
 
   loadPayments(): void {
-
     this.paymentService.getAll().subscribe({
-
       next: (data: Payment[]) => {
-
-        this.payments = data;
-        this.filteredPayments = data;
-
+        this.payments = (data || []).sort((a, b) => (b.id || 0) - (a.id || 0));
+        this.filteredPayments = this.payments;
         this.loadStudents();
-
-        console.log('Payments loaded:', data);
-
+        this.cdr.markForCheck();
       },
-
       error: (error: any) => {
-
         console.error('Error loading payments:', error);
-
+        this.cdr.markForCheck();
       }
-
     });
-
   }
 
   loadStudents(): void {
-
-    const studentMap = new Map<number, any>();
-
-    this.payments.forEach(payment => {
-
-      if (payment.student?.id) {
-
-        studentMap.set(
-          payment.student.id,
-          payment.student
-        );
-
+    const map = new Map();
+    this.payments.forEach(p => {
+      if (p.student && p.student.id) {
+        map.set(p.student.id, p.student);
       }
-
     });
-
-    this.students = Array.from(
-      studentMap.values()
-    );
-
+    this.students = Array.from(map.values());
+    this.cdr.markForCheck();
   }
 
   filterPayments(): void {
+    let result = this.payments;
 
-    this.filteredPayments =
-      this.payments.filter(payment => {
+    if (this.selectedStudent !== 'ALL') {
+      result = result.filter(p => p.student?.id === Number(this.selectedStudent));
+    }
 
-        const studentMatch =
-          this.selectedStudent === 'ALL' ||
-          payment.student?.id?.toString() ===
-          this.selectedStudent;
+    if (this.selectedStatus !== 'ALL') {
+      result = result.filter(p => p.status === this.selectedStatus);
+    }
 
-        const statusMatch =
-          this.selectedStatus === 'ALL' ||
-          payment.status === this.selectedStatus;
-
-        return studentMatch && statusMatch;
-
-      });
-
+    this.filteredPayments = result;
+    this.cdr.markForCheck();
   }
 
+  exportCsv(): void {
+    this.reportService.downloadPaymentsCsv().subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'payments_export.csv';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: () => alert('Failed to download CSV')
+    });
+  }
 }

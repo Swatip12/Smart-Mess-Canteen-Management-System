@@ -3,8 +3,6 @@ package com.smartmess.smart_mess_management.Controllers;
 import com.smartmess.smart_mess_management.Services.FeedbackService;
 import com.smartmess.smart_mess_management.entity.Feedback;
 
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +10,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/feedbacks")
-@RequiredArgsConstructor
 public class FeedbackController {
 
     private final FeedbackService feedbackService;
+
+    public FeedbackController(FeedbackService feedbackService) {
+        this.feedbackService = feedbackService;
+    }
 
     @PostMapping
     public ResponseEntity<Feedback> create(

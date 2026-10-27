@@ -3,8 +3,6 @@ package com.smartmess.smart_mess_management.Controllers;
 import com.smartmess.smart_mess_management.Services.FoodOrderItemService;
 import com.smartmess.smart_mess_management.entity.FoodOrderItem;
 
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +10,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/order-items")
-@RequiredArgsConstructor
 public class FoodOrderItemController {
 
     private final FoodOrderItemService orderItemService;
+
+    public FoodOrderItemController(FoodOrderItemService orderItemService) {
+        this.orderItemService = orderItemService;
+    }
 
     @PostMapping
     public ResponseEntity<FoodOrderItem> create(

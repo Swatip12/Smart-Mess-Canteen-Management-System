@@ -1,123 +1,79 @@
-<div class="container mt-4">
-
-  <h2>Add Complaint</h2>
-
-  <form
-    [formGroup]="complaintForm"
-    (ngSubmit)="addComplaint()">
-
-    <!-- Student -->
-
-    <div class="mb-3">
-
-      <label class="form-label">
-        Student
-      </label>
-
-      <select
-        class="form-select"
-        formControlName="student">
-
-        <option [ngValue]="null">
-          -- Select Student --
-        </option>
-
-        <option
-          *ngFor="let student of students"
-          [ngValue]="student.id">
-
-          {{ student.name }}
-
-        </option>
-
-      </select>
-
+<div class="page-container">
+  <div class="page-header mb-4">
+    <div class="d-flex align-items-center gap-2 mb-1">
+      <a routerLink="/complaints" class="btn btn-sm btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i>
+      </a>
+      <h2 class="mb-0">File Student Complaint</h2>
     </div>
+    <p class="text-muted ms-4 ps-2 mb-0">Record a grievance on behalf of a student</p>
+  </div>
 
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <form [formGroup]="complaintForm" (ngSubmit)="addComplaint()">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Student <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="student">
+                  <option [ngValue]="null">-- Select Student --</option>
+                  <option *ngFor="let student of students" [ngValue]="student.id">
+                    {{ student.name }} ({{ student.rollNumber || student.email }})
+                  </option>
+                </select>
+              </div>
 
-    <!-- Title -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Complaint Category <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="category">
+                  <option [ngValue]="null">-- Select Category --</option>
+                  <option *ngFor="let category of categories" [ngValue]="category">
+                    {{ category }}
+                  </option>
+                </select>
+              </div>
 
-    <div class="mb-3">
+              <div class="col-md-12">
+                <label class="form-label fw-semibold">Complaint Subject / Title <span class="text-danger">*</span></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="title"
+                  placeholder="e.g. Cold food served during lunch">
+              </div>
 
-      <label class="form-label">
-        Title
-      </label>
+              <div class="col-md-12">
+                <label class="form-label fw-semibold">Detailed Description <span class="text-danger">*</span></label>
+                <textarea
+                  class="form-control"
+                  rows="4"
+                  formControlName="description"
+                  placeholder="Provide context, time, and specific dining details"></textarea>
+              </div>
+            </div>
 
-      <input
-        type="text"
-        class="form-control"
-        formControlName="title"
-        placeholder="Enter complaint title">
+            <hr class="my-4 text-muted">
 
+            <div class="d-flex justify-content-end gap-2">
+              <button
+                type="button"
+                class="btn btn-light border px-4"
+                (click)="cancel()">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary px-4 d-flex align-items-center gap-2"
+                [disabled]="complaintForm.invalid">
+                <i class="bi bi-send"></i>
+                Submit Complaint
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-
-
-    <!-- Description -->
-
-    <div class="mb-3">
-
-      <label class="form-label">
-        Description
-      </label>
-
-      <textarea
-        class="form-control"
-        rows="4"
-        formControlName="description"
-        placeholder="Enter complaint description">
-      </textarea>
-
-    </div>
-
-
-    <!-- Category -->
-
-    <div class="mb-3">
-
-      <label class="form-label">
-        Category
-      </label>
-
-      <select
-        class="form-select"
-        formControlName="category">
-
-        <option [ngValue]="null">
-          -- Select Category --
-        </option>
-
-        <option
-          *ngFor="let category of categories"
-          [ngValue]="category">
-
-          {{ category }}
-
-        </option>
-
-      </select>
-
-    </div>
-
-
-    <!-- Buttons -->
-
-    <button
-      type="submit"
-      class="btn btn-primary me-2">
-
-      Add Complaint
-
-    </button>
-
-    <button
-      type="button"
-      class="btn btn-secondary"
-      (click)="cancel()">
-
-      Cancel
-
-    </button>
-
-  </form>
-
+  </div>
 </div>

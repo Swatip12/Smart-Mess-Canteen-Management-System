@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -15,10 +15,12 @@ import { SubscriptionService } from '../../../../services/services/subscription'
 export class SubscriptionList implements OnInit {
 
   subscriptions: Subscription[] = [];
+  loading: boolean = false;
 
   constructor(
     private subscriptionService: SubscriptionService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -26,32 +28,24 @@ export class SubscriptionList implements OnInit {
   }
 
   loadSubscriptions(): void {
+    this.loading = true;
+    this.cdr.markForCheck();
 
     this.subscriptionService.getAll().subscribe({
-
       next: (data: Subscription[]) => {
-
-        this.subscriptions = data;
-
-        console.log('Subscriptions loaded:', data);
-
+        this.subscriptions = data || [];
+        this.loading = false;
+        this.cdr.markForCheck();
       },
-
       error: (error: any) => {
-
-        console.error(
-          'Error loading subscriptions:',
-          error
-        );
-
+        console.error('Error loading subscriptions:', error);
+        this.loading = false;
+        this.cdr.markForCheck();
       }
-
     });
-
   }
 
   addSubscription(): void {
     this.router.navigate(['/subscriptions/add']);
   }
-
 }

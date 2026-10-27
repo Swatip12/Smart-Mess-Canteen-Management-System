@@ -17,14 +17,16 @@ import com.smartmess.smart_mess_management.Services.CanteenService;
 import com.smartmess.smart_mess_management.entity.Canteen;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/canteens")
-@RequiredArgsConstructor
 public class CanteenController {
 
     private final CanteenService canteenService;
+
+    public CanteenController(CanteenService canteenService) {
+        this.canteenService = canteenService;
+    }
 
     @PostMapping
     public ResponseEntity<Canteen> create(

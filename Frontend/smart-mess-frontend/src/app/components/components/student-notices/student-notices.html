@@ -1,0 +1,54 @@
+<div class="student-notices-container">
+
+  <div class="student-notices-header">
+    <button class="back-button" (click)="goBack()">← Back to Dashboard</button>
+    <h1>Notices & Announcements</h1>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Loading notices...
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!loading && notices.length > 0" class="notices-content">
+    <div class="notice-card" *ngFor="let notice of notices">
+      <div class="notice-header">
+        <div class="notice-title">
+          <h3>{{ notice.title }}</h3>
+          <span
+            class="notice-type-badge"
+            [style.background-color]="getNoticeTypeColor(notice.type)"
+          >
+            {{ notice.type }}
+          </span>
+        </div>
+        <div class="notice-date">
+          <p>{{ formatDate(notice.createdAt) }}</p>
+          <p *ngIf="notice.validUntil" class="valid-until">
+            Valid until: {{ formatDate(notice.validUntil) }}
+          </p>
+        </div>
+      </div>
+
+      <div class="notice-content">
+        <p>{{ notice.content }}</p>
+      </div>
+
+      <div *ngIf="!isNoticeValid(notice.validUntil)" class="expired-badge">
+        Expired
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && notices.length === 0 && !errorMessage" class="no-notices">
+    <div class="no-notices-content">
+      <div class="no-notices-icon">📢</div>
+      <h2>No Notices Available</h2>
+      <p>There are currently no active notices or announcements.</p>
+    </div>
+  </div>
+
+</div>

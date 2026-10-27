@@ -1,5 +1,6 @@
 package com.smartmess.smart_mess_management.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,9 +27,17 @@ public class Attendance {
     @JoinColumn(name = "student_id")
     private Student student;
 
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long studentId;
+
     @ManyToOne
     @JoinColumn(name = "meal_id")
     private Meal meal;
+
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long mealId;
 
     private LocalDate attendanceDate;
 
@@ -36,7 +45,6 @@ public class Attendance {
 
     @CreationTimestamp
     private LocalDateTime markedAt;
-
 
     // Getters and Setters
 
@@ -56,12 +64,28 @@ public class Attendance {
         this.student = student;
     }
 
+    public Long getStudentId() {
+        return student != null ? student.getId() : studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
+    }
+
     public Meal getMeal() {
         return meal;
     }
 
     public void setMeal(Meal meal) {
         this.meal = meal;
+    }
+
+    public Long getMealId() {
+        return meal != null ? meal.getId() : mealId;
+    }
+
+    public void setMealId(Long mealId) {
+        this.mealId = mealId;
     }
 
     public LocalDate getAttendanceDate() {

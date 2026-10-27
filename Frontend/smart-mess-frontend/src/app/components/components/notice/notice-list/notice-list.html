@@ -1,152 +1,78 @@
-<div class="container mt-4">
-
-  <!-- Header -->
-
-  <div class="d-flex justify-content-between mb-3">
-
-    <h2>Notices</h2>
-
-    <a
-      routerLink="/notices/add"
-      class="btn btn-primary">
-
-      + Add Notice
-
+<div class="page-container">
+  <div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="mb-1"><i class="bi bi-megaphone text-primary me-2"></i>Campus Notices & Circulars</h2>
+      <p class="text-muted mb-0">Publish announcements, holiday schedules, and mess updates for students</p>
+    </div>
+    <a routerLink="/notices/add" class="btn btn-primary d-flex align-items-center gap-2">
+      <i class="bi bi-plus-lg"></i>
+      <span>Create Notice</span>
     </a>
-
   </div>
 
+  <div class="card card-table shadow-sm border-0">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th class="ps-4">Notice Title</th>
+              <th>Announcement Content</th>
+              <th>Category</th>
+              <th>Valid Until</th>
+              <th>Status</th>
+              <th class="text-end pe-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let notice of notices">
+              <td class="ps-4">
+                <div class="fw-semibold text-dark">{{ notice.title }}</div>
+              </td>
+              <td>
+                <span class="text-muted small text-truncate d-inline-block" style="max-width: 300px;">
+                  {{ notice.content || 'N/A' }}
+                </span>
+              </td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'badge-danger': notice.type === 'URGENT',
+                  'badge-warning': notice.type === 'MAINTENANCE',
+                  'badge-info': notice.type === 'HOLIDAY',
+                  'badge-primary': notice.type === 'GENERAL'
+                }">{{ notice.type }}</span>
+              </td>
+              <td>
+                <span class="text-muted small">
+                  <i class="bi bi-calendar-event me-1"></i>{{ notice.validUntil ? (notice.validUntil | date:'mediumDate') : 'Permanent' }}
+                </span>
+              </td>
+              <td>
+                <span class="badge" [ngClass]="notice.isActive ? 'badge-success' : 'badge-secondary'">
+                  {{ notice.isActive ? 'ACTIVE' : 'INACTIVE' }}
+                </span>
+              </td>
+              <td class="text-end pe-4">
+                <button
+                  type="button"
+                  class="btn btn-sm"
+                  [ngClass]="notice.isActive ? 'btn-outline-warning' : 'btn-outline-success'"
+                  (click)="toggleNotice(notice)">
+                  <i class="bi" [ngClass]="notice.isActive ? 'bi-pause-circle me-1' : 'bi-play-circle me-1'"></i>
+                  {{ notice.isActive ? 'Deactivate' : 'Activate' }}
+                </button>
+              </td>
+            </tr>
 
-  <!-- Notices Table -->
-
-  <table class="table table-striped">
-
-    <thead>
-
-      <tr>
-
-        <th>Title</th>
-
-        <th>Content</th>
-
-        <th>Type</th>
-
-        <th>Valid Until</th>
-
-        <th>Status</th>
-
-        <th>Action</th>
-
-      </tr>
-
-    </thead>
-
-
-    <tbody>
-
-      <tr
-        *ngFor="let notice of notices">
-
-        <!-- Title -->
-
-        <td>
-          {{ notice.title }}
-        </td>
-
-
-        <!-- Content -->
-
-        <td>
-          {{ notice.content || 'N/A' }}
-        </td>
-
-
-        <!-- Type -->
-
-        <td>
-
-          <span
-            class="type-badge"
-            [ngClass]="getTypeClass(notice.type)">
-
-            {{ notice.type }}
-
-          </span>
-
-        </td>
-
-
-        <!-- Valid Until -->
-
-        <td>
-          {{ notice.validUntil || 'N/A' }}
-        </td>
-
-
-        <!-- Status -->
-
-        <td>
-
-          <span
-            *ngIf="notice.isActive"
-            class="badge bg-success">
-
-            ACTIVE
-
-          </span>
-
-
-          <span
-            *ngIf="!notice.isActive"
-            class="badge bg-secondary">
-
-            INACTIVE
-
-          </span>
-
-        </td>
-
-
-        <!-- Action -->
-
-        <td>
-
-          <button
-            type="button"
-            class="btn btn-sm"
-            [ngClass]="
-              notice.isActive
-                ? 'btn-warning'
-                : 'btn-success'
-            "
-            (click)="toggleNotice(notice)">
-
-            {{ notice.isActive ? 'Deactivate' : 'Activate' }}
-
-          </button>
-
-        </td>
-
-      </tr>
-
-
-      <!-- No Notices -->
-
-      <tr
-        *ngIf="notices.length === 0">
-
-        <td
-          colspan="6"
-          class="text-center">
-
-          No notices found.
-
-        </td>
-
-      </tr>
-
-    </tbody>
-
-  </table>
-
+            <tr *ngIf="notices.length === 0">
+              <td colspan="6" class="text-center py-5 text-muted">
+                <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
+                No notices published yet. Click "Create Notice" to post announcements.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

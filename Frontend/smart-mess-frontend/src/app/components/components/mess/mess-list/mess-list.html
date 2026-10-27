@@ -1,71 +1,79 @@
-<div class="container mt-4">
-
-  <div class="d-flex justify-content-between mb-3">
-    <h2>Mess List</h2>
-
-    <a routerLink="/messes/add" class="btn btn-primary">
-      + Add Mess
+<div class="page-container">
+  <div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="mb-1"><i class="bi bi-shop text-primary me-2"></i>Mess Management</h2>
+      <p class="text-muted mb-0">View, create, and manage dining messes and facilities</p>
+    </div>
+    <a routerLink="/messes/add" class="btn btn-primary d-flex align-items-center gap-2">
+      <i class="bi bi-plus-lg"></i>
+      <span>Add New Mess</span>
     </a>
   </div>
 
-  <table class="table table-striped">
+  <div class="card card-table shadow-sm border-0">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th class="ps-4">ID</th>
+              <th>Mess Name</th>
+              <th>Location</th>
+              <th>Contact Number</th>
+              <th>Capacity</th>
+              <th>Dietary Type</th>
+              <th class="text-end pe-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let m of messes">
+              <td class="ps-4 fw-semibold text-secondary">#{{ m.id }}</td>
+              <td>
+                <div class="fw-semibold text-dark">{{ m.name }}</div>
+              </td>
+              <td>
+                <span class="text-muted"><i class="bi bi-geo-alt me-1 text-danger"></i>{{ m.location }}</span>
+              </td>
+              <td>
+                <span class="text-muted"><i class="bi bi-telephone me-1 text-primary"></i>{{ m.contactNumber || 'N/A' }}</span>
+              </td>
+              <td>
+                <span class="badge bg-light text-dark border">
+                  <i class="bi bi-people me-1"></i>{{ m.capacity }} seats
+                </span>
+              </td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'badge-success': m.type === 'VEG',
+                  'badge-warning': m.type === 'NON_VEG',
+                  'badge-info': m.type === 'BOTH'
+                }">{{ m.type }}</span>
+              </td>
+              <td class="text-end pe-4">
+                <button
+                  class="btn btn-sm btn-outline-primary me-2"
+                  (click)="editMess(m.id!)"
+                  title="Edit Mess">
+                  <i class="bi bi-pencil me-1"></i>Edit
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="deleteMess(m.id!)"
+                  title="Delete Mess">
+                  <i class="bi bi-trash me-1"></i>Delete
+                </button>
+              </td>
+            </tr>
 
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Location</th>
-        <th>Contact Number</th>
-        <th>Capacity</th>
-        <th>Type</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-
-    <tbody>
-
-      <tr *ngFor="let m of messes">
-
-        <td>{{ m.id }}</td>
-
-        <td>{{ m.name }}</td>
-
-        <td>{{ m.location }}</td>
-
-        <td>{{ m.contactNumber }}</td>
-
-        <td>{{ m.capacity }}</td>
-
-        <td>{{ m.type }}</td>
-
-        <td>
-
-          <button
-            class="btn btn-sm btn-warning me-1"
-            (click)="editMess(m.id!)">
-            Edit
-          </button>
-
-          <button
-            class="btn btn-sm btn-danger"
-            (click)="deleteMess(m.id!)">
-            Delete
-          </button>
-
-        </td>
-
-      </tr>
-
-      <tr *ngIf="messes.length === 0">
-
-        <td colspan="7" class="text-center">
-          No messes found.
-        </td>
-
-      </tr>
-
-    </tbody>
-
-  </table>
-
+            <tr *ngIf="messes.length === 0">
+              <td colspan="7" class="text-center py-5 text-muted">
+                <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
+                No messes registered yet. Click "Add New Mess" to get started.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

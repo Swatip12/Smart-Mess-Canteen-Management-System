@@ -1,158 +1,97 @@
-<div class="container mt-4">
-
-  <h2>Mark Attendance</h2>
-
-  <form
-    [formGroup]="attendanceForm"
-    (ngSubmit)="markAttendance()">
-
-    <!-- Student -->
-
-    <div class="mb-3">
-
-      <label class="form-label">
-        Student
-      </label>
-
-      <select
-        class="form-select"
-        formControlName="student">
-
-        <option [ngValue]="null">
-          -- Select Student --
-        </option>
-
-        <option
-          *ngFor="let student of students"
-          [ngValue]="student.id">
-
-          {{ student.name }}
-
-          <span *ngIf="student.rollNumber">
-            - {{ student.rollNumber }}
-          </span>
-
-        </option>
-
-      </select>
-
+<div class="page-container">
+  <div class="page-header mb-4">
+    <div class="d-flex align-items-center gap-2 mb-1">
+      <a routerLink="/attendance" class="btn btn-sm btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i>
+      </a>
+      <h2 class="mb-0">Mark Student Attendance</h2>
     </div>
+    <p class="text-muted ms-4 ps-2 mb-0">Record a dining attendance entry for a student</p>
+  </div>
 
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <form [formGroup]="attendanceForm" (ngSubmit)="markAttendance()">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Select Student <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="student">
+                  <option [ngValue]="null">-- Select Student --</option>
+                  <option *ngFor="let s of students" [ngValue]="s.id">
+                    {{ s.name }} ({{ s.rollNumber || s.email }})
+                  </option>
+                </select>
+              </div>
 
-    <!-- Meal -->
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Meal Session <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="meal">
+                  <option [ngValue]="null">-- Select Meal Session --</option>
+                  <option *ngFor="let m of meals" [ngValue]="m.id">
+                    {{ m.name }} ({{ m.serveTime || 'Regular' }})
+                  </option>
+                </select>
+              </div>
 
-    <div class="mb-3">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Attendance Date <span class="text-danger">*</span></label>
+                <input
+                  type="date"
+                  class="form-control"
+                  formControlName="attendanceDate">
+              </div>
 
-      <label class="form-label">
-        Meal
-      </label>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold d-block">Status <span class="text-danger">*</span></label>
+                <div class="pt-2">
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      [value]="true"
+                      formControlName="isPresent"
+                      id="present">
+                    <label class="form-check-label fw-semibold text-success" for="present">
+                      <i class="bi bi-check-circle me-1"></i> Present
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline ms-3">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      [value]="false"
+                      formControlName="isPresent"
+                      id="absent">
+                    <label class="form-check-label fw-semibold text-danger" for="absent">
+                      <i class="bi bi-x-circle me-1"></i> Absent
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-      <select
-        class="form-select"
-        formControlName="meal">
+            <hr class="my-4 text-muted">
 
-        <option [ngValue]="null">
-          -- Select Meal --
-        </option>
-
-        <option
-          *ngFor="let meal of meals"
-          [ngValue]="meal.id">
-
-          {{ meal.name }}
-
-        </option>
-
-      </select>
-
-    </div>
-
-
-    <!-- Date -->
-
-    <div class="mb-3">
-
-      <label class="form-label">
-        Attendance Date
-      </label>
-
-      <input
-        type="date"
-        class="form-control"
-        formControlName="attendanceDate">
-
-    </div>
-
-
-    <!-- Present / Absent -->
-
-    <div class="mb-3">
-
-      <label class="form-label d-block">
-        Attendance
-      </label>
-
-      <div class="form-check form-check-inline">
-
-        <input
-          class="form-check-input"
-          type="radio"
-          [value]="true"
-          formControlName="isPresent"
-          id="present">
-
-        <label
-          class="form-check-label"
-          for="present">
-
-          Present
-
-        </label>
-
+            <div class="d-flex justify-content-end gap-2">
+              <button
+                type="button"
+                class="btn btn-light border px-4"
+                (click)="cancel()">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary px-4 d-flex align-items-center gap-2"
+                [disabled]="attendanceForm.invalid">
+                <i class="bi bi-check2-circle"></i>
+                Save Attendance
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-
-
-      <div class="form-check form-check-inline">
-
-        <input
-          class="form-check-input"
-          type="radio"
-          [value]="false"
-          formControlName="isPresent"
-          id="absent">
-
-        <label
-          class="form-check-label"
-          for="absent">
-
-          Absent
-
-        </label>
-
-      </div>
-
     </div>
-
-
-    <!-- Buttons -->
-
-    <button
-      type="submit"
-      class="btn btn-primary me-2">
-
-      Mark Attendance
-
-    </button>
-
-    <button
-      type="button"
-      class="btn btn-secondary"
-      (click)="cancel()">
-
-      Cancel
-
-    </button>
-
-  </form>
-
+  </div>
 </div>

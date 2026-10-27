@@ -1,0 +1,296 @@
+.student-dashboard-wrapper {
+  min-height: 100vh;
+  background-color: #f1f5f9;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  padding-bottom: 40px;
+}
+
+/* Nav Header */
+.student-nav-bar {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 14px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.student-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-avatar {
+  font-size: 1.6rem;
+  background: #ecfdf5;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d1fae5;
+}
+
+.brand-title-wrap h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.brand-title-wrap span {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #059669;
+  letter-spacing: 0.08em;
+}
+
+.student-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.student-user-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.student-user-pill:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.student-user-pill i {
+  font-size: 1.3rem;
+  color: #059669;
+}
+
+.user-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-text strong {
+  font-size: 0.82rem;
+  color: #0f172a;
+}
+
+.user-text small {
+  font-size: 0.7rem;
+  color: #64748b;
+}
+
+.student-logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.student-logout-btn:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+/* Body */
+.student-dashboard-body {
+  max-width: 1200px;
+  margin: 28px auto 0 auto;
+  padding: 0 20px;
+}
+
+/* Welcome Banner */
+.welcome-banner {
+  background: linear-gradient(135deg, #064e3b 0%, #065f46 60%, #047857 100%);
+  color: #ffffff;
+  border-radius: 18px;
+  padding: 32px 36px;
+  box-shadow: 0 10px 25px -5px rgba(6, 78, 59, 0.35);
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.welcome-text h1 {
+  font-size: 1.85rem;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.02em;
+}
+
+.welcome-text p {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  margin: 0;
+  max-width: 650px;
+  line-height: 1.5;
+}
+
+.quick-metrics-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.metric-chip {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.metric-chip i {
+  font-size: 1.4rem;
+  background: #ffffff;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.metric-chip div {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-chip small {
+  font-size: 0.72rem;
+  opacity: 0.85;
+}
+
+.metric-chip strong {
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+/* Section Title */
+.section-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+/* Services Grid */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 18px;
+}
+
+.service-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.12);
+  border-color: #cbd5e1;
+}
+
+.service-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.45rem;
+  flex-shrink: 0;
+}
+
+.icon-green { background: #ecfdf5; color: #059669; }
+.icon-blue { background: #eff6ff; color: #2563eb; }
+.icon-indigo { background: #eef2ff; color: #4f46e5; }
+.icon-amber { background: #fffbeb; color: #d97706; }
+.icon-teal { background: #f0fdfa; color: #0d9488; }
+.icon-yellow { background: #fefce8; color: #ca8a04; }
+.icon-red { background: #fef2f2; color: #dc2626; }
+.icon-purple { background: #faf5ff; color: #9333ea; }
+.icon-slate { background: #f8fafc; color: #475569; }
+
+.service-details {
+  flex: 1;
+}
+
+.service-details h3 {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+}
+
+.service-details p {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.action-arrow {
+  color: #cbd5e1;
+  font-size: 1.1rem;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.service-card:hover .action-arrow {
+  transform: translateX(4px);
+  color: #059669;
+}
+
+@media (max-width: 768px) {
+  .student-nav-bar {
+    padding: 12px 16px;
+  }
+  .welcome-banner {
+    padding: 24px 20px;
+  }
+  .welcome-text h1 {
+    font-size: 1.5rem;
+  }
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}

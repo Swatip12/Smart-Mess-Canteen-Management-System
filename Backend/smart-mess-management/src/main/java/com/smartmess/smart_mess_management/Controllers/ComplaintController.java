@@ -5,8 +5,6 @@ import com.smartmess.smart_mess_management.entity.Complaint;
 
 import enums.ComplaintStatus;
 
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +12,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/complaints")
-@RequiredArgsConstructor
 public class ComplaintController {
 
     private final ComplaintService complaintService;
+
+    public ComplaintController(ComplaintService complaintService) {
+        this.complaintService = complaintService;
+    }
 
     @PostMapping
     public ResponseEntity<Complaint> create(

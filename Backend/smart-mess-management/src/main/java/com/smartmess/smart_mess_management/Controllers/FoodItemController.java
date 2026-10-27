@@ -18,14 +18,16 @@ import com.smartmess.smart_mess_management.Services.FoodItemService;
 import com.smartmess.smart_mess_management.entity.FoodItem;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/food-items")
-@RequiredArgsConstructor
 public class FoodItemController {
 
     private final FoodItemService foodItemService;
+
+    public FoodItemController(FoodItemService foodItemService) {
+        this.foodItemService = foodItemService;
+    }
 
     @PostMapping
     public ResponseEntity<FoodItem> create(

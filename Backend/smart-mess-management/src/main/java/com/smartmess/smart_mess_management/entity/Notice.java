@@ -1,5 +1,6 @@
 package com.smartmess.smart_mess_management.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -33,12 +34,17 @@ public class Notice {
     @JoinColumn(name = "admin_id")
     private Admin admin;
 
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long adminId;
+
     private LocalDate validUntil;
+
+    @Builder.Default
     private Boolean isActive = true;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
-
 
     // Getters and Setters
 
@@ -80,6 +86,14 @@ public class Notice {
 
     public void setAdmin(Admin admin) {
         this.admin = admin;
+    }
+
+    public Long getAdminId() {
+        return admin != null ? admin.getId() : adminId;
+    }
+
+    public void setAdminId(Long adminId) {
+        this.adminId = adminId;
     }
 
     public LocalDate getValidUntil() {

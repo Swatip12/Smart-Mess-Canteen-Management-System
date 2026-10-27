@@ -1,12 +1,9 @@
 package com.smartmess.smart_mess_management.Services;
 
-
 import java.util.List;
 
 import com.smartmess.smart_mess_management.entity.FoodOrder;
-
 import enums.OrderStatus;
-
 
 public interface FoodOrderService {
 
@@ -23,4 +20,6 @@ public interface FoodOrderService {
     List<FoodOrder> getOrdersByStatus(OrderStatus status);
 
     FoodOrder updateOrderStatus(Long orderId, OrderStatus status);
+
+    FoodOrder cancelOrder(Long orderId, Long studentId);
 }

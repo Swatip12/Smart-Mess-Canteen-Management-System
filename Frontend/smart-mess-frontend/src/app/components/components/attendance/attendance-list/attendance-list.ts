@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -20,9 +20,11 @@ export class AttendanceList implements OnInit {
 
   fromDate: string = '';
   toDate: string = '';
+  loading: boolean = false;
 
   constructor(
-    private attendanceService: AttendanceService
+    private attendanceService: AttendanceService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -30,69 +32,48 @@ export class AttendanceList implements OnInit {
   }
 
   loadAttendance(): void {
+    this.loading = true;
+    this.cdr.markForCheck();
 
     this.attendanceService.getAll().subscribe({
-
       next: (data: Attendance[]) => {
-
-        this.attendanceRecords = data;
-        this.filteredRecords = data;
-
-        console.log('Attendance loaded:', data);
-
+        this.attendanceRecords = data || [];
+        this.filteredRecords = data || [];
+        this.loading = false;
+        this.cdr.markForCheck();
       },
-
       error: (error: any) => {
-
-        console.error(
-          'Error loading attendance:',
-          error
-        );
-
+        console.error('Error loading attendance:', error);
+        this.loading = false;
+        this.cdr.markForCheck();
       }
-
     });
-
   }
 
   filterByDateRange(): void {
-
     if (!this.fromDate && !this.toDate) {
-
       this.filteredRecords = this.attendanceRecords;
-
+      this.cdr.markForCheck();
       return;
-
     }
 
-    this.filteredRecords =
-      this.attendanceRecords.filter(record => {
+    this.filteredRecords = this.attendanceRecords.filter(record => {
+      const recordDate = record.attendanceDate || '';
+      const fromMatch = !this.fromDate || recordDate >= this.fromDate;
+      const toMatch = !this.toDate || recordDate <= this.toDate;
+      return fromMatch && toMatch;
+    });
+    this.cdr.markForCheck();
+  }
 
-        const recordDate =
-          record.attendanceDate || '';
-
-        const fromMatch =
-          !this.fromDate ||
-          recordDate >= this.fromDate;
-
-        const toMatch =
-          !this.toDate ||
-          recordDate <= this.toDate;
-
-        return fromMatch && toMatch;
-
-      });
-
+  resetFilter(): void {
+    this.fromDate = '';
+    this.toDate = '';
+    this.filteredRecords = this.attendanceRecords;
+    this.cdr.markForCheck();
   }
 
   clearFilter(): void {
-
-    this.fromDate = '';
-    this.toDate = '';
-
-    this.filteredRecords =
-      this.attendanceRecords;
-
+    this.resetFilter();
   }
-
 }

@@ -1,0 +1,139 @@
+<div class="student-profile-container">
+
+  <div class="student-profile-header">
+    <button class="back-button" (click)="goBack()">← Back to Dashboard</button>
+    <h1>My Profile</h1>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Loading profile...
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!loading && student.id" class="profile-card">
+
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+
+    <div class="profile-header">
+      <div class="profile-avatar">
+        <div class="avatar-placeholder">👤</div>
+      </div>
+      <div class="profile-info">
+        <h2>{{ student.name }}</h2>
+        <p>{{ student.email }}</p>
+        <span class="status-badge" [class.active]="student.status === 'ACTIVE'">
+          {{ student.status }}
+        </span>
+      </div>
+      <button
+        *ngIf="!isEditing"
+        class="edit-button"
+        (click)="enableEditing()"
+      >
+        Edit Profile
+      </button>
+    </div>
+
+    <form (ngSubmit)="updateProfile()" #profileForm="ngForm">
+
+      <div class="profile-details">
+        <div class="detail-row">
+          <label>Roll Number:</label>
+          <div class="detail-value">
+            <input
+              *ngIf="isEditing"
+              type="text"
+              [(ngModel)]="student.rollNumber"
+              name="rollNumber"
+            />
+            <span *ngIf="!isEditing">{{ student.rollNumber || 'N/A' }}</span>
+          </div>
+        </div>
+
+        <div class="detail-row">
+          <label>Department:</label>
+          <div class="detail-value">
+            <input
+              *ngIf="isEditing"
+              type="text"
+              [(ngModel)]="student.department"
+              name="department"
+            />
+            <span *ngIf="!isEditing">{{ student.department || 'N/A' }}</span>
+          </div>
+        </div>
+
+        <div class="detail-row">
+          <label>Phone:</label>
+          <div class="detail-value">
+            <input
+              *ngIf="isEditing"
+              type="text"
+              [(ngModel)]="student.phone"
+              name="phone"
+            />
+            <span *ngIf="!isEditing">{{ student.phone || 'N/A' }}</span>
+          </div>
+        </div>
+
+        <div class="detail-row">
+          <label>Hostel Name:</label>
+          <div class="detail-value">
+            <input
+              *ngIf="isEditing"
+              type="text"
+              [(ngModel)]="student.hostelName"
+              name="hostelName"
+            />
+            <span *ngIf="!isEditing">{{ student.hostelName || 'N/A' }}</span>
+          </div>
+        </div>
+
+        <div class="detail-row">
+          <label>Room Number:</label>
+          <div class="detail-value">
+            <input
+              *ngIf="isEditing"
+              type="text"
+              [(ngModel)]="student.roomNumber"
+              name="roomNumber"
+            />
+            <span *ngIf="!isEditing">{{ student.roomNumber || 'N/A' }}</span>
+          </div>
+        </div>
+
+        <div class="detail-row">
+          <label>Registration Date:</label>
+          <div class="detail-value">
+            <span>{{ student.createdAt | date:'mediumDate' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isEditing" class="form-actions">
+        <button
+          type="button"
+          class="cancel-button"
+          (click)="cancelEditing()"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="save-button"
+          [disabled]="loading"
+        >
+          {{ loading ? 'Saving...' : 'Save Changes' }}
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

@@ -4,23 +4,26 @@ import {
   Router
 } from '@angular/router';
 
-export const authGuard: CanActivateFn = () => {
+export const authGuard: CanActivateFn = (route, state) => {
 
-  const adminId =
-    localStorage.getItem('adminId');
+  const adminId = localStorage.getItem('adminId');
+  const studentId = localStorage.getItem('studentId');
 
+  const isStudentRoute = state.url.startsWith('/student');
 
-  if (adminId) {
-
-    return true;
-
+  if (isStudentRoute) {
+    if (studentId) {
+      return true;
+    }
+    inject(Router).navigate(['/student-login']);
+    return false;
   }
 
+  if (adminId) {
+    return true;
+  }
 
-  inject(Router).navigate([
-    '/login'
-  ]);
-
+  inject(Router).navigate(['/login']);
   return false;
 
 };

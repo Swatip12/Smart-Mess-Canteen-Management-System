@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { Mess } from '../../../../models/models/mess.model';
 import { MessService } from '../../../../services/services/mess';
+
 @Component({
   selector: 'app-mess-list',
   standalone: true,
@@ -14,10 +15,12 @@ import { MessService } from '../../../../services/services/mess';
 export class MessList implements OnInit {
 
   messes: Mess[] = [];
+  isLoading = false;
 
   constructor(
     private messService: MessService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -25,12 +28,20 @@ export class MessList implements OnInit {
   }
 
   loadMesses(): void {
+    this.isLoading = true;
+    this.cdr.markForCheck();
+
     this.messService.getAll().subscribe({
       next: (data: Mess[]) => {
-        this.messes = data;
+        this.messes = data || [];
+        this.isLoading = false;
+        this.cdr.markForCheck();
       },
       error: (error: any) => {
         console.error('Error loading messes:', error);
+        this.messes = [];
+        this.isLoading = false;
+        this.cdr.markForCheck();
       }
     });
   }

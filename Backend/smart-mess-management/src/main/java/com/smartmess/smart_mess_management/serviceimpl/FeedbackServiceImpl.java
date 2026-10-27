@@ -7,17 +7,42 @@ import org.springframework.stereotype.Service;
 import com.smartmess.smart_mess_management.Services.FeedbackService;
 import com.smartmess.smart_mess_management.entity.Feedback;
 import com.smartmess.smart_mess_management.repository.FeedbackRepository;
-
-import lombok.RequiredArgsConstructor;
+import com.smartmess.smart_mess_management.repository.MessRepository;
+import com.smartmess.smart_mess_management.repository.StudentRepository;
 
 @Service
-@RequiredArgsConstructor
 public class FeedbackServiceImpl implements FeedbackService {
 
     private final FeedbackRepository feedbackRepository;
+    private final StudentRepository studentRepository;
+    private final MessRepository messRepository;
+
+    public FeedbackServiceImpl(
+            FeedbackRepository feedbackRepository,
+            StudentRepository studentRepository,
+            MessRepository messRepository) {
+        this.feedbackRepository = feedbackRepository;
+        this.studentRepository = studentRepository;
+        this.messRepository = messRepository;
+    }
 
     @Override
     public Feedback createFeedback(Feedback feedback) {
+        Long sId = feedback.getStudentId();
+        if (sId == null && feedback.getStudent() != null) {
+            sId = feedback.getStudent().getId();
+        }
+        if (sId != null) {
+            studentRepository.findById(sId).ifPresent(feedback::setStudent);
+        }
+
+        Long mId = feedback.getMessId();
+        if (mId == null && feedback.getMess() != null) {
+            mId = feedback.getMess().getId();
+        }
+        if (mId != null) {
+            messRepository.findById(mId).ifPresent(feedback::setMess);
+        }
         return feedbackRepository.save(feedback);
     }
 
@@ -38,11 +63,21 @@ public class FeedbackServiceImpl implements FeedbackService {
 
         Feedback existing = getFeedbackById(id);
 
-        existing.setStudent(feedback.getStudent());
-        existing.setMess(feedback.getMess());
-        existing.setRating(feedback.getRating());
-        existing.setComment(feedback.getComment());
-        existing.setCategory(feedback.getCategory());
+        if (feedback.getStudent() != null) {
+            existing.setStudent(feedback.getStudent());
+        } else if (feedback.getStudentId() != null) {
+            studentRepository.findById(feedback.getStudentId()).ifPresent(existing::setStudent);
+        }
+
+        if (feedback.getMess() != null) {
+            existing.setMess(feedback.getMess());
+        } else if (feedback.getMessId() != null) {
+            messRepository.findById(feedback.getMessId()).ifPresent(existing::setMess);
+        }
+
+        if (feedback.getRating() != null) existing.setRating(feedback.getRating());
+        if (feedback.getComment() != null) existing.setComment(feedback.getComment());
+        if (feedback.getCategory() != null) existing.setCategory(feedback.getCategory());
 
         return feedbackRepository.save(existing);
     }

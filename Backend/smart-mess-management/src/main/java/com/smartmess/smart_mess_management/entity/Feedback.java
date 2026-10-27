@@ -1,5 +1,6 @@
 package com.smartmess.smart_mess_management.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -24,9 +25,17 @@ public class Feedback {
     @JoinColumn(name = "student_id")
     private Student student;
 
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long studentId;
+
     @ManyToOne
     @JoinColumn(name = "mess_id")
     private Mess mess;
+
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long messId;
 
     @Min(1) @Max(5)
     private Integer rating;
@@ -39,7 +48,6 @@ public class Feedback {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
-
 
     // Getters and Setters
 
@@ -59,12 +67,28 @@ public class Feedback {
         this.student = student;
     }
 
+    public Long getStudentId() {
+        return student != null ? student.getId() : studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
+    }
+
     public Mess getMess() {
         return mess;
     }
 
     public void setMess(Mess mess) {
         this.mess = mess;
+    }
+
+    public Long getMessId() {
+        return mess != null ? mess.getId() : messId;
+    }
+
+    public void setMessId(Long messId) {
+        this.messId = messId;
     }
 
     public Integer getRating() {

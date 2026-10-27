@@ -1,33 +1,115 @@
-<h1>STUDENT LIST TEST</h1>
+<div class="student-list-container">
 
-<p>Total Students: {{ students.length }}</p>
+  <!-- Header -->
+  <div class="page-header-box">
+    <div>
+      <h2>Students Management</h2>
+      <p>View, search, edit, and manage registered student accounts</p>
+    </div>
+    <a routerLink="/students/add" class="btn btn-primary">
+      <i class="bi bi-person-plus me-1"></i> + Add Student
+    </a>
+  </div>
 
-<div *ngFor="let student of students">
+  <!-- Search & Stats Bar -->
+  <div class="card border-0 shadow-sm p-3 mb-4">
+    <div class="row g-3 align-items-center">
+      <div class="col-md-6">
+        <div class="input-group">
+          <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
+          <input
+            type="text"
+            class="form-control border-start-0"
+            placeholder="Search by name, email, roll number, or department..."
+            [(ngModel)]="searchTerm"
+          />
+        </div>
+      </div>
+      <div class="col-md-6 text-md-end text-muted small">
+        Showing <strong>{{ filteredStudents.length }}</strong> of <strong>{{ students.length }}</strong> students
+      </div>
+    </div>
+  </div>
 
-  <p>
-    {{ student.id }} -
-    {{ student.name }} -
-    {{ student.email }}
-  </p>
+  <!-- Loading State -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="text-muted mt-2">Loading students...</p>
+  </div>
 
-  <button
-    type="button"
-    (click)="editStudent(student.id)">
-    Edit
-  </button>
+  <!-- Error State -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    <i class="bi bi-exclamation-triangle me-2"></i>{{ errorMessage }}
+  </div>
 
-  <button
-    type="button"
-    (click)="deleteStudent(student.id)">
-    Delete
-  </button>
+  <!-- Table Card -->
+  <div class="card border-0 shadow-sm overflow-hidden" *ngIf="!loading && !errorMessage">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Roll No</th>
+            <th>Department</th>
+            <th>Hostel / Room</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of filteredStudents">
+            <td><strong>#{{ student.id }}</strong></td>
+            <td>
+              <div class="fw-semibold text-dark">{{ student.name }}</div>
+            </td>
+            <td>{{ student.email }}</td>
+            <td><span class="badge bg-light text-dark border">{{ student.rollNumber || 'N/A' }}</span></td>
+            <td>{{ student.department || 'N/A' }}</td>
+            <td>
+              <span *ngIf="student.hostelName">{{ student.hostelName }} (Rm {{ student.roomNumber || '-' }})</span>
+              <span *ngIf="!student.hostelName" class="text-muted">N/A</span>
+            </td>
+            <td>{{ student.phone || 'N/A' }}</td>
+            <td>
+              <span class="badge" [ngClass]="student.status === 'ACTIVE' ? 'bg-success' : 'bg-secondary'">
+                {{ student.status || 'ACTIVE' }}
+              </span>
+            </td>
+            <td class="text-end">
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-primary me-2"
+                (click)="editStudent(student.id)"
+                title="Edit student"
+              >
+                <i class="bi bi-pencil-square"></i> Edit
+              </button>
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-danger"
+                (click)="deleteStudent(student.id)"
+                title="Delete student"
+              >
+                <i class="bi bi-trash3"></i> Delete
+              </button>
+            </td>
+          </tr>
 
-  <hr>
+          <!-- Empty State -->
+          <tr *ngIf="filteredStudents.length === 0">
+            <td colspan="9" class="text-center py-5 text-muted">
+              <i class="bi bi-person-x fs-1 d-block mb-2 text-secondary"></i>
+              No students found{{ searchTerm ? ' matching your search' : '' }}.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
 </div>
-
-<button
-  type="button"
-  (click)="addStudent()">
-  + Add Student
-</button>

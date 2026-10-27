@@ -1,68 +1,88 @@
-<div class="container mt-4">
-
-  <h2>Add Mess</h2>
-
-  <form [formGroup]="messForm" (ngSubmit)="addMess()">
-
-    <div class="mb-3">
-      <label>Name</label>
-      <input
-        type="text"
-        class="form-control"
-        formControlName="name">
+<div class="page-container">
+  <div class="page-header mb-4">
+    <div class="d-flex align-items-center gap-2 mb-1">
+      <a routerLink="/messes" class="btn btn-sm btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i>
+      </a>
+      <h2 class="mb-0">Add New Mess</h2>
     </div>
+    <p class="text-muted ms-4 ps-2 mb-0">Register a new dining mess facility in the system</p>
+  </div>
 
-    <div class="mb-3">
-      <label>Location</label>
-      <input
-        type="text"
-        class="form-control"
-        formControlName="location">
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <form [formGroup]="messForm" (ngSubmit)="addMess()">
+            <div class="row g-3">
+              <div class="col-md-12">
+                <label class="form-label fw-semibold">Mess Name <span class="text-danger">*</span></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                  placeholder="e.g. North Campus Dining Hall">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Location <span class="text-danger">*</span></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="location"
+                  placeholder="e.g. Hostel Block A, Ground Floor">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Contact Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="contactNumber"
+                  placeholder="e.g. +91 9876543210">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Seating Capacity</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="capacity"
+                  placeholder="e.g. 250">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Dietary Type</label>
+                <select
+                  class="form-select"
+                  formControlName="type">
+                  <option value="VEG">VEG (Vegetarian Only)</option>
+                  <option value="NON_VEG">NON_VEG (Non-Vegetarian Only)</option>
+                  <option value="BOTH">BOTH (Veg & Non-Veg)</option>
+                </select>
+              </div>
+            </div>
+
+            <hr class="my-4 text-muted">
+
+            <div class="d-flex justify-content-end gap-2">
+              <button
+                type="button"
+                class="btn btn-light border px-4"
+                (click)="cancel()">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary px-4 d-flex align-items-center gap-2"
+                [disabled]="messForm.invalid">
+                <i class="bi bi-check2-circle"></i>
+                Save Mess
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-
-    <div class="mb-3">
-      <label>Contact Number</label>
-      <input
-        type="text"
-        class="form-control"
-        formControlName="contactNumber">
-    </div>
-
-    <div class="mb-3">
-      <label>Capacity</label>
-      <input
-        type="number"
-        class="form-control"
-        formControlName="capacity">
-    </div>
-
-    <div class="mb-3">
-      <label>Type</label>
-
-      <select
-        class="form-control"
-        formControlName="type">
-
-        <option value="VEG">VEG</option>
-        <option value="NON_VEG">NON_VEG</option>
-        <option value="BOTH">BOTH</option>
-
-      </select>
-    </div>
-
-    <button
-      type="submit"
-      class="btn btn-primary me-2">
-      Save Mess
-    </button>
-
-    <button
-      type="button"
-      class="btn btn-secondary"
-      (click)="cancel()">
-      Cancel
-    </button>
-
-  </form>
-
+  </div>
 </div>

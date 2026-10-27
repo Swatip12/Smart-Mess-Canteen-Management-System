@@ -1,127 +1,145 @@
-<div class="register-page">
+<div class="admin-login-wrapper">
 
-  <div class="register-card">
+  <!-- Ambient background glow elements -->
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
 
-    <div class="register-header">
+  <div class="admin-login-card">
 
-      <h1>Smart Mess</h1>
-
-      <h2>Admin Registration</h2>
-
-      <p>
-        Create your admin account
-      </p>
-
+    <!-- Card Brand Header -->
+    <div class="admin-login-header">
+      <div class="brand-badge">
+        <i class="bi bi-person-badge-fill"></i>
+        <span>ADMIN REGISTRATION</span>
+      </div>
+      <h1 class="portal-title">Create Admin Account</h1>
+      <p class="portal-subtitle">Register credentials to manage messes, canteens, and food service operations</p>
     </div>
 
+    <!-- Registration Form -->
+    <form (ngSubmit)="register()" #registerForm="ngForm" class="login-form">
 
-    <form
-      (ngSubmit)="register()"
-      #registerForm="ngForm"
-    >
-
-
-      <div class="form-group">
-
-        <label>Name</label>
-
-        <input
-          type="text"
-          name="name"
-          [(ngModel)]="name"
-          placeholder="Enter your name"
-          required
-        />
-
+      <!-- Full Name -->
+      <div class="form-field-group">
+        <label class="field-label">Full Name *</label>
+        <div class="input-container">
+          <i class="bi bi-person-fill field-icon"></i>
+          <input
+            type="text"
+            name="name"
+            [(ngModel)]="name"
+            placeholder="e.g. Ramesh Kumar"
+            class="form-control-custom"
+            required
+          />
+        </div>
       </div>
 
-
-      <div class="form-group">
-
-        <label>Email</label>
-
-        <input
-          type="email"
-          name="email"
-          [(ngModel)]="email"
-          placeholder="Enter your email"
-          required
-        />
-
+      <!-- Email Address -->
+      <div class="form-field-group">
+        <label class="field-label">Email Address *</label>
+        <div class="input-container">
+          <i class="bi bi-envelope-at field-icon"></i>
+          <input
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="admin@smartmess.com"
+            class="form-control-custom"
+            required
+          />
+        </div>
       </div>
 
-
-      <div class="form-group">
-
-        <label>Phone</label>
-
-        <input
-          type="text"
-          name="phone"
-          [(ngModel)]="phone"
-          placeholder="Enter phone number"
-        />
-
+      <!-- Password -->
+      <div class="form-field-group">
+        <label class="field-label">Password *</label>
+        <div class="input-container">
+          <i class="bi bi-key-fill field-icon"></i>
+          <input
+            type="password"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="Create a strong password"
+            class="form-control-custom"
+            required
+          />
+        </div>
       </div>
 
-
-      <div class="form-group">
-
-        <label>Password</label>
-
-        <input
-          type="password"
-          name="password"
-          [(ngModel)]="password"
-          placeholder="Create password"
-          required
-        />
-
+      <!-- Phone -->
+      <div class="form-field-group">
+        <label class="field-label">Contact Phone</label>
+        <div class="input-container">
+          <i class="bi bi-telephone-fill field-icon"></i>
+          <input
+            type="tel"
+            name="phone"
+            [(ngModel)]="phone"
+            placeholder="e.g. 9876543210"
+            class="form-control-custom"
+          />
+        </div>
       </div>
 
-
-      <div
-        *ngIf="errorMessage"
-        class="error-message"
-      >
-
-        {{ errorMessage }}
-
+      <!-- Role Selection -->
+      <div class="form-field-group">
+        <label class="field-label">System Role</label>
+        <div class="input-container">
+          <i class="bi bi-award-fill field-icon"></i>
+          <select
+            name="role"
+            [(ngModel)]="role"
+            class="form-control-custom"
+          >
+            <option value="ADMIN">ADMIN (Full Mess & Canteen Operations)</option>
+            <option value="SUPER_ADMIN">SUPER_ADMIN (Complete System Access)</option>
+            <option value="MESS_ADMIN">MESS_ADMIN (Mess Only)</option>
+          </select>
+        </div>
       </div>
 
+      <!-- Error Feedback -->
+      <div *ngIf="errorMessage" class="error-banner">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span>{{ errorMessage }}</span>
+      </div>
 
+      <!-- Submit Button -->
       <button
         type="submit"
-        class="register-button"
+        class="btn-admin-submit"
         [disabled]="loading"
       >
-
-        {{ loading ? 'Registering...' : 'Register' }}
-
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        <span>{{ loading ? 'Creating Account...' : 'Complete Registration' }}</span>
+        <i *ngIf="!loading" class="bi bi-check-lg ms-2"></i>
       </button>
-
 
     </form>
 
+    <!-- Footer Links -->
+    <div class="admin-login-footer">
+      <div class="divider">
+        <span>EXISTING USER</span>
+      </div>
 
-    <div class="login-link">
+      <div class="text-center mb-3">
+        <span style="font-size: 0.88rem; color: #64748b;">Already have an account?</span>
+        <button
+          type="button"
+          (click)="goToLogin()"
+          style="background: none; border: none; color: #2563eb; font-weight: 700; text-decoration: underline; cursor: pointer; margin-left: 6px; font-size: 0.88rem;"
+        >
+          Sign In Here
+        </button>
+      </div>
 
-      Already have an account?
-
-      <button
-        type="button"
-        (click)="goToLogin()"
-      >
-        Sign In
-      </button>
-
-    </div>
-
-
-    <div class="register-footer">
-
-      © 2026 Smart Mess & Canteen Management System
-
+      <div class="home-link-wrap">
+        <a routerLink="/home" class="back-home-link">
+          <i class="bi bi-arrow-left me-1"></i> Back to Homepage
+        </a>
+      </div>
     </div>
 
   </div>

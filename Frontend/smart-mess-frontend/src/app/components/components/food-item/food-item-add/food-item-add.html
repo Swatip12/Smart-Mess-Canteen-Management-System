@@ -1,108 +1,104 @@
-<div class="container mt-4">
-
-  <h2>Add Food Item</h2>
-
-  <form
-    [formGroup]="foodItemForm"
-    (ngSubmit)="addFoodItem()">
-
-    <div class="mb-3">
-      <label>Name</label>
-
-      <input
-        type="text"
-        class="form-control"
-        formControlName="name"
-        placeholder="Enter food item name">
+<div class="page-container">
+  <div class="page-header mb-4">
+    <div class="d-flex align-items-center gap-2 mb-1">
+      <a routerLink="/food-items" class="btn btn-sm btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i>
+      </a>
+      <h2 class="mb-0">Add Food Item</h2>
     </div>
+    <p class="text-muted ms-4 ps-2 mb-0">Add a dish or beverage to the canteen inventory</p>
+  </div>
 
-    <div class="mb-3">
-      <label>Description</label>
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <form [formGroup]="foodItemForm" (ngSubmit)="addFoodItem()">
+            <div class="row g-3">
+              <div class="col-md-8">
+                <label class="form-label fw-semibold">Item Name <span class="text-danger">*</span></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                  placeholder="e.g. Masala Paneer Roll">
+              </div>
 
-      <textarea
-        class="form-control"
-        rows="3"
-        formControlName="description"
-        placeholder="Enter description">
-      </textarea>
+              <div class="col-md-4">
+                <label class="form-label fw-semibold">Price (₹) <span class="text-danger">*</span></label>
+                <input
+                  type="number"
+                  class="form-control"
+                  formControlName="price"
+                  min="0"
+                  step="0.5"
+                  placeholder="e.g. 60">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Category <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="category">
+                  <option value="">-- Select Category --</option>
+                  <option value="VEG">VEG (Vegetarian)</option>
+                  <option value="NON_VEG">NON_VEG (Non-Vegetarian)</option>
+                  <option value="BEVERAGE">BEVERAGE (Drinks, Juice, Coffee)</option>
+                  <option value="SNACK">SNACK (Quick Bites)</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Canteen Outlet</label>
+                <select class="form-select" formControlName="canteen">
+                  <option [ngValue]="null">-- Select Canteen --</option>
+                  <option *ngFor="let c of canteens" [ngValue]="c">
+                    {{ c.name }} ({{ c.location }})
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-md-12">
+                <label class="form-label fw-semibold">Description</label>
+                <textarea
+                  class="form-control"
+                  rows="3"
+                  formControlName="description"
+                  placeholder="Short description of ingredients or taste"></textarea>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-check form-switch mt-2">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="isAvailable"
+                    formControlName="isAvailable">
+                  <label class="form-check-label fw-semibold" for="isAvailable">
+                    Available for students to order
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-4 text-muted">
+
+            <div class="d-flex justify-content-end gap-2">
+              <button
+                type="button"
+                class="btn btn-light border px-4"
+                (click)="cancel()">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary px-4 d-flex align-items-center gap-2"
+                [disabled]="foodItemForm.invalid">
+                <i class="bi bi-check2-circle"></i>
+                Save Food Item
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-
-    <div class="mb-3">
-      <label>Price</label>
-
-      <input
-        type="number"
-        class="form-control"
-        formControlName="price"
-        min="0">
-    </div>
-
-    <div class="mb-3">
-      <label>Category</label>
-
-      <select
-        class="form-control"
-        formControlName="category">
-
-        <option value="">
-          Select Category
-        </option>
-
-        <option value="VEG">VEG</option>
-        <option value="NON_VEG">NON_VEG</option>
-        <option value="BEVERAGE">BEVERAGE</option>
-        <option value="SNACK">SNACK</option>
-
-      </select>
-    </div>
-
-    <div class="mb-3">
-      <label>Canteen</label>
-
-      <select
-        class="form-control"
-        formControlName="canteen">
-
-        <option [ngValue]="null">
-          Select Canteen
-        </option>
-
-        <option
-          *ngFor="let canteen of canteens"
-          [ngValue]="canteen">
-
-          {{ canteen.name }}
-
-        </option>
-
-      </select>
-    </div>
-
-    <div class="mb-3">
-
-      <label>
-        <input
-          type="checkbox"
-          formControlName="isAvailable">
-
-        Available
-      </label>
-
-    </div>
-
-    <button
-      type="submit"
-      class="btn btn-primary me-2">
-      Save Food Item
-    </button>
-
-    <button
-      type="button"
-      class="btn btn-secondary"
-      (click)="cancel()">
-      Cancel
-    </button>
-
-  </form>
-
+  </div>
 </div>

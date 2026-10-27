@@ -1,309 +1,142 @@
-<div class="dashboard-layout">
+<div class="dashboard-content-wrapper">
 
-  <!-- =========================================
-       SIDEBAR
-  ========================================== -->
+  <!-- DASHBOARD HEADER -->
+  <div class="page-header-box mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <div>
+      <h2 class="fw-bold mb-1">Executive Dashboard</h2>
+      <p class="text-muted mb-0">Real-time financial collections, inventory alerts, and operations overview</p>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 d-flex align-items-center gap-2" *ngIf="lastRefreshedAt">
+        <span class="spinner-grow spinner-grow-sm text-success" style="width: 8px; height: 8px;" role="status" *ngIf="!isRefreshing"></span>
+        <span class="spinner-border spinner-border-sm text-success" role="status" *ngIf="isRefreshing"></span>
+        <span>Live Sync: {{ lastRefreshedAt }}</span>
+      </span>
+      <button class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1 shadow-sm" (click)="refreshAll(true)" [disabled]="isRefreshing">
+        <i class="bi bi-arrow-clockwise" [class.spin-icon]="isRefreshing"></i>
+        <span>{{ isRefreshing ? 'Refreshing...' : 'Refresh' }}</span>
+      </button>
+    </div>
+  </div>
 
-  <aside class="sidebar">
-
-    <!-- LOGO -->
-    <div class="sidebar-logo">
-      🍴 Smart Mess
+  <!-- DASHBOARD KPI CARDS -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-4 col-lg-2">
+      <div class="card h-100 p-3 border-0 shadow-sm" style="border-left: 4px solid #0d6efd !important;">
+        <div class="text-muted small text-uppercase fw-bold">Students</div>
+        <div class="fs-3 fw-bold text-dark mt-1">{{ totalStudents }}</div>
+        <small class="text-primary"><i class="bi bi-people-fill me-1"></i>Enrolled</small>
+      </div>
     </div>
 
-
-    <!-- SIDEBAR MENU -->
-    <div class="sidebar-menu">
-
-      <!-- Dashboard -->
-      <a
-        routerLink="/dashboard"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }">
-        🏠 Dashboard
-      </a>
-
-
-      <!-- Students -->
-      <a
-        routerLink="/students"
-        routerLinkActive="active">
-        👨‍🎓 Students
-      </a>
-
-
-      <!-- Messes -->
-      <a
-        routerLink="/messes"
-        routerLinkActive="active">
-        🏠 Messes
-      </a>
-
-
-      <!-- Canteens -->
-      <a
-        routerLink="/canteens"
-        routerLinkActive="active">
-        🍽️ Canteens
-      </a>
-
-
-      <!-- Menus / Meals -->
-      <a
-        routerLink="/menus"
-        routerLinkActive="active">
-        📋 Menus / Meals
-      </a>
-
-
-      <!-- Food Items -->
-      <a
-        routerLink="/food-items"
-        routerLinkActive="active">
-        🍛 Food Items
-      </a>
-
-
-      <!-- Orders -->
-      <a
-        routerLink="/orders"
-        routerLinkActive="active">
-        🛒 Orders
-      </a>
-
-
-      <!-- Payments -->
-      <a
-        routerLink="/payments"
-        routerLinkActive="active">
-        💳 Payments
-      </a>
-
-
-      <!-- Subscriptions -->
-      <a
-        routerLink="/subscriptions"
-        routerLinkActive="active">
-        📝 Subscriptions
-      </a>
-
-
-      <!-- Attendance -->
-      <a
-        routerLink="/attendance"
-        routerLinkActive="active">
-        📅 Attendance
-      </a>
-
-
-      <!-- Feedback -->
-      <a
-        routerLink="/feedbacks"
-        routerLinkActive="active">
-        ⭐ Feedback
-      </a>
-
-
-      <!-- Complaints -->
-      <a
-        routerLink="/complaints"
-        routerLinkActive="active">
-        ⚠️ Complaints
-      </a>
-
-
-      <!-- Notices -->
-      <a
-        routerLink="/notices"
-        routerLinkActive="active">
-        📢 Notices
-      </a>
-
+    <div class="col-md-4 col-lg-2">
+      <div class="card h-100 p-3 border-0 shadow-sm" style="border-left: 4px solid #10b981 !important;">
+        <div class="text-muted small text-uppercase fw-bold">Active Plans</div>
+        <div class="fs-3 fw-bold text-dark mt-1">{{ activeSubscriptions }}</div>
+        <small class="text-success"><i class="bi bi-check-circle-fill me-1"></i>Memberships</small>
+      </div>
     </div>
 
-  </aside>
-
-
-  <!-- =========================================
-       MAIN DASHBOARD
-  ========================================== -->
-
-  <main class="dashboard-main">
-
-    <div class="dashboard-container">
-
-
-      <!-- =====================================
-           DASHBOARD HEADER
-      ====================================== -->
-
-      <div class="dashboard-title">
-
-        <h1>
-          Smart Mess Dashboard
-        </h1>
-
-        <p>
-          Smart Mess & Canteen Management System
-        </p>
-
+    <div class="col-md-4 col-lg-2">
+      <div class="card h-100 p-3 border-0 shadow-sm" style="border-left: 4px solid #f59e0b !important;">
+        <div class="text-muted small text-uppercase fw-bold">Pending Orders</div>
+        <div class="fs-3 fw-bold text-dark mt-1">{{ pendingOrders }}</div>
+        <small class="text-warning"><i class="bi bi-clock-history me-1"></i>Kitchen Queue</small>
       </div>
-
-
-      <!-- =====================================
-           DASHBOARD CARDS
-      ====================================== -->
-
-      <div class="dashboard-cards">
-
-
-        <!-- TOTAL STUDENTS -->
-
-        <div class="dashboard-card">
-
-          <h3>
-            Total Students
-          </h3>
-
-          <div class="card-number">
-            {{ totalStudents }}
-          </div>
-
-          <p>
-            Registered Students
-          </p>
-
-        </div>
-
-
-        <!-- ACTIVE SUBSCRIPTIONS -->
-
-        <div class="dashboard-card">
-
-          <h3>
-            Active Subscriptions
-          </h3>
-
-          <div class="card-number">
-            {{ activeSubscriptions }}
-          </div>
-
-          <p>
-            Currently Active
-          </p>
-
-        </div>
-
-
-        <!-- PENDING ORDERS -->
-
-        <div class="dashboard-card">
-
-          <h3>
-            Pending Orders
-          </h3>
-
-          <div class="card-number">
-            {{ pendingOrders }}
-          </div>
-
-          <p>
-            Waiting for Confirmation
-          </p>
-
-        </div>
-
-
-        <!-- OPEN COMPLAINTS -->
-
-        <div class="dashboard-card">
-
-          <h3>
-            Open Complaints
-          </h3>
-
-          <div class="card-number">
-            {{ openComplaints }}
-          </div>
-
-          <p>
-            Unresolved Complaints
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <!-- =====================================
-           RECENT NOTICES
-      ====================================== -->
-
-      <div class="recent-notices">
-
-        <h2>
-          Recent Notices
-        </h2>
-
-
-        <!-- NO NOTICES -->
-
-        <div
-          *ngIf="recentNotices.length === 0"
-          class="no-notices">
-
-          No recent notices found.
-
-        </div>
-
-
-        <!-- NOTICE LIST -->
-
-        <div
-          *ngFor="let notice of recentNotices"
-          class="notice-item">
-
-
-          <!-- NOTICE HEADER -->
-
-          <div class="notice-header">
-
-            <h3>
-              {{ notice.title }}
-            </h3>
-
-
-            <span class="notice-type">
-              {{ notice.type }}
-            </span>
-
-          </div>
-
-
-          <!-- NOTICE CONTENT -->
-
-          <p>
-            {{ notice.content || 'No content available.' }}
-          </p>
-
-
-          <!-- VALID UNTIL -->
-
-          <small>
-
-            Valid Until:
-
-            {{ notice.validUntil || 'N/A' }}
-
-          </small>
-
-        </div>
-
-      </div>
-
-
     </div>
 
-  </main>
+    <div class="col-md-4 col-lg-2">
+      <div class="card h-100 p-3 border-0 shadow-sm" style="border-left: 4px solid #ef4444 !important;">
+        <div class="text-muted small text-uppercase fw-bold">Complaints</div>
+        <div class="fs-3 fw-bold text-dark mt-1">{{ openComplaints }}</div>
+        <small class="text-danger"><i class="bi bi-exclamation-circle-fill me-1"></i>Open Tickets</small>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-lg-2">
+      <div class="card h-100 p-3 border-0 shadow-sm" style="border-left: 4px solid #8b5cf6 !important;">
+        <div class="text-muted small text-uppercase fw-bold">Low Stock</div>
+        <div class="fs-3 fw-bold text-dark mt-1">{{ lowStockCount }}</div>
+        <small class="text-purple"><a routerLink="/inventory" class="text-decoration-none">Review Stock</a></small>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-lg-2">
+      <div class="card h-100 p-3 border-0 shadow-sm" style="border-left: 4px solid #059669 !important;">
+        <div class="text-muted small text-uppercase fw-bold">Total Revenue</div>
+        <div class="fs-3 fw-bold text-dark mt-1">₹{{ totalRevenue }}</div>
+        <small class="text-success">Today: ₹{{ todayRevenue }}</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK ACCESS TILES -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white border-0 py-3">
+      <h5 class="mb-0 fw-bold"><i class="bi bi-grid-fill text-primary me-2"></i>Quick Management Modules</h5>
+    </div>
+    <div class="card-body pt-0">
+      <div class="row g-3">
+        <div class="col-6 col-md-3 col-lg-2">
+          <a routerLink="/inventory" class="btn btn-outline-light text-dark border p-3 w-100 text-center text-decoration-none h-100 d-flex flex-column align-items-center justify-content-center">
+            <i class="bi bi-box-seam fs-2 text-primary mb-2"></i>
+            <span class="fw-semibold small">Kitchen Stock</span>
+          </a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <a routerLink="/orders" class="btn btn-outline-light text-dark border p-3 w-100 text-center text-decoration-none h-100 d-flex flex-column align-items-center justify-content-center">
+            <i class="bi bi-cart3 fs-2 text-warning mb-2"></i>
+            <span class="fw-semibold small">Live Orders</span>
+          </a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <a routerLink="/menus" class="btn btn-outline-light text-dark border p-3 w-100 text-center text-decoration-none h-100 d-flex flex-column align-items-center justify-content-center">
+            <i class="bi bi-calendar4-week fs-2 text-info mb-2"></i>
+            <span class="fw-semibold small">Daily Menus</span>
+          </a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <a routerLink="/suppliers" class="btn btn-outline-light text-dark border p-3 w-100 text-center text-decoration-none h-100 d-flex flex-column align-items-center justify-content-center">
+            <i class="bi bi-truck fs-2 text-success mb-2"></i>
+            <span class="fw-semibold small">Suppliers</span>
+          </a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <a routerLink="/settings" class="btn btn-outline-light text-dark border p-3 w-100 text-center text-decoration-none h-100 d-flex flex-column align-items-center justify-content-center">
+            <i class="bi bi-gear fs-2 text-secondary mb-2"></i>
+            <span class="fw-semibold small">Rules & Settings</span>
+          </a>
+        </div>
+        <div class="col-6 col-md-3 col-lg-2">
+          <a routerLink="/audit-logs" class="btn btn-outline-light text-dark border p-3 w-100 text-center text-decoration-none h-100 d-flex flex-column align-items-center justify-content-center">
+            <i class="bi bi-shield-lock fs-2 text-dark mb-2"></i>
+            <span class="fw-semibold small">Audit Trail</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTICES & CIRCULARS PREVIEW -->
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+      <h5 class="mb-0 fw-bold"><i class="bi bi-megaphone text-primary me-2"></i>Recent Campus Circulars</h5>
+      <a routerLink="/notices" class="btn btn-sm btn-outline-primary">Manage Notices</a>
+    </div>
+    <div class="card-body p-0">
+      <div class="list-group list-group-flush">
+        <div *ngFor="let n of recentNotices" class="list-group-item p-3 d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="mb-1 fw-bold text-dark">{{ n.title }}</h6>
+            <p class="mb-0 text-muted small">{{ n.content }}</p>
+          </div>
+          <span class="badge badge-info">{{ n.type }}</span>
+        </div>
+        <div *ngIf="recentNotices.length === 0" class="p-4 text-center text-muted">
+          No notices published yet.
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>

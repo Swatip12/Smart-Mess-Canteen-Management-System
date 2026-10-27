@@ -1,5 +1,6 @@
 package com.smartmess.smart_mess_management.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
@@ -31,6 +33,9 @@ public class Meal {
     @JoinColumn(name = "mess_id")
     private Mess mess;
 
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long messId;
 
     // Getters and Setters
 
@@ -72,5 +77,13 @@ public class Meal {
 
     public void setMess(Mess mess) {
         this.mess = mess;
+    }
+
+    public Long getMessId() {
+        return mess != null ? mess.getId() : messId;
+    }
+
+    public void setMessId(Long messId) {
+        this.messId = messId;
     }
 }

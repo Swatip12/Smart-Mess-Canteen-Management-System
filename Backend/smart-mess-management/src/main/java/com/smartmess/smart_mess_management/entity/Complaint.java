@@ -1,5 +1,6 @@
 package com.smartmess.smart_mess_management.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,10 @@ public class Complaint {
     @JoinColumn(name = "student_id")
     private Student student;
 
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long studentId;
+
     @NotBlank
     private String title;
 
@@ -43,7 +48,6 @@ public class Complaint {
 
     private LocalDateTime resolvedAt;
 
-
     // Getters and Setters
 
     public Long getId() {
@@ -60,6 +64,14 @@ public class Complaint {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public Long getStudentId() {
+        return student != null ? student.getId() : studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
     public String getTitle() {

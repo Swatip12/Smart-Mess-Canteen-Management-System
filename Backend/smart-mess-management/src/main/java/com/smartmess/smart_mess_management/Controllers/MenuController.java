@@ -20,14 +20,16 @@ import com.smartmess.smart_mess_management.Services.MenuService;
 import com.smartmess.smart_mess_management.entity.Menu;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/menus")
-@RequiredArgsConstructor
 public class MenuController {
 
     private final MenuService menuService;
+
+    public MenuController(MenuService menuService) {
+        this.menuService = menuService;
+    }
 
     @PostMapping
     public ResponseEntity<Menu> create(

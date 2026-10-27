@@ -1,0 +1,173 @@
+<div class="student-page-container">
+  <div class="student-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <div class="d-flex align-items-center gap-2 mb-1">
+        <a routerLink="/student-dashboard" class="btn btn-sm btn-outline-secondary">
+          <i class="bi bi-arrow-left"></i>
+        </a>
+        <h2 class="mb-0">Mess Subscriptions</h2>
+      </div>
+      <p class="text-muted ms-4 ps-2 mb-0">Manage your active dining subscription and meal membership</p>
+    </div>
+    <div class="d-flex gap-2">
+      <button class="btn btn-primary d-flex align-items-center gap-2" (click)="openRenewModal()">
+        <i class="bi bi-patch-plus"></i>
+        <span>Subscribe / Renew</span>
+      </button>
+      <button class="btn btn-outline-danger" (click)="logout()">
+        <i class="bi bi-box-arrow-right me-1"></i> Logout
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="message" class="alert alert-dismissible fade show" [ngClass]="'alert-' + messageType">
+    {{ message }}
+    <button type="button" class="btn-close" (click)="message = ''"></button>
+  </div>
+
+  <!-- Active Subscription Card -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card border-0 shadow-sm subscription-hero-card" *ngIf="activeSubscription; else noActiveSub">
+        <div class="card-body p-4">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <span class="badge badge-success px-3 py-2 fs-6 mb-2">
+                <i class="bi bi-check-circle me-1"></i> ACTIVE SUBSCRIPTION
+              </span>
+              <h3 class="fw-bold mb-1">{{ activeSubscription.mess?.name || 'Mess Dining Plan' }}</h3>
+              <p class="text-muted mb-3">
+                <i class="bi bi-geo-alt me-1 text-danger"></i> {{ activeSubscription.mess?.location || 'Campus Mess' }}
+              </p>
+              <div class="d-flex flex-wrap gap-4 text-secondary">
+                <div>
+                  <small class="text-muted d-block">Plan Duration</small>
+                  <strong>{{ activeSubscription.plan }} PLAN</strong>
+                </div>
+                <div>
+                  <small class="text-muted d-block">Valid From</small>
+                  <strong>{{ activeSubscription.startDate | date:'mediumDate' }}</strong>
+                </div>
+                <div>
+                  <small class="text-muted d-block">Valid Until</small>
+                  <strong class="text-primary">{{ activeSubscription.endDate | date:'mediumDate' }}</strong>
+                </div>
+                <div>
+                  <small class="text-muted d-block">Fee Paid</small>
+                  <strong>₹{{ activeSubscription.amount }}</strong>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+              <button class="btn btn-outline-primary btn-lg px-4" (click)="openRenewModal()">
+                <i class="bi bi-arrow-repeat me-1"></i> Renew / Change Plan
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noActiveSub>
+        <div class="card border-0 shadow-sm text-center py-5">
+          <div class="card-body">
+            <i class="bi bi-card-checklist fs-1 text-secondary mb-3 d-block"></i>
+            <h4 class="fw-bold text-dark">No Active Mess Subscription</h4>
+            <p class="text-muted mb-4">You do not currently have an active meal plan. Subscribe now to enjoy daily hostel meals.</p>
+            <button class="btn btn-primary px-4 py-2" (click)="openRenewModal()">
+              <i class="bi bi-plus-lg me-1"></i> Get a Meal Plan
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- Subscription History -->
+  <div class="card card-table shadow-sm border-0">
+    <div class="card-header bg-white py-3 border-0">
+      <h5 class="fw-bold mb-0">Subscription History</h5>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th class="ps-4">ID</th>
+              <th>Mess</th>
+              <th>Plan</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of mySubscriptions">
+              <td class="ps-4 fw-semibold text-secondary">#{{ s.id }}</td>
+              <td>
+                <div class="fw-semibold text-dark">{{ s.mess?.name || 'Mess #' + (s.messId || '') }}</div>
+              </td>
+              <td><span class="badge bg-light text-dark border">{{ s.plan }}</span></td>
+              <td>{{ s.startDate | date:'mediumDate' }}</td>
+              <td>{{ s.endDate | date:'mediumDate' }}</td>
+              <td class="fw-semibold text-dark">₹{{ s.amount }}</td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'badge-success': s.status === 'ACTIVE',
+                  'badge-secondary': s.status === 'EXPIRED',
+                  'badge-danger': s.status === 'CANCELLED'
+                }">{{ s.status }}</span>
+              </td>
+            </tr>
+            <tr *ngIf="mySubscriptions.length === 0">
+              <td colspan="7" class="text-center py-4 text-muted">
+                No past subscription records.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Renew / Subscribe Modal -->
+  <div class="modal-backdrop-custom" *ngIf="showRenewModal">
+    <div class="modal-card">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="fw-bold mb-0">Subscribe / Renew Meal Plan</h4>
+        <button class="btn-close" (click)="closeRenewModal()"></button>
+      </div>
+
+      <form [formGroup]="renewForm" (ngSubmit)="submitSubscription()">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Select Mess Facility <span class="text-danger">*</span></label>
+          <select class="form-select" formControlName="messId">
+            <option value="">-- Choose Mess --</option>
+            <option *ngFor="let m of messes" [value]="m.id">{{ m.name }} ({{ m.location }} - {{ m.type }})</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Subscription Plan Duration <span class="text-danger">*</span></label>
+          <select class="form-select" formControlName="plan" (change)="onPlanChange($event)">
+            <option value="MONTHLY">Monthly Plan (30 Days) - ₹3,000</option>
+            <option value="QUARTERLY">Quarterly Plan (90 Days) - ₹8,500</option>
+            <option value="YEARLY">Yearly Plan (365 Days) - ₹32,000</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Amount to Pay (₹)</label>
+          <input type="number" class="form-control" formControlName="amount" readonly>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+          <button type="button" class="btn btn-light border" (click)="closeRenewModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="renewForm.invalid || isSubmitting">
+            <i class="bi bi-check2-circle me-1"></i> Confirm & Activate
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

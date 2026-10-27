@@ -1,6 +1,6 @@
 package com.smartmess.smart_mess_management.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +25,10 @@ public class Payment {
     @JoinColumn(name = "student_id")
     private Student student;
 
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Long studentId;
+
     private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
@@ -38,7 +42,6 @@ public class Payment {
 
     @CreationTimestamp
     private LocalDateTime paidAt;
-
 
     // Getters and Setters
 
@@ -56,6 +59,14 @@ public class Payment {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public Long getStudentId() {
+        return student != null ? student.getId() : studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
 
     public BigDecimal getAmount() {

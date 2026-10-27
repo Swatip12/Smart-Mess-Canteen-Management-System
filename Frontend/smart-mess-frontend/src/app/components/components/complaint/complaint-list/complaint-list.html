@@ -1,121 +1,94 @@
-<div class="container mt-4">
-
-  <div class="d-flex justify-content-between mb-3">
-
-    <h2>Complaints</h2>
-
-    <a
-      routerLink="/complaints/add"
-      class="btn btn-primary">
-
-      + Add Complaint
-
+<div class="page-container">
+  <div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="mb-1"><i class="bi bi-exclamation-triangle text-danger me-2"></i>Grievances & Complaints</h2>
+      <p class="text-muted mb-0">Review, address, and resolve student mess and canteen complaints</p>
+    </div>
+    <a routerLink="/complaints/add" class="btn btn-primary d-flex align-items-center gap-2">
+      <i class="bi bi-plus-lg"></i>
+      <span>Log Complaint</span>
     </a>
-
   </div>
 
+  <div class="card card-table shadow-sm border-0">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th class="ps-4">ID</th>
+              <th>Student</th>
+              <th>Complaint Title</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th>Resolution Notes</th>
+              <th class="text-end pe-4">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of complaints">
+              <td class="ps-4 fw-semibold text-secondary">#{{ c.id }}</td>
+              <td>
+                <div class="fw-semibold text-dark">
+                  {{ c.student?.name || ('Student #' + (c.studentId || 'N/A')) }}
+                </div>
+                <small class="text-muted" *ngIf="c.student?.rollNumber">{{ c.student.rollNumber }}</small>
+              </td>
+              <td>
+                <div class="fw-semibold text-dark">{{ c.title }}</div>
+                <small class="text-muted text-truncate d-inline-block" style="max-width: 250px;">
+                  {{ c.description }}
+                </small>
+              </td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'badge-danger': c.category === 'HYGIENE',
+                  'badge-warning': c.category === 'FOOD',
+                  'badge-info': c.category === 'SERVICE',
+                  'badge-secondary': c.category === 'OTHER' || c.category === 'BILLING'
+                }">{{ c.category }}</span>
+              </td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'badge-danger': c.status === 'OPEN',
+                  'badge-warning': c.status === 'IN_PROGRESS',
+                  'badge-success': c.status === 'RESOLVED',
+                  'badge-secondary': c.status === 'CLOSED'
+                }">{{ c.status }}</span>
+              </td>
+              <td>
+                <span class="text-muted small" *ngIf="c.resolution; else noRes">
+                  <i class="bi bi-check-circle-fill text-success me-1"></i>{{ c.resolution }}
+                </span>
+                <ng-template #noRes>
+                  <span class="text-muted fst-italic small">Pending review</span>
+                </ng-template>
+              </td>
+              <td class="text-end pe-4">
+                <button
+                  *ngIf="c.status !== 'RESOLVED' && c.status !== 'CLOSED'"
+                  type="button"
+                  class="btn btn-sm btn-outline-success d-inline-flex align-items-center gap-1"
+                  (click)="resolveComplaint(c.id!)">
+                  <i class="bi bi-check2"></i> Resolve
+                </button>
+                <span
+                  *ngIf="c.status === 'RESOLVED' || c.status === 'CLOSED'"
+                  class="badge bg-light text-success border">
+                  Resolved
+                </span>
+              </td>
+            </tr>
 
-  <table class="table table-striped">
-
-    <thead>
-
-      <tr>
-
-        <th>Student</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Category</th>
-        <th>Status</th>
-        <th>Resolution</th>
-        <th>Action</th>
-
-      </tr>
-
-    </thead>
-
-
-    <tbody>
-
-      <tr
-        *ngFor="let complaint of complaints">
-
-        <td>
-          {{ complaint.student?.name || 'N/A' }}
-        </td>
-
-        <td>
-          {{ complaint.title }}
-        </td>
-
-        <td>
-          {{ complaint.description || 'N/A' }}
-        </td>
-
-        <td>
-          {{ complaint.category || 'N/A' }}
-        </td>
-
-        <td>
-
-          <span
-            class="status-badge"
-            [ngClass]="getStatusClass(complaint.status)">
-
-            {{ complaint.status }}
-
-          </span>
-
-        </td>
-
-        <td>
-          {{ complaint.resolution || '-' }}
-        </td>
-
-        <td>
-
-          <button
-            *ngIf="
-              complaint.status !== 'RESOLVED' &&
-              complaint.status !== 'CLOSED'
-            "
-            type="button"
-            class="btn btn-success btn-sm"
-            (click)="resolveComplaint(complaint.id!)">
-
-            Resolve
-
-          </button>
-
-          <span
-            *ngIf="
-              complaint.status === 'RESOLVED' ||
-              complaint.status === 'CLOSED'
-            ">
-
-            Completed
-
-          </span>
-
-        </td>
-
-      </tr>
-
-
-      <tr
-        *ngIf="complaints.length === 0">
-
-        <td
-          colspan="7"
-          class="text-center">
-
-          No complaints found.
-
-        </td>
-
-      </tr>
-
-    </tbody>
-
-  </table>
-
+            <tr *ngIf="complaints.length === 0">
+              <td colspan="7" class="text-center py-5 text-muted">
+                <i class="bi bi-check-circle fs-1 d-block mb-2 text-success"></i>
+                No active complaints. Everything is running smoothly!
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

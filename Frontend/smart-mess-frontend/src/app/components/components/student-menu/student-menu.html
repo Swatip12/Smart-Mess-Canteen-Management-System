@@ -1,0 +1,60 @@
+<div class="student-menu-container">
+
+  <div class="student-menu-header">
+    <button class="back-button" (click)="goBack()">← Back to Dashboard</button>
+    <h1>Daily Mess Menu</h1>
+  </div>
+
+  <div class="menu-filters">
+    <div class="filter-group">
+      <label for="mess-select">Select Mess:</label>
+      <select
+        id="mess-select"
+        [(ngModel)]="selectedMess"
+        (change)="onMessChange()"
+      >
+        <option *ngFor="let mess of messes" [value]="mess.id">
+          {{ mess.name }} ({{ mess.type }})
+        </option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="date-select">Select Date:</label>
+      <input
+        id="date-select"
+        type="date"
+        [(ngModel)]="selectedDate"
+        (change)="onDateChange()"
+      />
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Loading menu...
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!loading && menus.length > 0" class="menu-content">
+    <div class="menu-section" *ngFor="let menu of menus">
+      <div class="menu-card">
+        <div class="meal-name">
+          <h3>{{ getMealName(menu) }}</h3>
+          <span class="menu-date">{{ menu.menuDate | date:'fullDate' }} ({{ menu.dayOfWeek }})</span>
+        </div>
+        <div class="menu-items">
+          <h4>Menu Items:</h4>
+          <p>{{ menu.items }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && menus.length === 0 && !errorMessage" class="no-menu">
+    <p>No menu available for the selected date and mess facility.</p>
+  </div>
+
+</div>

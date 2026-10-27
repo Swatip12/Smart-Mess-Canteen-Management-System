@@ -1,1 +1,125 @@
-<p>login works!</p>
+<div class="admin-login-wrapper">
+
+  <!-- Ambient background glow elements -->
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+
+  <div class="admin-login-card">
+
+    <!-- Card Brand Header -->
+    <div class="admin-login-header">
+      <div class="brand-badge">
+        <i class="bi bi-shield-lock-fill"></i>
+        <span>ADMIN CONSOLE</span>
+      </div>
+      <h1 class="portal-title">Smart Mess & Canteen</h1>
+      <p class="portal-subtitle">Secure management portal for cafeteria, mess, and inventory administration</p>
+    </div>
+
+    <!-- Demo Credential Quick-Fill Pill -->
+    <div class="demo-banner">
+      <div class="demo-info">
+        <i class="bi bi-info-circle-fill text-primary"></i>
+        <span><strong>Quick Fill:</strong> admin&#64;smartmess.com / admin123</span>
+      </div>
+      <button type="button" class="btn-demo-fill" (click)="fillDemoCredentials()" title="Fill credentials automatically">
+        Auto Fill
+      </button>
+    </div>
+
+    <!-- Login Form -->
+    <form (ngSubmit)="login()" class="login-form">
+
+      <!-- Email Field -->
+      <div class="form-field-group">
+        <label for="adminEmail" class="field-label">Administrator Email</label>
+        <div class="input-container">
+          <i class="bi bi-envelope-at field-icon"></i>
+          <input
+            id="adminEmail"
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="admin@smartmess.com"
+            class="form-control-custom"
+            autocomplete="email"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-field-group">
+        <div class="password-label-row">
+          <label for="adminPassword" class="field-label">Password</label>
+          <a routerLink="/home" class="help-link">Need Help?</a>
+        </div>
+        <div class="input-container">
+          <i class="bi bi-key-fill field-icon"></i>
+          <input
+            id="adminPassword"
+            [type]="showPassword ? 'text' : 'password'"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="Enter admin password"
+            class="form-control-custom"
+            autocomplete="current-password"
+            required
+          />
+          <button
+            type="button"
+            class="toggle-password-btn"
+            (click)="togglePasswordVisibility()"
+            [title]="showPassword ? 'Hide password' : 'Show password'"
+          >
+            <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Error Feedback Alert -->
+      <div *ngIf="errorMessage" class="error-banner">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn-admin-submit"
+        [disabled]="loading"
+      >
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        <span>{{ loading ? 'Authenticating Admin...' : 'Sign In as Administrator' }}</span>
+        <i *ngIf="!loading" class="bi bi-arrow-right ms-2"></i>
+      </button>
+
+    </form>
+
+    <!-- Card Footer & Cross-Portal Routing -->
+    <div class="admin-login-footer">
+      <div class="divider">
+        <span>OR SWITCH PORTAL</span>
+      </div>
+
+      <div class="footer-actions">
+        <a routerLink="/student-login" class="portal-switch-card">
+          <div class="switch-icon"><i class="bi bi-mortarboard-fill"></i></div>
+          <div class="switch-text">
+            <strong>Student & Diner Portal</strong>
+            <small>Browse menus, purchase meal plans & check attendance</small>
+          </div>
+          <i class="bi bi-chevron-right arrow-icon"></i>
+        </a>
+      </div>
+
+      <div class="home-link-wrap">
+        <a routerLink="/home" class="back-home-link">
+          <i class="bi bi-arrow-left me-1"></i> Back to Homepage
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</div>

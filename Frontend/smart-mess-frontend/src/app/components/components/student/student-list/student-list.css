@@ -1,0 +1,130 @@
+.student-page {
+  min-height: 100vh;
+  padding: 30px;
+  background: #f4f7fb;
+}
+
+.student-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 22px 25px;
+  margin-bottom: 25px;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.student-header h1 {
+  margin: 0;
+  color: #062b63;
+  font-size: 28px;
+}
+
+.student-header p {
+  margin: 6px 0 0;
+  color: #777;
+}
+
+.add-btn {
+  border: none;
+  background: #0d6efd;
+  color: white;
+  padding: 11px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.add-btn:hover {
+  background: #0b5ed7;
+}
+
+.loading {
+  background: white;
+  padding: 40px;
+  text-align: center;
+  border-radius: 10px;
+  color: #555;
+  font-size: 16px;
+}
+
+.table-container {
+  background: white;
+  border-radius: 10px;
+  overflow-x: auto;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1100px;
+}
+
+thead {
+  background: #062b63;
+}
+
+th {
+  color: white;
+  padding: 14px 12px;
+  text-align: left;
+  font-size: 14px;
+}
+
+td {
+  padding: 13px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+tbody tr:hover {
+  background: #f8fafc;
+}
+
+.status {
+  background: #d1e7dd;
+  color: #146c43;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.actions {
+  white-space: nowrap;
+}
+
+.edit-btn {
+  border: none;
+  background: #ffc107;
+  color: #212529;
+  padding: 7px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+.delete-btn {
+  border: none;
+  background: #dc3545;
+  color: white;
+  padding: 7px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background: #ffca2c;
+}
+
+.delete-btn:hover {
+  background: #bb2d3b;
+}
+
+.no-data {
+  text-align: center;
+  padding: 35px;
+  color: #777;
+}

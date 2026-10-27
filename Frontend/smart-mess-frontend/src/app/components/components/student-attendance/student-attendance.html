@@ -1,0 +1,75 @@
+<div class="student-attendance-container">
+
+  <div class="student-attendance-header">
+    <button class="back-button" (click)="goBack()">← Back to Dashboard</button>
+    <h1>My Attendance Records</h1>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Loading attendance records...
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!loading && attendance.length > 0" class="attendance-content">
+
+    <div class="attendance-summary">
+      <div class="summary-card">
+        <div class="summary-icon">✅</div>
+        <div class="summary-details">
+          <h3>{{ getPresentCount() }}</h3>
+          <p>Present Meals</p>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-icon">❌</div>
+        <div class="summary-details">
+          <h3>{{ getAbsentCount() }}</h3>
+          <p>Absent / Skipped</p>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-icon">📊</div>
+        <div class="summary-details">
+          <h3>{{ getAttendancePercentage() }}%</h3>
+          <p>Attendance Rate</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="attendance-records">
+      <h2>Meal Check-in History</h2>
+      <div class="attendance-list">
+        <div class="attendance-item" *ngFor="let record of attendance">
+          <div class="attendance-date">
+            <p class="date">{{ formatDate(record.attendanceDate) }}</p>
+            <p class="meal">{{ record.meal?.name || ('Meal Session #' + (record.mealId || '')) }}</p>
+          </div>
+          <div class="attendance-status">
+            <span
+              class="status-badge"
+              [class.present]="record.isPresent"
+              [class.absent]="!record.isPresent"
+            >
+              {{ record.isPresent ? 'Present' : 'Absent' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="!loading && attendance.length === 0 && !errorMessage" class="no-attendance">
+    <div class="no-attendance-content">
+      <div class="no-attendance-icon">📋</div>
+      <h2>No Attendance Records Found</h2>
+      <p>No dining attendance has been marked for your profile yet.</p>
+    </div>
+  </div>
+
+</div>

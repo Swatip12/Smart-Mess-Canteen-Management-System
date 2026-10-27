@@ -1,1 +1,104 @@
-<p>food-order-list works!</p>
+<div class="page-container">
+  <div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="mb-1"><i class="bi bi-cart3 text-primary me-2"></i>Canteen Orders</h2>
+      <p class="text-muted mb-0">Track and manage student orders across canteen outlets</p>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <div class="d-flex align-items-center gap-2">
+        <label class="form-label text-muted mb-0 small fw-semibold">Status:</label>
+        <select
+          class="form-select form-select-sm"
+          style="width: 150px;"
+          [(ngModel)]="selectedStatus"
+          (change)="filterOrders()">
+          <option value="ALL">All Statuses</option>
+          <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+
+      <button class="btn btn-sm btn-outline-success d-flex align-items-center gap-1" (click)="exportCsv()">
+        <i class="bi bi-file-earmark-spreadsheet"></i>
+        <span>Export CSV</span>
+      </button>
+
+      <a routerLink="/orders/add" class="btn btn-sm btn-primary d-flex align-items-center gap-1">
+        <i class="bi bi-plus-lg"></i>
+        <span>Place Order</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="card card-table shadow-sm border-0">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th class="ps-4">Order ID</th>
+              <th>Student</th>
+              <th>Canteen Outlet</th>
+              <th>Total Amount</th>
+              <th>Order Status</th>
+              <th>Ordered Time</th>
+              <th class="text-end pe-4">Update Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of filteredOrders">
+              <td class="ps-4 fw-semibold text-secondary">#{{ order.id }}</td>
+              <td>
+                <div class="fw-semibold text-dark">
+                  {{ order.student?.name || 'Student #' + (order.studentId || order.student) }}
+                </div>
+                <small class="text-muted" *ngIf="order.student?.rollNumber">
+                  {{ order.student.rollNumber }}
+                </small>
+              </td>
+              <td>
+                <span class="text-muted">
+                  <i class="bi bi-shop me-1 text-secondary"></i>
+                  {{ order.canteen?.name || 'Canteen #' + (order.canteenId || order.canteen) }}
+                </span>
+              </td>
+              <td class="fw-bold text-dark">₹{{ order.totalAmount || 0 }}</td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'badge-warning': order.status === 'PENDING',
+                  'badge-info': order.status === 'CONFIRMED',
+                  'badge-secondary': order.status === 'PREPARING',
+                  'badge-primary': order.status === 'READY',
+                  'badge-success': order.status === 'DELIVERED',
+                  'badge-danger': order.status === 'CANCELLED'
+                }">{{ order.status }}</span>
+              </td>
+              <td>
+                <span class="text-muted small">
+                  {{ order.orderedAt ? (order.orderedAt | date:'medium') : 'Just now' }}
+                </span>
+              </td>
+              <td class="text-end pe-4">
+                <select
+                  class="form-select form-select-sm d-inline-block"
+                  style="width: 140px;"
+                  [value]="order.status"
+                  (change)="updateStatus(order.id!, $any($event.target).value)">
+                  <option *ngFor="let status of statuses" [value]="status">
+                    {{ status }}
+                  </option>
+                </select>
+              </td>
+            </tr>
+
+            <tr *ngIf="filteredOrders.length === 0">
+              <td colspan="7" class="text-center py-5 text-muted">
+                <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
+                No canteen orders found for the selected status.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

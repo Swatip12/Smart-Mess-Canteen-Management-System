@@ -1,1 +1,88 @@
-<p>feedback-add works!</p>
+<div class="page-container">
+  <div class="page-header mb-4">
+    <div class="d-flex align-items-center gap-2 mb-1">
+      <a routerLink="/feedbacks" class="btn btn-sm btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i>
+      </a>
+      <h2 class="mb-0">Record Student Feedback</h2>
+    </div>
+    <p class="text-muted ms-4 ps-2 mb-0">Record dining review and ratings</p>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <form [formGroup]="feedbackForm" (ngSubmit)="addFeedback()">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Student <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="student">
+                  <option [ngValue]="null">-- Select Student --</option>
+                  <option *ngFor="let s of students" [ngValue]="s.id">
+                    {{ s.name }} ({{ s.rollNumber || s.email }})
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Mess Facility <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="mess">
+                  <option [ngValue]="null">-- Select Mess --</option>
+                  <option *ngFor="let m of messes" [ngValue]="m.id">
+                    {{ m.name }} ({{ m.location }})
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Rating (1 to 5 Stars) <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="rating">
+                  <option [ngValue]="null">-- Select Rating --</option>
+                  <option *ngFor="let r of ratings" [ngValue]="r">
+                    {{ r }} ★ {{ r === 5 ? '(Excellent)' : r === 4 ? '(Good)' : r === 3 ? '(Average)' : '(Needs Improvement)' }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Category <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="category">
+                  <option [ngValue]="null">-- Select Category --</option>
+                  <option *ngFor="let c of categories" [ngValue]="c">{{ c }}</option>
+                </select>
+              </div>
+
+              <div class="col-md-12">
+                <label class="form-label fw-semibold">Comments & Feedback</label>
+                <textarea
+                  class="form-control"
+                  rows="4"
+                  formControlName="comment"
+                  placeholder="Enter detailed feedback or comments"></textarea>
+              </div>
+            </div>
+
+            <hr class="my-4 text-muted">
+
+            <div class="d-flex justify-content-end gap-2">
+              <button
+                type="button"
+                class="btn btn-light border px-4"
+                (click)="cancel()">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary px-4 d-flex align-items-center gap-2"
+                [disabled]="feedbackForm.invalid">
+                <i class="bi bi-star"></i>
+                Save Feedback
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

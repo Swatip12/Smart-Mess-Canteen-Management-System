@@ -1,0 +1,92 @@
+/* =========================================
+   SMART MESS SIDEBAR
+   ========================================= */
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.sidebar {
+  width: 240px;
+  min-height: calc(100vh - 120px);
+  background: #071d3a;
+  color: white;
+  padding: 22px 14px;
+  box-shadow: 3px 0 10px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Sidebar title */
+
+.sidebar h2 {
+  color: white;
+  font-size: 20px;
+  margin: 0 10px 25px;
+  font-weight: 700;
+}
+
+
+/* Links */
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #dbe7f5;
+  padding: 12px 14px;
+  margin-bottom: 5px;
+  border-radius: 7px;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.sidebar a:hover {
+  background: #0b4d9c;
+  color: white;
+}
+
+
+/* Active */
+
+.sidebar a.active {
+  background: #0d6efd;
+  color: white;
+  font-weight: 600;
+}
+
+
+/* Lists */
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin: 0;
+}
+
+
+/* Mobile */
+
+@media (max-width: 900px) {
+
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+    padding: 10px;
+  }
+
+  .sidebar ul {
+    display: flex;
+    overflow-x: auto;
+    gap: 5px;
+  }
+
+  .sidebar a {
+    white-space: nowrap;
+  }
+
+}

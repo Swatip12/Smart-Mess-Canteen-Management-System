@@ -1,1 +1,90 @@
-<p>notice-add works!</p>
+<div class="page-container">
+  <div class="page-header mb-4">
+    <div class="d-flex align-items-center gap-2 mb-1">
+      <a routerLink="/notices" class="btn btn-sm btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i>
+      </a>
+      <h2 class="mb-0">Create Notice</h2>
+    </div>
+    <p class="text-muted ms-4 ps-2 mb-0">Publish a campus dining announcement or circular</p>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <form [formGroup]="noticeForm" (ngSubmit)="addNotice()">
+            <div class="row g-3">
+              <div class="col-md-8">
+                <label class="form-label fw-semibold">Notice Title <span class="text-danger">*</span></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="title"
+                  placeholder="e.g. Special Holiday Mess Timing">
+                <small class="text-danger" *ngIf="noticeForm.get('title')?.touched && noticeForm.get('title')?.invalid">
+                  Title is required.
+                </small>
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label fw-semibold">Notice Type</label>
+                <select class="form-select" formControlName="type">
+                  <option *ngFor="let type of types" [ngValue]="type">{{ type }}</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Valid Until Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  formControlName="validUntil">
+              </div>
+
+              <div class="col-md-6 d-flex align-items-center">
+                <div class="form-check form-switch mt-3">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="isActive"
+                    formControlName="isActive">
+                  <label class="form-check-label fw-semibold" for="isActive">
+                    Publish immediately (Active)
+                  </label>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <label class="form-label fw-semibold">Notice Content / Instructions</label>
+                <textarea
+                  class="form-control"
+                  rows="4"
+                  formControlName="content"
+                  placeholder="Enter full notice announcement details"></textarea>
+              </div>
+            </div>
+
+            <hr class="my-4 text-muted">
+
+            <div class="d-flex justify-content-end gap-2">
+              <button
+                type="button"
+                class="btn btn-light border px-4"
+                (click)="cancel()">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary px-4 d-flex align-items-center gap-2"
+                [disabled]="noticeForm.invalid">
+                <i class="bi bi-send"></i>
+                Publish Notice
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

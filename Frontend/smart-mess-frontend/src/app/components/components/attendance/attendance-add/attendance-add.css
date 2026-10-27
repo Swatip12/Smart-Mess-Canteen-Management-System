@@ -1,0 +1,200 @@
+/* ================================
+   ATTENDANCE ADD PAGE
+   ================================ */
+
+:host {
+  display: block;
+  min-height: 100%;
+  background: #f5f7fb;
+}
+
+/* Main container */
+.container {
+  max-width: 900px;
+  margin: 35px auto !important;
+  padding: 0 20px 40px;
+}
+
+/* Page heading */
+h2 {
+  margin: 0 0 28px;
+  padding: 22px 25px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  border-radius: 14px;
+  font-size: 26px;
+  font-weight: 700;
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.18);
+}
+
+/* Form card */
+form {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+  border: 1px solid #e5e7eb;
+}
+
+/* Form group */
+.mb-3 {
+  margin-bottom: 24px !important;
+}
+
+/* Labels */
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #1e293b;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Select and date input */
+.form-select,
+.form-control {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 13px;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  background-color: #ffffff;
+  color: #1f2937;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+/* Focus */
+.form-select:focus,
+.form-control:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Placeholder option */
+.form-select option {
+  color: #1f2937;
+}
+
+/* Attendance radio section */
+.form-check-inline {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 25px;
+  margin-bottom: 5px;
+}
+
+.form-check-input {
+  width: 18px;
+  height: 18px;
+  margin: 0 8px 0 0;
+  cursor: pointer;
+  accent-color: #2563eb;
+}
+
+.form-check-label {
+  color: #374151;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Buttons */
+.btn {
+  min-height: 44px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Primary button */
+.btn-primary {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(37, 99, 235, 0.25);
+}
+
+/* Secondary button */
+.btn-secondary {
+  background: #64748b;
+  color: #ffffff;
+}
+
+.btn-secondary:hover {
+  background: #475569;
+  transform: translateY(-1px);
+}
+
+/* Button spacing */
+.me-2 {
+  margin-right: 10px !important;
+}
+
+/* Validation */
+.ng-invalid.ng-touched.form-control,
+.ng-invalid.ng-touched.form-select {
+  border-color: #ef4444;
+}
+
+.ng-invalid.ng-touched.form-control:focus,
+.ng-invalid.ng-touched.form-select:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+  .container {
+    margin: 20px auto !important;
+    padding: 0 15px 30px;
+  }
+
+  h2 {
+    font-size: 22px;
+    padding: 18px 20px;
+  }
+
+  form {
+    padding: 22px 18px;
+  }
+
+  .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .me-2 {
+    margin-right: 0 !important;
+  }
+
+  .form-check-inline {
+    margin-right: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  h2 {
+    font-size: 20px;
+  }
+
+  form {
+    padding: 18px 15px;
+  }
+
+  .form-check-inline {
+    display: flex;
+    margin-bottom: 12px;
+  }
+}

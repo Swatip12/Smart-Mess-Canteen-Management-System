@@ -1,1 +1,90 @@
-<p>canteen-list works!</p>
+<div class="canteen-list-container">
+
+  <!-- Header -->
+  <div class="page-header-box">
+    <div>
+      <h2>Canteens Management</h2>
+      <p>Manage campus canteens, timings, and operational status</p>
+    </div>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="addCanteen()">
+      <i class="bi bi-shop me-1"></i> + Add Canteen
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="text-muted mt-2">Loading canteens...</p>
+  </div>
+
+  <!-- Table Card -->
+  <div class="card border-0 shadow-sm overflow-hidden" *ngIf="!loading">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Canteen Name</th>
+            <th>Location</th>
+            <th>Operating Hours</th>
+            <th>Contact</th>
+            <th>Status</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of canteens">
+            <td><strong>#{{ c.id }}</strong></td>
+            <td>
+              <div class="fw-semibold text-dark">{{ c.name }}</div>
+            </td>
+            <td>{{ c.location || 'Campus' }}</td>
+            <td>
+              <span class="badge bg-light text-dark border">
+                <i class="bi bi-clock me-1"></i>{{ c.openingTime || '8:00 AM' }} - {{ c.closingTime || '10:00 PM' }}
+              </span>
+            </td>
+            <td>{{ c.contactNumber || 'N/A' }}</td>
+            <td>
+              <span class="badge" [ngClass]="c.isActive ? 'bg-success' : 'bg-secondary'">
+                {{ c.isActive ? 'ACTIVE' : 'INACTIVE' }}
+              </span>
+            </td>
+            <td class="text-end">
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-primary me-2"
+                (click)="editCanteen(c.id)"
+                title="Edit canteen"
+              >
+                <i class="bi bi-pencil-square"></i> Edit
+              </button>
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-danger"
+                (click)="deleteCanteen(c.id)"
+                title="Delete canteen"
+              >
+                <i class="bi bi-trash3"></i> Delete
+              </button>
+            </td>
+          </tr>
+
+          <!-- Empty State -->
+          <tr *ngIf="canteens.length === 0">
+            <td colspan="7" class="text-center py-5 text-muted">
+              <i class="bi bi-shop-window fs-1 d-block mb-2 text-secondary"></i>
+              No canteens found. Click "+ Add Canteen" to register one.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

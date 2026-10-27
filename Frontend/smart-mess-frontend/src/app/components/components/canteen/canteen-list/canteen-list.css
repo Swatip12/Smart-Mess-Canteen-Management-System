@@ -1,0 +1,250 @@
+:host {
+  display: block;
+  min-height: 100%;
+}
+
+.canteen-page {
+  padding: 30px;
+  background: #f5f7fb;
+  min-height: calc(100vh - 60px);
+}
+
+
+/* HEADER */
+
+.canteen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #ffffff;
+  padding: 24px 28px;
+  margin-bottom: 22px;
+
+  border-radius: 14px;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+}
+
+.canteen-header h2 {
+  margin: 0;
+  color: #172554;
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.canteen-header p {
+  margin: 5px 0 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+
+/* ADD BUTTON */
+
+.add-btn {
+  background: #2563eb;
+  color: white;
+
+  text-decoration: none;
+
+  padding: 11px 18px;
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: 0.2s;
+}
+
+.add-btn:hover {
+  background: #1d4ed8;
+}
+
+
+/* LOADING */
+
+.loading-box {
+  background: white;
+  padding: 50px;
+  text-align: center;
+
+  border-radius: 14px;
+
+  color: #64748b;
+  font-size: 16px;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+
+/* TABLE CARD */
+
+.table-card {
+  background: white;
+
+  border-radius: 14px;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+
+  overflow: hidden;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+/* TABLE */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 950px;
+}
+
+
+/* HEADER */
+
+thead {
+  background: #1e3a8a;
+}
+
+th {
+  padding: 15px;
+
+  color: white;
+
+  text-align: left;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+/* BODY */
+
+td {
+  padding: 15px;
+
+  color: #475569;
+
+  font-size: 13px;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  white-space: nowrap;
+}
+
+tbody tr:hover {
+  background: #f8fafc;
+}
+
+
+/* NAME */
+
+.canteen-name {
+  color: #172554;
+  font-weight: 700;
+}
+
+
+/* STATUS */
+
+.status {
+  display: inline-block;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.active {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.inactive {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+
+/* EDIT */
+
+.edit-btn {
+  border: none;
+
+  background: #f59e0b;
+  color: white;
+
+  padding: 7px 12px;
+
+  border-radius: 6px;
+
+  margin-right: 6px;
+
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background: #d97706;
+}
+
+
+/* DELETE */
+
+.delete-btn {
+  border: none;
+
+  background: #dc2626;
+  color: white;
+
+  padding: 7px 12px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: #b91c1c;
+}
+
+
+/* EMPTY */
+
+.empty {
+  text-align: center;
+
+  padding: 45px !important;
+
+  color: #64748b;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+  .canteen-page {
+    padding: 15px;
+  }
+
+  .canteen-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+  }
+
+  .add-btn {
+    text-align: center;
+  }
+
+}

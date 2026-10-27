@@ -1,0 +1,123 @@
+<div class="student-order-container">
+
+  <div class="student-order-header">
+    <button class="back-button" (click)="goBack()">← Back to Dashboard</button>
+    <h1>Order Food</h1>
+  </div>
+
+  <div class="order-layout">
+
+    <div class="food-items-section">
+      <div class="canteen-selector">
+        <label for="canteen-select">Select Canteen:</label>
+        <select
+          id="canteen-select"
+          [(ngModel)]="selectedCanteen"
+          (change)="onCanteenChange()"
+        >
+          <option *ngFor="let canteen of canteens" [value]="canteen.id">
+            {{ canteen.name }} - {{ canteen.location }}
+          </option>
+        </select>
+      </div>
+
+      <div *ngIf="loading" class="loading">
+        Loading food items...
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <div *ngIf="!loading && foodItems.length > 0" class="food-items-grid">
+        <div class="food-item-card" *ngFor="let item of foodItems">
+          <div class="food-item-image">
+            <div class="placeholder-image">🍔</div>
+          </div>
+          <div class="food-item-details">
+            <h3>{{ item.name }}</h3>
+            <p class="description">{{ item.description || 'No description available' }}</p>
+            <div class="price-and-category">
+              <span class="price">₹{{ item.price }}</span>
+              <span class="category">{{ item.category }}</span>
+            </div>
+            <button
+              class="add-to-cart-button"
+              (click)="addToCart(item)"
+              [disabled]="!item.isAvailable"
+            >
+              {{ item.isAvailable ? 'Add to Cart' : 'Not Available' }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!loading && foodItems.length === 0 && !errorMessage" class="no-items">
+        <p>No food items available in this canteen.</p>
+      </div>
+    </div>
+
+    <div class="cart-section">
+      <div class="cart-card">
+        <h2>Your Cart</h2>
+
+        <div *ngIf="cart.length === 0" class="empty-cart">
+          <p>Your cart is empty</p>
+        </div>
+
+        <div *ngIf="cart.length > 0" class="cart-items">
+          <div class="cart-item" *ngFor="let item of cart; let i = index">
+            <div class="item-info">
+              <h4>{{ item.name }}</h4>
+              <p class="item-price">₹{{ item.price }} each</p>
+            </div>
+            <div class="item-controls">
+              <button
+                class="quantity-button"
+                (click)="updateQuantity(i, -1)"
+              >
+                -
+              </button>
+              <span class="quantity">{{ item.quantity }}</span>
+              <button
+                class="quantity-button"
+                (click)="updateQuantity(i, 1)"
+              >
+                +
+              </button>
+            </div>
+            <div class="item-subtotal">
+              <p>₹{{ item.subTotal }}</p>
+              <button
+                class="remove-button"
+                (click)="removeFromCart(i)"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="cart.length > 0" class="cart-total">
+          <div class="total-row">
+            <span>Total:</span>
+            <span class="total-amount">₹{{ getCartTotal() }}</span>
+          </div>
+          <button
+            class="place-order-button"
+            (click)="placeOrder()"
+            [disabled]="loading"
+          >
+            {{ loading ? 'Placing Order...' : 'Place Order' }}
+          </button>
+        </div>
+
+        <div *ngIf="successMessage" class="success-message">
+          {{ successMessage }}
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

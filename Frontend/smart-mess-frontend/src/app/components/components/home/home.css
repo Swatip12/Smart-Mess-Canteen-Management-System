@@ -1,0 +1,399 @@
+* {
+  box-sizing: border-box;
+}
+
+.home-page {
+  min-height: 100vh;
+  background: #f5f8fc;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #172b4d;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+  height: 80px;
+  background: #082b63;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 45px;
+
+  color: white;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.logo {
+  font-size: 27px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex;
+  gap: 38px;
+
+  margin-left: 70px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: #61a5ff;
+}
+
+.nav-buttons {
+  margin-left: auto;
+
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.login-btn,
+.register-btn,
+.student-login-btn,
+.student-register-btn {
+  text-decoration: none;
+
+  padding: 11px 25px;
+
+  border-radius: 7px;
+
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.login-btn {
+  background: white;
+  color: #082b63;
+}
+
+.student-login-btn {
+  background: #1fa463;
+  color: white;
+}
+
+.register-btn {
+  background: #1677ff;
+  color: white;
+}
+
+.student-register-btn {
+  background: #ff9800;
+  color: white;
+}
+
+.register-btn:hover {
+  background: #075dcc;
+}
+
+.student-login-btn:hover {
+  background: #158c4f;
+}
+
+.student-register-btn:hover {
+  background: #e68900;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+  max-width: 1400px;
+
+  margin: 38px auto;
+
+  padding: 60px 75px;
+
+  background: white;
+
+  border-radius: 18px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 60px;
+
+  box-shadow: 0 3px 18px rgba(0, 0, 0, 0.08);
+}
+
+.hero-content {
+  width: 52%;
+}
+
+.hero-content h1 {
+  font-size: 48px;
+
+  line-height: 1.15;
+
+  margin: 0 0 25px;
+
+  color: #102c52;
+}
+
+.hero-content h1 span {
+  color: #0b3b82;
+}
+
+.hero-content p {
+  font-size: 18px;
+
+  line-height: 1.7;
+
+  color: #61708a;
+
+  max-width: 650px;
+}
+
+.hero-buttons {
+  display: flex;
+
+  gap: 15px;
+
+  margin-top: 30px;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 13px 30px;
+
+  border-radius: 7px;
+
+  text-decoration: none;
+
+  font-weight: bold;
+
+  font-size: 16px;
+}
+
+.primary-btn {
+  background: #075dcc;
+  color: white;
+}
+
+.secondary-btn {
+  background: #1fa463;
+  color: white;
+}
+
+
+/* =========================
+   FOOD IMAGE
+========================= */
+
+.hero-image {
+  width: 45%;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+}
+
+.hero-image img {
+  width: 100%;
+
+  max-width: 520px;
+
+  height: 350px;
+
+  object-fit: cover;
+
+  border-radius: 18px;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+
+  display: block;
+}
+
+
+/* =========================
+   FEATURES
+========================= */
+
+.features {
+  max-width: 1400px;
+
+  margin: 25px auto;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 25px;
+
+  padding: 0 20px;
+}
+
+.feature-card {
+  background: white;
+
+  padding: 25px;
+
+  border-radius: 12px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.feature-icon {
+  font-size: 34px;
+}
+
+.feature-card h3 {
+  margin: 0 0 7px;
+
+  color: #123d76;
+}
+
+.feature-card p {
+  margin: 0;
+
+  color: #68778d;
+}
+
+
+/* =========================
+   SYSTEM SECTION
+========================= */
+
+.system-section {
+  max-width: 1400px;
+
+  margin: 45px auto;
+
+  padding: 20px;
+}
+
+.system-section h2 {
+  text-align: center;
+
+  font-size: 30px;
+
+  color: #0b3268;
+
+  margin-bottom: 30px;
+}
+
+.system-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 22px;
+}
+
+.system-card {
+  background: white;
+
+  padding: 25px;
+
+  text-align: center;
+
+  border-radius: 12px;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+  font-size: 32px;
+}
+
+.system-card h3 {
+  font-size: 18px;
+
+  color: #153f78;
+
+  margin: 12px 0 8px;
+}
+
+.system-card p {
+  font-size: 14px;
+
+  color: #6b778c;
+
+  margin: 0;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+  background: #082b63;
+
+  color: white;
+
+  text-align: center;
+
+  padding: 22px;
+
+  margin-top: 50px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+  .navbar {
+    padding: 15px 20px;
+
+    height: auto;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+  }
+
+  .nav-links {
+    margin-left: 0;
+
+    gap: 18px;
+  }
+
+  .hero {
+    flex-direction: column;
+
+    padding: 40px 25px;
+  }
+
+  .hero-content,
+  .hero-image {
+    width: 100%;
+  }
+
+  .hero-content h1 {
+    font-size: 38px;
+  }
+
+  .features,
+  .system-grid {
+    grid-template-columns: 1fr;
+  }
+
+}

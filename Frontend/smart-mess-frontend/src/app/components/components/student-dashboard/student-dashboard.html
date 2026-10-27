@@ -1,0 +1,174 @@
+<div class="student-dashboard-wrapper">
+
+  <!-- Top Navigation Header -->
+  <header class="student-nav-bar">
+    <div class="student-nav-brand">
+      <div class="brand-avatar">🍴</div>
+      <div class="brand-title-wrap">
+        <h2>Smart Mess & Canteen</h2>
+        <span>STUDENT & DINER HUB</span>
+      </div>
+    </div>
+
+    <div class="student-nav-actions">
+      <div class="student-user-pill" (click)="navigateTo('/student-profile')" title="View profile">
+        <i class="bi bi-person-circle"></i>
+        <div class="user-text">
+          <strong>{{ studentName }}</strong>
+          <small>{{ studentRoll || 'Student' }}</small>
+        </div>
+      </div>
+      <button class="student-logout-btn" (click)="logout()" title="Logout from Student Portal">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="student-dashboard-body">
+
+    <!-- Welcome Greeting & Quick Metrics -->
+    <div class="welcome-banner">
+      <div class="welcome-text">
+        <h1>Welcome, {{ studentName }}! 👋</h1>
+        <p>Explore today's dining menu, order fresh meals from campus canteens, and manage subscriptions.</p>
+      </div>
+
+      <div class="quick-metrics-row">
+        <div class="metric-chip">
+          <i class="bi bi-card-checklist text-success"></i>
+          <div>
+            <small>Active Meal Plan</small>
+            <strong>{{ activePlan }}</strong>
+          </div>
+        </div>
+        <div class="metric-chip">
+          <i class="bi bi-bag-check text-primary"></i>
+          <div>
+            <small>Total Orders Placed</small>
+            <strong>{{ totalOrders }} Orders</strong>
+          </div>
+        </div>
+        <div class="metric-chip">
+          <i class="bi bi-calendar-check text-warning"></i>
+          <div>
+            <small>Meals Attended</small>
+            <strong>{{ attendancePresent }} Sessions</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Student Services Grid -->
+    <div class="services-section">
+      <div class="section-title">
+        <i class="bi bi-grid-fill me-2"></i> Quick Services
+      </div>
+
+      <div class="services-grid">
+
+        <div class="service-card" (click)="navigateTo('/student-menu')">
+          <div class="service-icon-wrap icon-green">
+            <i class="bi bi-calendar4-week"></i>
+          </div>
+          <div class="service-details">
+            <h3>Daily Mess Menu</h3>
+            <p>View breakfast, lunch, snacks, and dinner schedules for campus messes.</p>
+          </div>
+          <i class="bi bi-chevron-right action-arrow"></i>
+        </div>
+
+        <div class="service-card" (click)="navigateTo('/student-order')">
+          <div class="service-icon-wrap icon-blue">
+            <i class="bi bi-cart3"></i>
+          </div>
+          <div class="service-details">
+            <h3>Order Food</h3>
+            <p>Browse campus canteen food items, add to cart, and place instant orders.</p>
+          </div>
+          <i class="bi bi-chevron-right action-arrow"></i>
+        </div>
+
+        <div class="service-card" (click)="navigateTo('/student-orders')">
+          <div class="service-icon-wrap icon-indigo">
+            <i class="bi bi-receipt"></i>
+          </div>
+          <div class="service-details">
+            <h3>Order History</h3>
+            <p>Track order progress (Preparing, Ready, Delivered) and cancel pending orders.</p>
+          </div>
+          <i class="bi bi-chevron-right action-arrow"></i>
+        </div>
+
+        <div class="service-card" (click)="navigateTo('/student-subscription')">
+          <div class="service-icon-wrap icon-amber">
+            <i class="bi bi-credit-card-2-front"></i>
+          </div>
+          <div class="service-details">
+            <h3>Mess Subscription</h3>
+            <p>Subscribe to monthly/quarterly meal plans and view renewal status.</p>
+          </div>
+          <i class="bi bi-chevron-right action-arrow"></i>
+        </div>
+
+        <div class="service-card" (click)="navigateTo('/student-attendance')">
+          <div class="service-icon-wrap icon-teal">
+            <i class="bi bi-check2-circle"></i>
+          </div>
+          <div class="service-details">
+            <h3>Attendance Log</h3>
+            <p>Review your meal attendance records and check-in eligibility stats.</p>
+          </div>
+          <i class="bi bi-chevron-right action-arrow"></i>
+        </div>
+
+        <div class="service-card" (click)="navigateTo('/student-feedback')">
+          <div class="service-icon-wrap icon-yellow">
+            <i class="bi bi-star-fill"></i>
+          </div>
+          <div class="service-details">
+            <h3>Food Feedback</h3>
+            <p>Rate meals, share dietary suggestions, and review mess service.</p>
+          </div>
+          <i class="bi bi-chevron-right action-arrow"></i>
+        </div>
+
+        <div class="service-card" (click)="navigateTo('/student-complaint')">
+          <div class="service-icon-wrap icon-red">
+            <i class="bi bi-exclamation-octagon-fill"></i>
+          </div>
+          <div class="service-details">
+            <h3>Complaints & Support</h3>
+            <p>Submit dining or billing concerns and track administrative resolution.</p>
+          </div>
+          <i class="bi bi-chevron-right action-arrow"></i>
+        </div>
+
+        <div class="service-card" (click)="navigateTo('/student-notices')">
+          <div class="service-icon-wrap icon-purple">
+            <i class="bi bi-megaphone-fill"></i>
+          </div>
+          <div class="service-details">
+            <h3>Mess Notices</h3>
+            <p>Read holiday schedules, special feast announcements, and menu updates.</p>
+          </div>
+          <i class="bi bi-chevron-right action-arrow"></i>
+        </div>
+
+        <div class="service-card" (click)="navigateTo('/student-profile')">
+          <div class="service-icon-wrap icon-slate">
+            <i class="bi bi-person-vcard-fill"></i>
+          </div>
+          <div class="service-details">
+            <h3>My Profile</h3>
+            <p>View and update hostel block, room number, phone, and department.</p>
+          </div>
+          <i class="bi bi-chevron-right action-arrow"></i>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

@@ -1,1 +1,148 @@
-<p>subscription-add works!</p>
+<div class="subscription-add-container">
+
+  <!-- Header -->
+  <div class="page-header-box">
+    <div>
+      <h2>Add Subscription</h2>
+      <p>Enroll a student in a mess meal plan</p>
+    </div>
+    <button type="button" class="btn btn-outline-secondary" (click)="cancel()">
+      <i class="bi bi-arrow-left me-1"></i> Back to Subscriptions
+    </button>
+  </div>
+
+  <div class="card border-0 shadow-sm p-4">
+
+    <div *ngIf="errorMessage" class="alert alert-danger mb-3">
+      <i class="bi bi-exclamation-triangle me-2"></i>{{ errorMessage }}
+    </div>
+
+    <form #subscriptionForm="ngForm" (ngSubmit)="saveSubscription()">
+
+      <div class="row g-3">
+
+        <!-- Student -->
+        <div class="col-md-6">
+          <label for="student" class="form-label fw-semibold">Student <span class="text-danger">*</span></label>
+          <select
+            id="student"
+            name="student"
+            class="form-select"
+            [(ngModel)]="subscription.student"
+            required>
+            <option [ngValue]="null">-- Select Student --</option>
+            <option *ngFor="let student of students" [ngValue]="student">
+              {{ student.name }} ({{ student.rollNumber || student.email }})
+            </option>
+          </select>
+        </div>
+
+        <!-- Mess -->
+        <div class="col-md-6">
+          <label for="mess" class="form-label fw-semibold">Mess <span class="text-danger">*</span></label>
+          <select
+            id="mess"
+            name="mess"
+            class="form-select"
+            [(ngModel)]="subscription.mess"
+            required>
+            <option [ngValue]="null">-- Select Mess --</option>
+            <option *ngFor="let mess of messes" [ngValue]="mess">
+              {{ mess.name }} - {{ mess.location }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Plan -->
+        <div class="col-md-4">
+          <label for="plan" class="form-label fw-semibold">Plan Type <span class="text-danger">*</span></label>
+          <select
+            id="plan"
+            name="plan"
+            class="form-select"
+            [(ngModel)]="subscription.plan"
+            required>
+            <option value="MONTHLY">Monthly</option>
+            <option value="QUARTERLY">Quarterly</option>
+            <option value="YEARLY">Yearly</option>
+          </select>
+        </div>
+
+        <!-- Start Date -->
+        <div class="col-md-4">
+          <label for="startDate" class="form-label fw-semibold">Start Date <span class="text-danger">*</span></label>
+          <input
+            type="date"
+            id="startDate"
+            name="startDate"
+            class="form-control"
+            [(ngModel)]="subscription.startDate"
+            required
+          />
+        </div>
+
+        <!-- End Date -->
+        <div class="col-md-4">
+          <label for="endDate" class="form-label fw-semibold">End Date <span class="text-danger">*</span></label>
+          <input
+            type="date"
+            id="endDate"
+            name="endDate"
+            class="form-control"
+            [(ngModel)]="subscription.endDate"
+            required
+          />
+        </div>
+
+        <!-- Amount -->
+        <div class="col-md-6">
+          <label for="amount" class="form-label fw-semibold">Subscription Amount (₹) <span class="text-danger">*</span></label>
+          <input
+            type="number"
+            id="amount"
+            name="amount"
+            class="form-control"
+            [(ngModel)]="subscription.amount"
+            placeholder="e.g. 3200"
+            required
+          />
+        </div>
+
+        <!-- Status -->
+        <div class="col-md-6">
+          <label for="status" class="form-label fw-semibold">Status</label>
+          <select
+            id="status"
+            name="status"
+            class="form-select"
+            [(ngModel)]="subscription.status">
+            <option value="ACTIVE">ACTIVE</option>
+            <option value="EXPIRED">EXPIRED</option>
+            <option value="CANCELLED">CANCELLED</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancel()">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="loading || !subscriptionForm.valid">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-1" role="status"></span>
+          {{ loading ? 'Saving...' : 'Save Subscription' }}
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

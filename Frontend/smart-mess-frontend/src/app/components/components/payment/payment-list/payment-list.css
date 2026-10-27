@@ -1,0 +1,44 @@
+.payment-container {
+  min-height: calc(100vh - 120px);
+  padding: 30px;
+  background: #f4f7fb;
+}
+
+.payment-container h2 {
+  color: #062b63;
+  margin-bottom: 25px;
+}
+
+.payment-table-container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  overflow-x: auto;
+  box-shadow: 0 3px 12px rgba(0,0,0,.07);
+}
+
+.payment-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.payment-table th {
+  background: #062b63;
+  color: white;
+  padding: 14px;
+}
+
+.payment-table td {
+  padding: 13px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.payment-table tr:hover {
+  background: #f8fafc;
+}
+
+.status {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}

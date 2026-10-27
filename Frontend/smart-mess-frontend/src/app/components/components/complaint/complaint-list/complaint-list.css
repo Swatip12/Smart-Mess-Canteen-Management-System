@@ -1,0 +1,61 @@
+.complaint-container {
+  min-height: calc(100vh - 120px);
+  padding: 30px;
+  background: #f4f7fb;
+}
+
+.complaint-header {
+  background: white;
+  padding: 22px 25px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.complaint-header h2 {
+  margin: 0;
+  color: #062b63;
+}
+
+.add-btn {
+  background: #0d6efd;
+  color: white;
+  border: none;
+  padding: 11px 20px;
+  border-radius: 6px;
+}
+
+.complaint-table-container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+.complaint-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.complaint-table th {
+  background: #062b63;
+  color: white;
+  padding: 14px;
+}
+
+.complaint-table td {
+  padding: 13px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.complaint-table tr:hover {
+  background: #f8fafc;
+}
+
+.status {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}

@@ -1,0 +1,71 @@
+<div class="student-orders-container">
+
+  <div class="student-orders-header">
+    <button class="back-button" (click)="goBack()">← Back to Dashboard</button>
+    <h1>My Orders</h1>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Loading orders...
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!loading && orders.length > 0" class="orders-content">
+    <div class="order-card" *ngFor="let order of orders">
+      <div class="order-header">
+        <div class="order-info">
+          <h3>Order #{{ order.id }}</h3>
+          <p class="order-date">{{ formatDate(order.orderedAt) }}</p>
+        </div>
+        <div class="order-status d-flex align-items-center gap-2">
+          <span
+            class="status-badge"
+            [style.background-color]="getStatusColor(order.status)"
+          >
+            {{ order.status }}
+          </span>
+          <button
+            *ngIf="order.status === 'PENDING'"
+            class="btn btn-sm btn-outline-danger ms-2 py-0 px-2"
+            style="font-size: 0.8rem; border-radius: 6px;"
+            (click)="cancelOrder(order.id)">
+            Cancel
+          </button>
+        </div>
+      </div>
+
+      <div class="order-details">
+        <div class="canteen-info">
+          <p><strong>Canteen:</strong> {{ order.canteen?.name || 'N/A' }}</p>
+          <p><strong>Total Amount:</strong> ₹{{ order.totalAmount }}</p>
+        </div>
+
+        <div class="order-items">
+          <h4>Order Items:</h4>
+          <div class="item-list">
+            <div class="item" *ngFor="let item of order.orderItems">
+              <span class="item-name">{{ item.foodItem?.name || 'Item' }}</span>
+              <span class="item-quantity">× {{ item.quantity }}</span>
+              <span class="item-price">₹{{ item.subTotal }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && orders.length === 0 && !errorMessage" class="no-orders">
+    <div class="no-orders-content">
+      <div class="no-orders-icon">📋</div>
+      <h2>No Orders Yet</h2>
+      <p>You haven't placed any orders yet.</p>
+      <button class="order-now-button" (click)="goBack()">
+        Order Food Now
+      </button>
+    </div>
+  </div>
+
+</div>

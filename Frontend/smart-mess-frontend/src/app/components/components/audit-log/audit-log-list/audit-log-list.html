@@ -1,0 +1,49 @@
+<div class="page-container">
+  <div class="page-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="mb-1"><i class="bi bi-clock-history text-primary me-2"></i>Security Audit Trail</h2>
+      <p class="text-muted mb-0">Immutable compliance log of administrative actions, status transitions, and ledger events</p>
+    </div>
+  </div>
+
+  <div class="card card-table shadow-sm border-0">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th class="ps-4">Timestamp</th>
+              <th>Actor</th>
+              <th>Role</th>
+              <th>Action</th>
+              <th>Target Entity</th>
+              <th class="pe-4">Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let log of logs">
+              <td class="ps-4 text-muted small">
+                {{ log.timestamp | date:'medium' }}
+              </td>
+              <td class="fw-semibold text-dark">{{ log.actorEmail }}</td>
+              <td><span class="badge badge-info">{{ log.actorRole }}</span></td>
+              <td>
+                <span class="badge badge-primary">{{ log.action }}</span>
+              </td>
+              <td>
+                <code class="text-secondary">{{ log.entityName }} #{{ log.entityId }}</code>
+              </td>
+              <td class="pe-4 text-muted small">{{ log.details }}</td>
+            </tr>
+            <tr *ngIf="logs.length === 0">
+              <td colspan="6" class="text-center py-5 text-muted">
+                <i class="bi bi-shield-check fs-1 d-block mb-2 text-secondary"></i>
+                No security audit logs recorded yet.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

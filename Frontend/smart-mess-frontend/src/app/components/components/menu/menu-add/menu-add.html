@@ -1,1 +1,88 @@
-<p>menu-add works!</p>
+<div class="page-container">
+  <div class="page-header mb-4">
+    <div class="d-flex align-items-center gap-2 mb-1">
+      <a routerLink="/menus" class="btn btn-sm btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i>
+      </a>
+      <h2 class="mb-0">Add Menu Schedule</h2>
+    </div>
+    <p class="text-muted ms-4 ps-2 mb-0">Publish meal menu items for students</p>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <form [formGroup]="menuForm" (ngSubmit)="addMenu()">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Menu Date <span class="text-danger">*</span></label>
+                <input
+                  type="date"
+                  class="form-control"
+                  formControlName="menuDate"
+                  (change)="setDayOfWeek()">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Day of Week</label>
+                <input
+                  type="text"
+                  class="form-control bg-light"
+                  formControlName="dayOfWeek"
+                  readonly>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Mess Facility <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="mess">
+                  <option [ngValue]="null">-- Select Mess --</option>
+                  <option *ngFor="let mess of messes" [ngValue]="mess">
+                    {{ mess.name }} ({{ mess.location }})
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Meal Session <span class="text-danger">*</span></label>
+                <select class="form-select" formControlName="meal">
+                  <option [ngValue]="null">-- Select Meal Session --</option>
+                  <option *ngFor="let meal of meals" [ngValue]="meal">
+                    {{ meal.name }} ({{ meal.serveTime || 'Regular' }})
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-md-12">
+                <label class="form-label fw-semibold">Dishes & Food Items Served <span class="text-danger">*</span></label>
+                <textarea
+                  class="form-control"
+                  rows="4"
+                  formControlName="items"
+                  placeholder="e.g. Masala Dosa, Sambar, Coconut Chutney, Filter Coffee"></textarea>
+              </div>
+            </div>
+
+            <hr class="my-4 text-muted">
+
+            <div class="d-flex justify-content-end gap-2">
+              <button
+                type="button"
+                class="btn btn-light border px-4"
+                (click)="cancel()">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary px-4 d-flex align-items-center gap-2"
+                [disabled]="menuForm.invalid">
+                <i class="bi bi-check2-circle"></i>
+                Save Menu
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+.feedback-container {
+  min-height: calc(100vh - 120px);
+  padding: 30px;
+  background: #f4f7fb;
+}
+
+.feedback-header {
+  background: white;
+  padding: 22px 25px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.feedback-header h2 {
+  margin: 0;
+  color: #062b63;
+}
+
+.add-btn {
+  background: #0d6efd;
+  color: white;
+  border: none;
+  padding: 11px 20px;
+  border-radius: 6px;
+}
+
+.feedback-table-container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+.feedback-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.feedback-table th {
+  background: #062b63;
+  color: white;
+  padding: 14px;
+}
+
+.feedback-table td {
+  padding: 13px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.feedback-table tr:hover {
+  background: #f8fafc;
+}
+
+.delete-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 7px 12px;
+  border-radius: 5px;
+}

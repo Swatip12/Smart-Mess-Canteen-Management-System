@@ -1,0 +1,23 @@
+/* =========================================
+   SMART MESS FOOTER
+   ========================================= */
+
+:host {
+  display: block;
+}
+
+.footer {
+  min-height: 55px;
+  background: #062b63;
+  color: #dbe7f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 15px 20px;
+  font-size: 13px;
+}
+
+.footer p {
+  margin: 0;
+}
